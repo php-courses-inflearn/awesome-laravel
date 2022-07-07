@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Password;
 
 class LoginController extends Controller
 {
@@ -17,6 +18,46 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function login() {}
-    public function logout() {}
+    /**
+     * 로그인
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|max:255',
+            'password' => 'required'
+        ]);
+
+        $request->validate([
+            'password' => [Password::defaults()]
+        ]);
+
+        $credentials = $request->only(['email', 'password']);
+
+        if (! auth()->attempt($credentials, $request->boolean('remember'))) {
+            return back()->withErrors([
+                'failed' => __('auth.failed')
+            ]);
+        }
+
+        return redirect()->intended();
+    }
+
+    /**
+     * 로그아웃
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout()
+    {
+        auth()->logout();
+
+        session()->invalidate();
+        session()->regenerateToken();
+
+        return to_route('home');
+    }
 }
