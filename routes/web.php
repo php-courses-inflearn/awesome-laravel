@@ -56,4 +56,16 @@ Route::domain('account.homestead.test')->group(function () {
             Route::get('/login/github/callback', 'callback');
         });
     });
+    Route::controller(\App\Http\Controllers\Auth\PasswordResetController::class)->group(function () {
+        Route::middleware('guest')->group(function () {
+            Route::get('/forgot-password', 'request')
+                ->name('password.request');
+            Route::post('/forgot-password', 'email')
+                ->name('password.email');
+            Route::get('/reset-password/{token}', 'reset')
+                ->name('password.reset');
+            Route::post('/reset-password', 'update')
+                ->name('password.update');
+        });
+    });
 });

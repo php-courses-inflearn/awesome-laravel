@@ -34,6 +34,10 @@
             @endforeach
         @endif
 
+        @if (session()->has('status'))
+            <div>{{ session()->get('status') }}</div>
+        @endif
+
         <main>@yield('content')</main>
     </body>
 </html>
