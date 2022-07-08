@@ -41,4 +41,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * 깃허브 사용자
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function githubUser()
+    {
+        return $this->hasOne(GithubUser::class);
+    }
 }

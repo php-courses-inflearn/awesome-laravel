@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class EmailVerificationController extends Controller
 {
     /**
-     * 이메일을 인증합니다.
+     * 이메일 인증
      *
      * @param EmailVerificationRequest $request
      * @return \Illuminate\Http\RedirectResponse
@@ -22,7 +22,7 @@ class EmailVerificationController extends Controller
     }
 
     /**
-     * 이메일이 인증되지 않은 경우.
+     * 이메일이 인증되지 않은 경우
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */

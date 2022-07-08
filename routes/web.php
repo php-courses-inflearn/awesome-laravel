@@ -19,13 +19,13 @@ Route::domain('homestead.test')->group(function () {
 });
 
 Route::domain('account.homestead.test')->group(function () {
-    Route::controller(\App\Http\Controllers\Auth\RegisterController::class)
-        ->middleware('guest')
-        ->group(function () {
+    Route::controller(\App\Http\Controllers\Auth\RegisterController::class)->group(function () {
+        Route::middleware('guest')->group(function () {
             Route::get('/register', 'showRegistrationForm')
                 ->name('register');
             Route::post('/register', 'register');
         });
+    });
     Route::controller(\App\Http\Controllers\Auth\LoginController::class)->group(function () {
         Route::middleware('guest')->group(function () {
             Route::get('/', 'showLoginForm')
@@ -37,10 +37,8 @@ Route::domain('account.homestead.test')->group(function () {
             ->middleware('auth');
     });
     Route::controller(\App\Http\Controllers\Auth\EmailVerificationController::class)->group(function () {
-        Route::name('verification.')
-            ->prefix('/email')
-            ->middleware('auth')
-            ->group(function () {
+        Route::name('verification.')->prefix('/email')->group(function () {
+            Route::middleware('auth')->group(function () {
                 Route::get('/verify', 'notice')
                     ->name('notice');
                 Route::get('/verify/{id}/{hash}', 'verify')
@@ -49,5 +47,13 @@ Route::domain('account.homestead.test')->group(function () {
                 Route::post('/verification-notification', 'send')
                     ->name('send');
             });
+        });
+    });
+    Route::controller(\App\Http\Controllers\Auth\GithubLoginController::class)->group(function () {
+        Route::middleware('guest')->group(function () {
+            Route::get('/login/github', 'redirect')
+                ->name('login.github');
+            Route::get('/login/github/callback', 'callback');
+        });
     });
 });
