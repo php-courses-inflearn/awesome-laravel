@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Provider as ProviderEnum;
+use App\Enums\SocialiteProvider;
 use App\Models\Provider;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,7 +16,7 @@ class ProviderSeeder extends Seeder
      */
     public function run()
     {
-        $providers = ProviderEnum::cases();
+        $providers = SocialiteProvider::cases();
 
         collect($providers)->each(
             fn ($case) => Provider::create(['name' => $case->name])

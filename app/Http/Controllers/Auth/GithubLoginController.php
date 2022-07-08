@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Enums\Provider as ProviderEnum;
+use App\Enums\SocialiteProvider;
 
 class GithubLoginController extends SocialLoginController
 {
     /**
-     * @var ProviderEnum 서비스 제공자
+     * @var SocialiteProvider 서비스 제공자
      */
-    protected ProviderEnum $provider = ProviderEnum::GITHUB;
+    protected SocialiteProvider $provider = SocialiteProvider::GITHUB;
 }

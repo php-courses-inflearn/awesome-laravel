@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Provider;
-use App\Enums\Provider as ProviderEnum;
+use App\Enums\SocialiteProvider;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Laravel\Socialite\Contracts\User as SocialUser;
+use Laravel\Socialite\Contracts\User as SocialiteUser;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialLoginController extends Controller
 {
     /**
-     * @var ProviderEnum 서비스 제공자
+     * @var SocialiteProvider 서비스 제공자
      */
-    protected ProviderEnum $provider;
+    protected SocialiteProvider $provider;
 
     /**
      * 서비스 제공자 리다이렉트
@@ -45,10 +45,10 @@ class SocialLoginController extends Controller
     /**
      * 소셜 사용자 등록
      *
-     * @param SocialUser $socialUser
+     * @param SocialiteUser $socialUser
      * @return User
      */
-    protected function register(SocialUser $socialUser): User
+    protected function register(SocialiteUser $socialUser): User
     {
         $user = Provider::find($this->provider)->users()->updateOrCreate([
             'email' => $socialUser->email
