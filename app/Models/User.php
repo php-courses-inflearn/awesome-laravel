@@ -21,6 +21,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'provider_uid',
+        'provider_token',
+        'provider_refresh_token'
     ];
 
     /**
@@ -43,12 +46,12 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * 깃허브 사용자
+     * 서비스 제공자
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function githubUser()
+    public function provider()
     {
-        return $this->hasOne(GithubUser::class);
+        return $this->belongsTo(Provider::class);
     }
 }

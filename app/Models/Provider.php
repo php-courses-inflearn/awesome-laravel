@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GithubUser extends Model
+class Provider extends Model
 {
     use HasFactory;
 
@@ -15,17 +15,16 @@ class GithubUser extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id',
-        'token',
+        'name'
     ];
 
     /**
      * 사용자
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
     }
 }

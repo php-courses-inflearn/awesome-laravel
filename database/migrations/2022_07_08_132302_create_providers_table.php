@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('github_users', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary();
-            $table->foreignIdFor(\App\Models\User::class)
-                ->constrained()
-                ->cascadeOnDelete();
-            $table->string('token');
+        Schema::create('providers', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('github_users');
+        Schema::dropIfExists('providers');
     }
 };
