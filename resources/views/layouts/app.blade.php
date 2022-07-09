@@ -22,6 +22,7 @@
                             <button type="submit">로그아웃</button>
                         </form>
                     </li>
+                    <li><a href="{{ route('dashboard.account') }}">마이페이지</a></li>
                 @endguest
             </ul>
         </nav>

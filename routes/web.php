@@ -75,4 +75,13 @@ Route::domain('account.homestead.test')->group(function () {
             Route::post('/confirm-password', 'confirm');
         });
     });
+    Route::namespace('\\App\\Http\\Controllers\\Auth\\Dashboard\\')->group(function () {
+        Route::controller('AccountController')->group(function () {
+            Route::middleware('auth')->group(function () {
+                Route::get('/dashboard/account', 'show')
+                    ->name('dashboard.account');
+                Route::post('/dashboard/account', 'update');
+            });
+        });
+    });
 });
