@@ -16,13 +16,13 @@
                     <li><a href="{{ route('login') }}">로그인</a></li>
                     <li><a href="{{ route('register') }}">회원가입</a></li>
                 @else
+                    <li><a href="{{ route('dashboard.account') }}">대시보드</a></li>
                     <li>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <button type="submit">로그아웃</button>
                         </form>
                     </li>
-                    <li><a href="{{ route('dashboard.account') }}">마이페이지</a></li>
                 @endguest
             </ul>
         </nav>

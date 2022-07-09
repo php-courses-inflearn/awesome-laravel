@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class AccountController extends Controller
 {
@@ -32,6 +33,10 @@ class AccountController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'password' => 'nullable|confirmed|max:255',
+        ]);
+
+        $request->validate([
+            'password' => [Password::defaults()]
         ]);
 
         $user = $request->user();

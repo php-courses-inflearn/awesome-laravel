@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password as PasswordRule;
 
 class PasswordResetController extends Controller
 {
@@ -65,6 +66,10 @@ class PasswordResetController extends Controller
             'email' => 'required|email|exists:users',
             'password' => 'required|confirmed',
             'token' => 'required'
+        ]);
+
+        $request->validate([
+            'password' => [PasswordRule::defaults()]
         ]);
 
         $credentials = $request->only(
