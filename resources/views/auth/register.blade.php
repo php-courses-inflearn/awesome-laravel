@@ -12,5 +12,5 @@
         <button type="submit">회원가입</button>
     </form>
 
-    @include('auth.social-login')
+    @include('auth.social')
 @endsection

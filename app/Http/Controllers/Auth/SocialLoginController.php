@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Provider;
 use App\Enums\SocialiteProvider;
 use App\Models\User;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
 use Laravel\Socialite\Facades\Socialite;
@@ -48,18 +49,21 @@ class SocialLoginController extends Controller
      * @param SocialiteUser $socialUser
      * @return User
      */
-    protected function register(SocialiteUser $socialUser): User
+    protected function register(SocialiteUser $socialUser)
     {
-        $user = Provider::find($this->provider)->users()->updateOrCreate([
-            'email' => $socialUser->email
-        ], [
-            'name' => $socialUser->name,
-            'provider_uid' => $socialUser->id,
-            'provider_token' => $socialUser?->token,
-            'provider_refresh_token' => $socialUser?->refreshToken
-        ]);
+        $user = Provider::find($this->provider)->users()
+            ->updateOrCreate([
+                'email' => $socialUser->email
+            ], [
+                'name' => $socialUser->name,
+                'provider_uid' => $socialUser->id,
+                'provider_token' => $socialUser?->token,
+                'provider_refresh_token' => $socialUser?->refreshToken
+            ]);
 
-        $user->markEmailAsVerified();
+        if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+        }
 
         return $user;
     }

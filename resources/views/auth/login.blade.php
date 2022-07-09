@@ -12,5 +12,7 @@
         <button type="submit">로그인</button>
     </form>
 
-    @include('auth.social-login')
+    <a href="{{ route('password.request') }}">비밀번호 재설정</a>
+
+    @include('auth.social')
 @endsection
