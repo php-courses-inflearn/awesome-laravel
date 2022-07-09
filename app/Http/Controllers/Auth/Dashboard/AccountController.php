@@ -40,8 +40,8 @@ class AccountController extends Controller
         ]);
 
         $user = $request->user();
-
         $data = $request->only('name');
+
         if ($request->filled('password')) {
             $data = $data + ['password' => Hash::make($request->password)];
         }

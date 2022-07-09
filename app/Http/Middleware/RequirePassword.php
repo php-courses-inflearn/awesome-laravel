@@ -15,9 +15,12 @@ class RequirePassword extends Middleware
      * @param  int|null  $passwordTimeoutSeconds
      * @return bool
      */
-    public function shouldConfirmPassword($request, $passwordTimeoutSeconds = null)
+    protected function shouldConfirmPassword($request, $passwordTimeoutSeconds = null)
     {
-        return auth()->check() && (! $request->user()->provider)
-            && parent::shouldConfirmPassword($request, $passwordTimeoutSeconds);
+        if (auth()->check() && $request->user()->provider) {
+            return false;
+        }
+
+        return parent::shouldConfirmPassword($request, $passwordTimeoutSeconds);
     }
 }
