@@ -31,7 +31,7 @@ class PasswordResetController extends Controller
     public function email(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users'
+            'email' => 'required|email|exists:users|max:255'
         ]);
 
         $status = Password::sendResetLink($request->only('email'));
@@ -63,8 +63,8 @@ class PasswordResetController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users',
-            'password' => 'required|confirmed',
+            'email' => 'required|email|exists:users|max:255',
+            'password' => 'required|confirmed|max:255',
             'token' => 'required'
         ]);
 
