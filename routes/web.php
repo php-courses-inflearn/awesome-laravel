@@ -26,16 +26,6 @@ Route::domain('account.homestead.test')->group(function () {
             Route::post('/register', 'register');
         });
     });
-    Route::controller(\App\Http\Controllers\Auth\LoginController::class)->group(function () {
-        Route::middleware('guest')->group(function () {
-            Route::get('/', 'showLoginForm')
-                ->name('login');
-            Route::post('/', 'login');
-        });
-        Route::post('/logout', 'logout')
-            ->name('logout')
-            ->middleware('auth');
-    });
     Route::controller(\App\Http\Controllers\Auth\EmailVerificationController::class)->group(function () {
         Route::name('verification.')->prefix('/email')->group(function () {
             Route::middleware('auth')->group(function () {
@@ -48,6 +38,16 @@ Route::domain('account.homestead.test')->group(function () {
                     ->name('send');
             });
         });
+    });
+    Route::controller(\App\Http\Controllers\Auth\LoginController::class)->group(function () {
+        Route::middleware('guest')->group(function () {
+            Route::get('/', 'showLoginForm')
+                ->name('login');
+            Route::post('/', 'login');
+        });
+        Route::post('/logout', 'logout')
+            ->name('logout')
+            ->middleware('auth');
     });
     Route::controller(\App\Http\Controllers\Auth\GithubLoginController::class)->group(function () {
         Route::middleware('guest')->group(function () {
