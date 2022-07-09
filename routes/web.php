@@ -68,4 +68,11 @@ Route::domain('account.homestead.test')->group(function () {
                 ->name('password.update');
         });
     });
+    Route::controller(\App\Http\Controllers\Auth\PasswordConfirmController::class)->group(function () {
+        Route::middleware('auth')->group(function () {
+            Route::get('/confirm-password', 'showPasswordConfirmationForm')
+                ->name('password.confirm');
+            Route::post('/confirm-password', 'confirm');
+        });
+    });
 });
