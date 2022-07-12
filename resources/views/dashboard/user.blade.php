@@ -5,7 +5,7 @@
 @section('content')
     @include('dashboard.menu')
 
-    <form action="{{ route('dashboard.account') }}" method="POST">
+    <form action="{{ route('dashboard.user') }}" method="POST">
         @method('PUT')
         @csrf
         <input type="text" name="name" value="{{ old('name', $user->name) }}">

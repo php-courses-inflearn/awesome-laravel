@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class AccountTest extends TestCase
+class UserTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -37,9 +37,9 @@ class AccountTest extends TestCase
 
         $response = $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard/account');
+            ->get('/dashboard/user');
 
-        $response->assertViewIs('dashboard.account');
+        $response->assertViewIs('dashboard.user');
     }
 
     /**
@@ -85,7 +85,7 @@ class AccountTest extends TestCase
     {
         $response = $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->put('/dashboard/account', $data);
+            ->put('/dashboard/user', $data);
 
         $this->assertTrue(
             Hash::check($password, $user->getAuthPassword())

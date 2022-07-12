@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
-class AccountController extends Controller
+class UserController extends Controller
 {
     /**
      * 사용자 정보 폼
@@ -17,7 +17,7 @@ class AccountController extends Controller
      */
     public function show(Request $request)
     {
-        return view('dashboard.account', [
+        return view('dashboard.user', [
             'user' => $request->user()
         ]);
     }
