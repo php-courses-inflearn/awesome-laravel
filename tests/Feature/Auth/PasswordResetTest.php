@@ -5,6 +5,7 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
@@ -88,19 +89,19 @@ class PasswordResetTest extends TestCase
         return [$user, $token];
     }
 
-        /**
-         * 비밀번호 재설정 폼 테스트
-         *
-         * @depends testEmail
-         */
-        public function testReset(array $credentials)
-        {
-            [, $token] = $credentials;
+    /**
+     * 비밀번호 재설정 폼 테스트
+     *
+     * @depends testEmail
+     */
+    public function testReset(array $credentials)
+    {
+        [, $token] = $credentials;
 
-            $response = $this->get("/reset-password/{$token}");
+        $response = $this->get("/reset-password/{$token}");
 
-            $response->assertViewIs('auth.reset-password');
-        }
+        $response->assertViewIs('auth.reset-password');
+    }
 
     /**
      * 비밀번호 재설정 테스트
@@ -136,6 +137,8 @@ class PasswordResetTest extends TestCase
             'password_confirmation' => 'password',
             'token' => $token
         ]);
+
+        $user->delete();
 
         Event::assertDispatched(PasswordReset::class);
 
