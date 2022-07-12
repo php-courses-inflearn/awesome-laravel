@@ -3,9 +3,10 @@
 @section('title', '대시보드')
 
 @section('content')
-    @include('auth.dashboard.menu')
+    @include('dashboard.menu')
 
     <form action="{{ route('dashboard.account') }}" method="POST">
+        @method('PUT')
         @csrf
         <input type="text" name="name" value="{{ old('name', $user->name) }}">
         <input type="email" name="email" value="{{ $user->email }}" readonly disabled>

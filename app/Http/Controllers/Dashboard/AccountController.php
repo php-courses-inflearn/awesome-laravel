@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Dashboard;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class AccountController extends Controller
      */
     public function show(Request $request)
     {
-        return view('auth.dashboard.account', [
+        return view('dashboard.account', [
             'user' => $request->user()
         ]);
     }
