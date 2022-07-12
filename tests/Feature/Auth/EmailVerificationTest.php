@@ -16,18 +16,6 @@ class EmailVerificationTest extends TestCase
     use RefreshDatabase, WithFaker;
 
     /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        \URL::forceRootUrl(env('APP_AUTH_URL'));
-    }
-
-    /**
      * 이메일 인증 테스트
      *
      * @return void

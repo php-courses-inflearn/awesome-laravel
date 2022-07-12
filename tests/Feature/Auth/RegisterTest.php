@@ -13,18 +13,6 @@ class RegisterTest extends TestCase
     use RefreshDatabase, WithFaker;
 
     /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        \URL::forceRootUrl(env('APP_AUTH_URL'));
-    }
-
-    /**
      * 회원가입 폼 테스트
      *
      * @return void

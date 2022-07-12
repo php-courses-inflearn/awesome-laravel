@@ -10,21 +10,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+class ProfileTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
-
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        \URL::forceRootUrl(env('APP_AUTH_URL'));
-    }
 
     /**
      * 사용자 정보 폼 테스트
@@ -37,9 +25,9 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard/user');
+            ->get('/dashboard/profile');
 
-        $response->assertViewIs('dashboard.user');
+        $response->assertViewIs('dashboard.profile');
     }
 
     /**
@@ -85,7 +73,7 @@ class UserTest extends TestCase
     {
         $response = $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->put('/dashboard/user', $data);
+            ->put('/dashboard/profile', $data);
 
         $this->assertTrue(
             Hash::check($password, $user->getAuthPassword())

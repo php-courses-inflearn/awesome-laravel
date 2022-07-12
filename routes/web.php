@@ -76,11 +76,11 @@ Route::domain('account.homestead.test')->group(function () {
         });
     });
     Route::prefix('/dashboard')->group(function () {
-        Route::controller(\App\Http\Controllers\Dashboard\UserController::class)->group(function () {
+        Route::controller(\App\Http\Controllers\Dashboard\ProfileController::class)->group(function () {
             Route::middleware(['auth', 'password.confirm'])->group(function () {
-                Route::get('/user', 'show')
-                    ->name('dashboard.user');
-                Route::put('/user', 'update');
+                Route::get('/profile', 'show')
+                    ->name('dashboard.profile');
+                Route::put('/profile', 'update');
             });
         });
     });

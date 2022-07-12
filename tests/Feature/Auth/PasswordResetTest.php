@@ -21,18 +21,6 @@ class PasswordResetTest extends TestCase
     use WithFaker;
 
     /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        \URL::forceRootUrl(env('APP_AUTH_URL'));
-    }
-
-    /**
      * 비밀번호를 찾을 이메일을 입력하는 폼 테스트
      *
      * @return void

@@ -13,18 +13,6 @@ class PasswordConfirmTest extends TestCase
     use RefreshDatabase, WithFaker;
 
     /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        \URL::forceRootUrl(env('APP_AUTH_URL'));
-    }
-
-    /**
      * 비밀번호 확인 폼 테스트
      *
      * @return void

@@ -15,18 +15,6 @@ class GithubLoginTest extends TestCase
     use RefreshDatabase, WithFaker;
 
     /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        \URL::forceRootUrl(env('APP_AUTH_URL'));
-    }
-
-    /**
      * 서비스 제공자 리다이렉트
      *
      * @return void
