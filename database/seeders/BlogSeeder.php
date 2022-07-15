@@ -16,8 +16,16 @@ class BlogSeeder extends Seeder
      */
     public function run()
     {
-        User::all()->each(
-            fn (User $user) => Blog::factory()->for($user)->create()
-        );
+        User::all()->each(function (User $user) {
+            $subscribers = User::inRandomOrder()
+                ->where('id', '<>', $user->id)
+                ->limit(3)
+                ->get();
+
+            Blog::factory()->for($user)->hasAttached(
+                factory: $subscribers,
+                relationship: 'subscribers'
+            )->create();
+        });
     }
 }

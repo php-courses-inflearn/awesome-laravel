@@ -3,6 +3,8 @@
 @section('title', '블로그 관리')
 
 @section('content')
+    @include('dashboard.menu')
+
     <a href="{{ route('blogs.create') }}">새로운 블로그 만들기</a>
 
     <ul>

@@ -62,7 +62,7 @@ class BlogController extends Controller
             $request->only(['name', 'display_name'])
         );
 
-        return to_route('dashboard.blogs');;
+        return to_route('dashboard.blogs');
     }
 
     /**
@@ -71,10 +71,14 @@ class BlogController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function show(Blog $blog)
+    public function show(Request $request, Blog $blog)
     {
+        $user = $request->user();
+
         return view('blogs.show', [
-            'blog' => $blog
+            'blog' => $blog,
+            'owned' => $user->blogs()->find($blog->id),
+            'subscribed' => $blog->subscribers()->find($user->id)
         ]);
     }
 

@@ -12,5 +12,6 @@
         </ul>
     @endauth
 
+    @include('blogs.show.subscription')
     {{-- 구독, 카테고리, 글 --}}
 @endsection

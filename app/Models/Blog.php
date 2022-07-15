@@ -38,6 +38,17 @@ class Blog extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * 내 구독자
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function subscribers()
+    {
+        return $this->belongsToMany(User::class)
+            ->as('subscription');
+    }
 }
 
 

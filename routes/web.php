@@ -71,6 +71,7 @@ Route::controller(\App\Http\Controllers\Auth\PasswordConfirmController::class)->
         Route::post('/confirm-password', 'confirm');
     });
 });
+
 Route::prefix('/dashboard')->group(function () {
     Route::middleware(['auth', 'password.confirm'])->group(function () {
         Route::controller(\App\Http\Controllers\Dashboard\ProfileController::class)->group(function () {
@@ -83,9 +84,22 @@ Route::prefix('/dashboard')->group(function () {
             Route::get('/blogs', 'dashboard')
                 ->name('dashboard.blogs');
         });
+        Route::controller(\App\Http\Controllers\Dashboard\SubscribeController::class)->group(function () {
+            Route::get('/subscribers', 'subscribers')
+                ->name('dashboard.subscribers');
+            Route::get('/subscriptions', 'subscriptions')
+                ->name('dashboard.subscriptions');
+        });
     });
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('blogs', \App\Http\Controllers\BlogController::class);
+
+    Route::controller(\App\Http\Controllers\SubscribeController::class)->group(function () {
+        Route::post('subscribe/{blog}', 'subscribe')
+            ->name('subscribe');
+        Route::delete('unsubscribe/{blog}', 'unsubscribe')
+            ->name('unsubscribe');
+    });
 });
