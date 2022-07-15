@@ -18,6 +18,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ProviderSeeder::class
         ]);
+
+        $this->call([
+            BlogSeeder::class,
+        ]);
     }
 }
 

@@ -1,0 +1,16 @@
+@extends('layouts.app')
+
+@section('title', '블로그 관리')
+
+@section('content')
+    <a href="{{ route('blogs.create') }}">새로운 블로그 만들기</a>
+
+    <ul>
+        @foreach ($blogs as $blog)
+            <li>
+                <a href="{{ route('blogs.show', $blog->name) }}">{{ $blog->display_name }}</a>
+                <a href="{{ route('blogs.edit', $blog->name) }}">블로그 관리</a>
+            </li>
+        @endforeach
+    </ul>
+@endsection

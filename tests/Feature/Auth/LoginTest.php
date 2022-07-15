@@ -18,7 +18,7 @@ class LoginTest extends TestCase
      */
     public function testShowLoginForm()
     {
-        $response = $this->get('/');
+        $response = $this->get('/login');
 
         $response->assertViewIs('auth.login');
     }
@@ -35,7 +35,7 @@ class LoginTest extends TestCase
         /**
          * 로그인 실패
          */
-        $response = $this->post('/', [
+        $response = $this->post('/login', [
             'email' => $user->email,
             'password' => $this->faker->password(8)
         ]);
@@ -48,7 +48,7 @@ class LoginTest extends TestCase
         /**
          * 로그인
          */
-        $response = $this->post('/', [
+        $response = $this->post('/login', [
             'email' => $user->email,
             'password' => 'password'
         ]);

@@ -19,7 +19,7 @@ class ProfileTest extends TestCase
      *
      * @return void
      */
-    public function testShow()
+    public function testProfile()
     {
         $user = User::factory()->create();
 
@@ -59,6 +59,26 @@ class ProfileTest extends TestCase
         ];
 
         $this->update($user, $data, $password);
+    }
+
+    /**
+     * 회원탈퇴 테스트
+     *
+     * @return void
+     */
+    public function testDestroy()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)
+            ->withoutMiddleware(RequirePassword::class)
+            ->delete('/dashboard/profile');
+
+        $this->assertDatabaseMissing('users', [
+            'email' => $user->email
+        ]);
+
+        $response->assertRedirect();
     }
 
     /**

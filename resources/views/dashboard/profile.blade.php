@@ -5,6 +5,7 @@
 @section('content')
     @include('dashboard.menu')
 
+    {{-- 개인정보 수정 --}}
     <form action="{{ route('dashboard.profile') }}" method="POST">
         @method('PUT')
         @csrf
@@ -17,5 +18,13 @@
         @endunless
 
         <button type="submit">개인정보 변경하기</button>
+    </form>
+
+    {{-- 회원탈퇴 --}}
+    <form action="{{ route('dashboard.profile') }}" method="POST">
+        @method('DELETE')
+        @csrf
+
+        <button type="submit">회원탈퇴</button>
     </form>
 @endsection
