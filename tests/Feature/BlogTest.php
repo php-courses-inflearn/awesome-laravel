@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class BlogTest extends TestCase
@@ -107,7 +108,7 @@ class BlogTest extends TestCase
 
         $data = [
             'name' => $this->faker->userName,
-            'display_name' => $this->faker->words(3, true)
+            'display_name' => $this->faker->unique()->words(3, true)
         ];
 
         $response = $this->actingAs($blog->user)
