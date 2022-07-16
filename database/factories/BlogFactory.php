@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Blog>
@@ -17,8 +18,10 @@ class BlogFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->unique()->userName,
-            'display_name' => fake()->unique()->words(3, true)
+            'name' => function (array $attributes) {
+                return Str::slug($attributes['display_name']);
+            },
+            'display_name' => $this->faker->unique()->words(3, true)
         ];
     }
 }

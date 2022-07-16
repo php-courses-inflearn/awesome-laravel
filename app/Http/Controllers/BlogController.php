@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBlogRequest;
+use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -42,20 +44,11 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreBlogRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreBlogRequest $request)
     {
-        $request->validate([
-            'name' => 'required|unique:blogs,name|max:255|min:4',
-            'display_name' => 'required|max:255'
-        ]);
-
-        $request->validate([
-            'name' => 'regex:/^[a-zA-Z\d\-_.]*$/'
-        ]);
-
         $user = $request->user();
 
         $user->blogs()->create(
@@ -97,21 +90,12 @@ class BlogController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\Response
+     * @param UpdateBlogRequest $request
+     * @param Blog $blog
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Blog $blog)
+    public function update(UpdateBlogRequest $request, Blog $blog)
     {
-        $request->validate([
-            'name' => 'required|unique:blogs,name|max:255|min:4',
-            'display_name' => 'required|max:255'
-        ]);
-
-        $request->validate([
-            'name' => 'regex:/^[a-zA-Z\d\-_.]*$/'
-        ]);
-
         $blog->update(
             $request->only(['name', 'display_name'])
         );
