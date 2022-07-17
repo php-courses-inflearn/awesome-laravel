@@ -49,6 +49,16 @@ class Blog extends Model
         return $this->belongsToMany(User::class)
             ->as('subscription');
     }
+
+    /**
+     * 글
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
 
 

@@ -71,7 +71,10 @@ class BlogController extends Controller
         return view('blogs.show', [
             'blog' => $blog,
             'owned' => $user->blogs()->find($blog->id),
-            'subscribed' => $blog->subscribers()->find($user->id)
+            'subscribed' => $blog->subscribers()->find($user->id),
+            'posts' => $blog->posts()
+                ->orderByDesc('created_at')
+                ->paginate(5)
         ]);
     }
 

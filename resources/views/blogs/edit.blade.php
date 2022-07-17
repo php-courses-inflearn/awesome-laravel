@@ -19,4 +19,6 @@
 
         <button type="submit">삭제</button>
     </form>
+
+    @include('blogs.edit.posts')
 @endsection
