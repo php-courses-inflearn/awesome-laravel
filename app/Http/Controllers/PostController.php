@@ -10,7 +10,7 @@ use App\Http\Requests\UpdatePostRequest;
 class PostController extends Controller
 {
     /**
-     * @return void
+     * PostController
      */
     public function __construct()
     {
@@ -67,14 +67,18 @@ class PostController extends Controller
     public function show(Post $post)
     {
         return view('blogs.posts.show', [
-            'post' => $post,
+            'post' => $post->loadCount('comments'),
             'prev' => Post::where('id', '<', $post->id)
                 ->where('blog_id', $post->blog->id)
                 ->orderByDesc('id')
                 ->first(),
             'next' => Post::where('id', '>', $post->id)
                 ->where('blog_id', $post->blog->id)
-                ->first()
+                ->first(),
+            'comments' => $post->comments()
+                ->doesntHave('parent')
+                ->with(['user', 'replies.user'])
+                ->get()
         ]);
     }
 

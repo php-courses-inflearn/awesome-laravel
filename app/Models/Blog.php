@@ -59,6 +59,17 @@ class Blog extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * 댓글
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function comments()
+    {
+        return $this->hasManyThrough(Comment::class, Post::class, secondKey: 'commentable_id')
+            ->where('commentable_type', Post::class);
+    }
 }
 
 

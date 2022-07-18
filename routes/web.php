@@ -90,6 +90,10 @@ Route::prefix('/dashboard')->group(function () {
             Route::get('/subscriptions', 'subscriptions')
                 ->name('dashboard.subscriptions');
         });
+        Route::controller(\App\Http\Controllers\Dashboard\CommentController::class)->group(function () {
+            Route::get('/comments', 'dashboard')
+                ->name('dashboard.comments');
+        });
     });
 });
 
@@ -103,4 +107,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     Route::resource('blogs.posts', \App\Http\Controllers\PostController::class)
         ->shallow();
+    Route::resource('posts.comments', \App\Http\Controllers\CommentController::class)
+        ->shallow()
+        ->only(['store', 'update', 'destroy']);
 });

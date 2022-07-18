@@ -13,6 +13,9 @@
 
     <article>{{ $post->content }}</article>
 
+    @include('blogs.posts.show.comments.form')
+    @include('blogs.posts.show.comments.list')
+
     @include('blogs.posts.show.simple-pagination')
 @endsection
 

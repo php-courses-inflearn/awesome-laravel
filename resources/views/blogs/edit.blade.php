@@ -21,4 +21,5 @@
     </form>
 
     @include('blogs.edit.posts')
+    @include('blogs.edit.comments')
 @endsection
