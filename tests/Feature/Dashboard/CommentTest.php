@@ -8,12 +8,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class BlogTest extends TestCase
+class CommentTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
-     * 블로그 대시보드 테스트
+     * 댓글 대시보드 테스트
      *
      * @return void
      */
@@ -23,8 +21,8 @@ class BlogTest extends TestCase
 
         $response = $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard/blogs');
+            ->get('/dashboard/comments');
 
-        $response->assertViewIs('dashboard.blogs');
+        $response->assertViewIs('dashboard.comments');
     }
 }
