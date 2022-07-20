@@ -16,7 +16,7 @@
                     <li><a href="{{ route('login') }}">로그인</a></li>
                     <li><a href="{{ route('register') }}">회원가입</a></li>
                 @else
-                    <li><a href="{{ route('dashboard.profile') }}">대시보드</a></li>
+                    <li><a href="{{ route('dashboard') }}">대시보드</a></li>
                     <li>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf

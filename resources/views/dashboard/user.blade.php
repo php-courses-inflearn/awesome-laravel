@@ -5,8 +5,7 @@
 @section('content')
     @include('dashboard.menu')
 
-    {{-- 개인정보 수정 --}}
-    <form action="{{ route('dashboard.profile') }}" method="POST">
+    <form action="{{ route('user.update') }}" method="POST">
         @method('PUT')
         @csrf
         <input type="text" name="name" value="{{ old('name', $user->name) }}">
@@ -20,8 +19,7 @@
         <button type="submit">개인정보 변경하기</button>
     </form>
 
-    {{-- 회원탈퇴 --}}
-    <form action="{{ route('dashboard.profile') }}" method="POST">
+    <form action="{{ route('user.destroy') }}" method="POST">
         @method('DELETE')
         @csrf
 

@@ -72,13 +72,20 @@ Route::controller(\App\Http\Controllers\Auth\PasswordConfirmController::class)->
     });
 });
 
+Route::controller(\App\Http\Controllers\UserController::class)->group(function () {
+    Route::middleware('auth')->group(function () {
+        Route::put('/user', 'update')
+            ->name('user.update');
+        Route::delete('/user', 'destroy')
+            ->name('user.destroy');
+    });
+});
+
 Route::prefix('/dashboard')->group(function () {
     Route::middleware(['auth', 'password.confirm'])->group(function () {
-        Route::controller(\App\Http\Controllers\Dashboard\ProfileController::class)->group(function () {
-            Route::get('/profile', 'dashboard')
-                ->name('dashboard.profile');
-            Route::put('/profile', 'update');
-            Route::delete('/profile', 'destroy');
+        Route::controller(\App\Http\Controllers\Dashboard\UserController::class)->group(function () {
+            Route::get('/', 'dashboard')
+                ->name('dashboard');
         });
         Route::controller(\App\Http\Controllers\Dashboard\BlogController::class)->group(function () {
             Route::get('/blogs', 'dashboard')

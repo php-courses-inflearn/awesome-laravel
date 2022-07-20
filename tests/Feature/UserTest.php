@@ -1,6 +1,6 @@
 <?php
 
-namespace Dashboard;
+namespace Tests\Feature;
 
 use App\Http\Middleware\RequirePassword;
 use App\Models\User;
@@ -10,25 +10,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class ProfileTest extends TestCase
+class UserTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
-
-    /**
-     * 사용자 정보 폼 테스트
-     *
-     * @return void
-     */
-    public function testProfile()
-    {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
-            ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard/profile');
-
-        $response->assertViewIs('dashboard.profile');
-    }
 
     /**
      * 사용자 정보 갱신 테스트
@@ -54,9 +38,9 @@ class ProfileTest extends TestCase
          */
         $password = $this->faker->password(8);
         $data = $data + [
-            'password' => $password,
-            'password_confirmation' => $password
-        ];
+                'password' => $password,
+                'password_confirmation' => $password
+            ];
 
         $this->update($user, $data, $password);
     }
@@ -72,7 +56,7 @@ class ProfileTest extends TestCase
 
         $response = $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->delete('/dashboard/profile');
+            ->delete('/user');
 
         $this->assertDatabaseMissing('users', [
             'email' => $user->email
@@ -93,13 +77,15 @@ class ProfileTest extends TestCase
     {
         $response = $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->put('/dashboard/profile', $data);
+            ->put('/user', $data);
 
         $this->assertTrue(
             Hash::check($password, $user->getAuthPassword())
         );
 
-        $this->assertDatabaseHas($user, ['name' => $data['name']]);
+        $this->assertDatabaseHas($user, [
+            'name' => $data['name']
+        ]);
 
         $response->assertRedirect();
     }
