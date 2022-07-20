@@ -57,7 +57,7 @@ class CommentTest extends TestCase
         ];
 
         $response = $this->actingAs($comment->user)
-            ->put("/comments/{$comment->commentable->id}", $data);
+            ->put("/comments/{$comment->id}", $data);
 
         $this->assertDatabaseHas('comments', $data + [
             'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id
@@ -82,7 +82,7 @@ class CommentTest extends TestCase
             ->create();
 
         $response = $this->actingAs($comment->user)
-            ->delete("/comments/{$comment->commentable->id}");
+            ->delete("/comments/{$comment->id}");
 
         $this->assertDatabaseHas('comments', [
             'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id
