@@ -139,15 +139,8 @@ class PostController extends Controller
      */
     private function attachments(Request $request, $post)
     {
-        try {
-            if ($request->hasFile('attachments')) {
-                app(AttachmentController::class)->store($request, $post);
-            }
-        } catch (HttpException $e) {
-            // report($e);
-            session()->flash('status', $e->getMessage());
-
-            return back()->withInput();
+        if ($request->hasFile('attachments')) {
+            app(AttachmentController::class)->store($request, $post);
         }
     }
 }

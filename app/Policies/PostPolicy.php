@@ -13,9 +13,9 @@ class PostPolicy
     use HandlesAuthorization;
 
     /**
-     * @var Blog
+     * @var Blog|null
      */
-    private Blog $Blog;
+    private Blog|null $Blog;
 
     /**
      * @param Request $request

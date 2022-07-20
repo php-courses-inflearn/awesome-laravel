@@ -25,10 +25,7 @@ class AttachmentController extends Controller
     public function store(Request $request, Post $post)
     {
         foreach ($request->file('attachments') as $attachment) {
-            abort_unless(
-                $attachment->storePublicly('attachments', 'public'),
-                500
-            );
+            $attachment->storePublicly('attachments', 'public');
 
             $post->attachments()->create([
                 'original_name' => $attachment->getClientOriginalName(),

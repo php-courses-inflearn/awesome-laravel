@@ -7,6 +7,8 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class PostTest extends TestCase
@@ -54,6 +56,10 @@ class PostTest extends TestCase
      */
     public function testStore()
     {
+        Storage::fake('public');
+
+        $attachment = UploadedFile::fake()->image('file.jpg');
+
         $user = User::factory()->hasBlogs(3)->create();
 
         foreach ($user->blogs as $blog) {
@@ -63,9 +69,20 @@ class PostTest extends TestCase
             ];
 
             $this->actingAs($user)
-                ->post("/blogs/{$blog->name}/posts", $data);
+                ->post("/blogs/{$blog->name}/posts", $data + [
+                    'attachments' => [
+                        $attachment
+                    ]
+                ]);
 
             $this->assertDatabaseHas('posts', $data);
+
+            $this->assertDatabaseHas('attachments', [
+                'original_name' => $attachment->getClientOriginalName(),
+                'name' => $attachment->hashName()
+            ]);
+
+            Storage::disk('public')->assertExists('attachments/' . $attachment->hashName());
         }
     }
 
