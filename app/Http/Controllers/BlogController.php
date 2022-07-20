@@ -72,9 +72,7 @@ class BlogController extends Controller
             'blog' => $blog,
             'owned' => $user->blogs()->find($blog->id),
             'subscribed' => $blog->subscribers()->find($user->id),
-            'posts' => $blog->posts()
-                ->orderByDesc('created_at')
-                ->paginate(5)
+            'posts' => $blog->posts()->latest()->paginate(5)
         ]);
     }
 

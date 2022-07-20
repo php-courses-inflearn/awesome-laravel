@@ -27,9 +27,7 @@ class PostController extends Controller
     public function index(Blog $blog)
     {
         return view('blogs.posts.index', [
-            'posts' => $blog->posts()
-                ->orderByDesc('created_at')
-                ->paginate()
+            'posts' => $blog->posts()->latest()->paginate()
         ]);
     }
 
