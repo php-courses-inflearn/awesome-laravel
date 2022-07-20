@@ -6,6 +6,8 @@ use App\Models\Blog;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PostController extends Controller
 {
@@ -54,6 +56,8 @@ class PostController extends Controller
         $post = $blog->posts()->create(
             $request->only('title', 'content')
         );
+
+        $this->attachments($request, $post);
 
         return to_route('posts.show', $post->id);
     }
@@ -108,6 +112,8 @@ class PostController extends Controller
             $request->only(['title', 'content'])
         );
 
+        $this->attachments($request, $post);
+
         return to_route('posts.show', $post->id);
     }
 
@@ -122,5 +128,26 @@ class PostController extends Controller
         $post->delete();
 
         return to_route('blogs.posts.index', $post->blog->name);
+    }
+
+    /**
+     * 파일 업로드
+     *
+     * @param Request $request
+     * @param $post
+     * @return void
+     */
+    private function attachments(Request $request, $post)
+    {
+        try {
+            if ($request->hasFile('attachments')) {
+                app(AttachmentController::class)->store($request, $post);
+            }
+        } catch (HttpException $e) {
+            // report($e);
+            session()->flash('status', $e->getMessage());
+
+            return back()->withInput();
+        }
     }
 }

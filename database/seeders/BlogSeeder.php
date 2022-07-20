@@ -23,6 +23,10 @@ class BlogSeeder extends Seeder
                 factory: $subscribers,
                 relationship: 'subscribers'
             )->create();
+
+            //Blog::factory()->for($user)->create()
+            //    ->subscribers()
+            //    ->sync($subscribers);
         });
     }
 }

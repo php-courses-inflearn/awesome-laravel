@@ -40,4 +40,14 @@ class Post extends Model
         return $this->morphMany(Comment::class, 'commentable')
             ->withTrashed();
     }
+
+    /**
+     * 첨부파일
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }
 }

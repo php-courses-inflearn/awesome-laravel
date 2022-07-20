@@ -17,7 +17,10 @@ class PostSeeder extends Seeder
     public function run()
     {
         Blog::all()->each(function (Blog $blog) {
-            Post::factory(3)->for($blog)->create();
+            Post::factory(3)
+                ->for($blog)
+                ->hasAttachments()
+                ->create();
         });
     }
 }

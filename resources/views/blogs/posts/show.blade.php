@@ -13,6 +13,8 @@
 
     <article>{{ $post->content }}</article>
 
+    @include('blogs.posts.show.attachments')
+
     @include('blogs.posts.show.comments.form')
     @include('blogs.posts.show.comments.list')
 

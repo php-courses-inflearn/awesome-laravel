@@ -110,4 +110,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('posts.comments', \App\Http\Controllers\CommentController::class)
         ->shallow()
         ->only(['store', 'update', 'destroy']);
+    Route::resource('posts.attachments', \App\Http\Controllers\AttachmentController::class)
+        ->shallow()
+        ->only(['store', 'destroy']);
 });
