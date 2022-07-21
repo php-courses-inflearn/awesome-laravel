@@ -2,11 +2,17 @@
 
 namespace Tests\Feature;
 
+use App\Events\Subscribed;
 use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
+use App\Mail\Subscribed as SubscribedMailable;
+use App\Notifications\Subscribed as SubscribedNotification;
 
 class SubscribeTest extends TestCase
 {
@@ -19,18 +25,25 @@ class SubscribeTest extends TestCase
      */
     public function testSubscribe()
     {
+        //Mail::fake();
+        //Notification::fake();
+        Event::fake();
+
         $user = User::factory()->create();
         $blog = Blog::factory()->forUser()->create();
 
-        $response = $this->actingAs($user)
-            ->post("/subscribe/{$blog->name}");
+        $this->actingAs($user)
+            ->post("/subscribe/{$blog->name}")
+            ->assertRedirect();
 
         $this->assertDatabaseHas('blog_user', [
             'user_id' => $user->id,
             'blog_id' => $blog->id
         ]);
 
-        $response->assertRedirect();
+        Event::assertDispatched(Subscribed::class);
+        //Notification::assertSentTo($blog->user, SubscribedNotification::class);
+        //Mail::assertQueued(SubscribedMailable::class);
     }
 
     /**
@@ -47,14 +60,13 @@ class SubscribeTest extends TestCase
             ->hasAttached(factory: $user, relationship: 'subscribers')
             ->create();
 
-        $response = $this->actingAs($user)
-            ->delete("/unsubscribe/{$blog->name}");
+        $this->actingAs($user)
+            ->delete("/unsubscribe/{$blog->name}")
+            ->assertRedirect();
 
         $this->assertDatabaseMissing('blog_user', [
             'user_id' => $user->id,
             'blog_id' => $blog->id
         ]);
-
-        $response->assertRedirect();
     }
 }

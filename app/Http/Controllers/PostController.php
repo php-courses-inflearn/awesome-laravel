@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Published;
 use App\Models\Blog;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
@@ -56,6 +57,8 @@ class PostController extends Controller
         );
 
         $this->attachments($request, $post);
+
+        event(new Published($blog->subscribers, $post));
 
         return to_route('posts.show', $post->id);
     }

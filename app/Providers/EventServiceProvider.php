@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\Published;
+use App\Events\Subscribed;
+use App\Listeners\SendPublishingNotification;
+use App\Listeners\SendSubscriptionNotification;
 use App\Models\Post;
 use App\Observers\PostObserver;
 use Illuminate\Auth\Events\Registered;
@@ -19,6 +23,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        Subscribed::class => [
+            SendSubscriptionNotification::class
+        ],
+        Published::class => [
+            SendPublishingNotification::class
+        ]
     ];
 
     /**

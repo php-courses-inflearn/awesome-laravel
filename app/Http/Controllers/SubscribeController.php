@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Subscribed;
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Subscribed as SubscribedMailable;
+use App\Notifications\Subscribed as SubscribedNotification;
 
 class SubscribeController extends Controller
 {
@@ -19,6 +23,17 @@ class SubscribeController extends Controller
         $user = $request->user();
 
         $blog->subscribers()->attach($user->id);
+
+        // 이메일 전송
+        //Mail::to($blog->user)
+        //    ->send(
+        //        (new SubscribedMailable($user, $blog))
+        //            ->onQueue('emails')
+        //    );
+        // 알림
+        //$blog->user->notify(new SubscribedNotification($user, $blog));
+        // 이벤트
+        event(new Subscribed($user, $blog));
 
         return back();
     }
