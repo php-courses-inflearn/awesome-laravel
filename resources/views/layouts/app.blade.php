@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>라라벨 - @yield('title')</title>
+
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
 
     <body>
