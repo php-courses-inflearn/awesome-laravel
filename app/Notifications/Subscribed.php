@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\AnonymousNotifiable;
@@ -35,7 +36,7 @@ class Subscribed extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'broadcast'];
     }
 
     /**
@@ -68,6 +69,19 @@ class Subscribed extends Notification implements ShouldQueue
     }
 
     /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return BroadcastMessage
+     */
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'user' => $this->user,
+        ]);
+    }
+
+    /**
      * Determine which queues should be used for each notification channel.
      *
      * @return array
@@ -76,6 +90,7 @@ class Subscribed extends Notification implements ShouldQueue
     {
         return [
             'mail' => 'emails',
+            'broadcast' => 'broadcasts',
         ];
     }
 }

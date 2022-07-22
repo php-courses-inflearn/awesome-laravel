@@ -42,5 +42,21 @@
         @endif
 
         <main>@yield('content')</main>
+
+        @auth
+            <script type="module">
+                const id = "{{ auth()->user()->id }}"
+
+                Echo.private(`App.Models.User.${id}`)
+                    .notification(n => {
+                        switch (n.type) {
+                            case 'App\\Notifications\\Subscribed':
+                                return console.log(n.user)
+                            case 'App\\Notifications\\Published':
+                                return console.log(n.post)
+                        }
+                    })
+            </script>
+        @endauth
     </body>
 </html>
