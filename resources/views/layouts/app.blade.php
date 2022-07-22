@@ -14,6 +14,13 @@
         <nav>
             <ul>
                 <li><a href="{{ route('home') }}">홈</a></li>
+                <li>
+                    <form action="{{ route('search') }}" method="GET">
+                        <input type="search" name="query" placeholder="search...">
+
+                        <button type="submit">검색</button>
+                    </form>
+                </li>
                 @guest
                     <li><a href="{{ route('login') }}">로그인</a></li>
                     <li><a href="{{ route('register') }}">회원가입</a></li>
