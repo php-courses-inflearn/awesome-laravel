@@ -25,6 +25,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+
+        $schedule->command('mail:send --queue=emails')
+            ->weeklyOn(Schedule::MONDAY, '8:00');
     }
 
     /**
