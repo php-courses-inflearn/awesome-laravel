@@ -73,7 +73,6 @@ Route::controller(\App\Http\Controllers\Auth\PasswordConfirmController::class)->
         Route::post('/confirm-password', 'confirm');
     });
 });
-
 Route::controller(\App\Http\Controllers\UserController::class)->group(function () {
     Route::middleware('auth')->group(function () {
         Route::put('/user', 'update')
@@ -81,6 +80,10 @@ Route::controller(\App\Http\Controllers\UserController::class)->group(function (
         Route::delete('/user', 'destroy')
             ->name('user.destroy');
     });
+});
+Route::middleware('auth')->group(function () {
+    Route::resource('tokens', \App\Http\Controllers\Auth\TokenController::class)
+        ->only(['create', 'store', 'destroy']);
 });
 
 Route::prefix('/dashboard')->group(function () {
@@ -102,6 +105,10 @@ Route::prefix('/dashboard')->group(function () {
         Route::controller(\App\Http\Controllers\Dashboard\CommentController::class)->group(function () {
             Route::get('/comments', 'dashboard')
                 ->name('dashboard.comments');
+        });
+        Route::controller(\App\Http\Controllers\Dashboard\TokenController::class)->group(function () {
+            Route::get('/tokens', 'dashboard')
+                ->name('dashboard.tokens');
         });
     });
 });
