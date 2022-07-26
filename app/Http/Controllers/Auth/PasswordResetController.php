@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\SendResetLinkRequest;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rules\Password as PasswordRule;
 
 class PasswordResetController extends Controller
 {
@@ -25,15 +26,11 @@ class PasswordResetController extends Controller
     /**
      * 비밀번호 재설정 이메일 전송
      *
-     * @param Request $request
+     * @param SendResetLinkRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function email(Request $request)
+    public function email(SendResetLinkRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email|exists:users|max:255'
-        ]);
-
         $status = Password::sendResetLink($request->only('email'));
 
         return $status === Password::RESET_LINK_SENT
@@ -57,21 +54,11 @@ class PasswordResetController extends Controller
     /**
      * 비밀번호 재설정
      *
-     * @param Request $request
+     * @param ResetPasswordRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request)
+    public function update(ResetPasswordRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email|exists:users|max:255',
-            'password' => 'required|confirmed|max:255',
-            'token' => 'required'
-        ]);
-
-        $request->validate([
-            'password' => [PasswordRule::defaults()]
-        ]);
-
         $credentials = $request->only(
             'email',
             'password',
