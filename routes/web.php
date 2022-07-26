@@ -113,7 +113,7 @@ Route::prefix('/dashboard')->group(function () {
     });
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('blogs', \App\Http\Controllers\BlogController::class);
     Route::controller(\App\Http\Controllers\SubscribeController::class)->group(function () {
         Route::post('subscribe/{blog}', 'subscribe')

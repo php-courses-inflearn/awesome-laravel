@@ -33,7 +33,7 @@ class PostPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->tokenCan('post:read');
     }
 
     /**
@@ -45,7 +45,7 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        return true;
+        return $user->tokenCan('post:read');
     }
 
     /**
@@ -56,7 +56,8 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        return $user->id === $this->blog->user_id;
+        return $user->id === $this->blog->user_id &&
+            $user->tokenCan('post:create');
     }
 
     /**
@@ -68,7 +69,8 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        return $user->id === $post->blog->user_id;
+        return $user->id === $post->blog->user_id &&
+            $user->tokenCan('post:update');
     }
 
     /**
@@ -80,30 +82,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post)
     {
-        return $user->id === $post->blog->user_id;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, Post $post)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, Post $post)
-    {
-        //
+        return $user->id === $post->blog->user_id &&
+            $user->tokenCan('post:delete');
     }
 }

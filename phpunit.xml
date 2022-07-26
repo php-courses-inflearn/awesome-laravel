@@ -17,6 +17,9 @@
         <testsuite name="Dashboard">
             <directory suffix="Test.php">./tests/Feature/Dashboard</directory>
         </testsuite>
+        <testsuite name="Api">
+            <directory suffix="Test.php">./tests/Feature/Api</directory>
+        </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>

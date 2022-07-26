@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -15,7 +16,7 @@ class PostController extends Controller
     /**
      * PostController
      */
-    public function __construct()
+    public function __construct(private readonly PostService $postService)
     {
         $this->authorizeResource(Post::class, 'post');
     }
@@ -52,13 +53,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request, Blog $blog)
     {
-        $post = $blog->posts()->create(
-            $request->only('title', 'content')
-        );
-
-        $this->attachments($request, $post);
-
-        event(new Published($blog->subscribers, $post));
+        $post = $this->postService->store($request, $blog);
 
         return to_route('posts.show', $post->id);
     }
@@ -109,11 +104,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        $post->update(
-            $request->only(['title', 'content'])
-        );
-
-        $this->attachments($request, $post);
+        $this->postService->update($request, $post);
 
         return to_route('posts.show', $post->id);
     }
@@ -126,22 +117,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->delete();
+        $this->postService->destroy($post);
 
         return to_route('blogs.posts.index', $post->blog->name);
-    }
-
-    /**
-     * 파일 업로드
-     *
-     * @param Request $request
-     * @param $post
-     * @return void
-     */
-    private function attachments(Request $request, $post)
-    {
-        if ($request->hasFile('attachments')) {
-            app(AttachmentController::class)->store($request, $post);
-        }
     }
 }
