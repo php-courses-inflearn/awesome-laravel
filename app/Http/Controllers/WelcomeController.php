@@ -55,27 +55,6 @@ class WelcomeController extends Controller
                 return $a['created_at']->lessThan($b['created_at']);
             });
     }
-
-//    /**
-//     * 페이지네이션
-//     *
-//     * @param Collection $items
-//     * @param int $total
-//     * @param int $perPage
-//     * @param int $currentPage
-//     * @param array $options
-//     * @return \Illuminate\Contracts\Foundation\Application|mixed
-//     */
-//    private function paginate(Collection $items, int $total, int $perPage, int $currentPage, array $options = [])
-//    {
-//        return app(LengthAwarePaginator::class, [
-//            'items' => $items->forPage($currentPage, $perPage),
-//            'total' => $total,
-//            'perPage' => $perPage,
-//            'currentPage' => $currentPage,
-//            'options' => $options,
-//        ]);
-//    }
 }
 
 

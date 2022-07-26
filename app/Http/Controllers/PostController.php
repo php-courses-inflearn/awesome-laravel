@@ -68,13 +68,6 @@ class PostController extends Controller
     {
         return view('blogs.posts.show', [
             'post' => $post->loadCount('comments'),
-            'prev' => Post::where('id', '<', $post->id)
-                ->where('blog_id', $post->blog->id)
-                ->orderByDesc('id')
-                ->first(),
-            'next' => Post::where('id', '>', $post->id)
-                ->where('blog_id', $post->blog->id)
-                ->first(),
             'comments' => $post->comments()
                 ->doesntHave('parent')
                 ->with(['user', 'replies.user'])

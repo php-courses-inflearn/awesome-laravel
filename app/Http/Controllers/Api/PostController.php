@@ -26,7 +26,9 @@ class PostController extends Controller
      */
     public function index(Blog $blog)
     {
-        return $blog->posts()->latest()->paginate(5);
+        return $blog->posts()
+            ->latest()
+            ->paginate(5);
     }
 
     /**

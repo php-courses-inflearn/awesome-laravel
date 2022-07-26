@@ -38,23 +38,6 @@ class RegisterController extends Controller
             'password' => 'required|max:255'
         ]);
 
-        // 비밀번호 유효성 검사 (정규식)
-        //$request->validate([
-        //    'password' => 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
-        //]);
-        // 비밀번호 유효성 검사 (사용자 정의 규칙)
-        //$request->validate([
-        //    'password' => [new PasswordRule()]
-        //]);
-        // 비밀번호 유효성 검사 (Password)
-        //$request->validate([
-        //    'password' => Password::min(8)
-        //        ->letters()
-        //        ->mixedCase()
-        //        ->numbers()
-        //        ->symbols(),
-        //    // 'password' => Password::min(8)->rules([new PasswordRule()])
-        //]);
         $request->validate([
             'password' => [Password::defaults()]
         ]);

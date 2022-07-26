@@ -24,15 +24,6 @@ class SubscribeController extends Controller
 
         $blog->subscribers()->attach($user->id);
 
-        // 이메일 전송
-        //Mail::to($blog->user)
-        //    ->send(
-        //        (new SubscribedMailable($user, $blog))
-        //            ->onQueue('emails')
-        //    );
-        // 알림
-        //$blog->user->notify(new SubscribedNotification($user, $blog));
-        // 이벤트
         event(new Subscribed($user, $blog));
 
         return back();
