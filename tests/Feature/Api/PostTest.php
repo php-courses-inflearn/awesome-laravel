@@ -26,7 +26,7 @@ class PostTest extends TestCase
         [$user, $token] = $this->userWithToken(TokenAbility::POST_READ);
 
         $this->withToken($token)
-            ->getJson("/api/blogs/{$user->blogs[0]->name}/posts")
+            ->getJson("/api/blogs/{$user->blogs()->first()->name}/posts")
             ->assertOk()
             ->assertJson(function (AssertableJson $json) {
                 $json->hasAll([
@@ -42,14 +42,14 @@ class PostTest extends TestCase
                     'per_page',
                     'prev_page_url',
                     'to',
-                    'total']);
-                $json->has('data', 3, function (AssertableJson $json) {
-                   $json->hasAll(['id', 'title', 'content', 'blog_id'])
-                       ->etc();
-                });
-                $json->whereAllType([
+                    'total'
+                ])
+                ->whereAllType([
                     'data' => 'array', 'links' => 'array'
-                ]);
+                ])
+                ->has('data', 3, function (AssertableJson $json) {
+                    $json->hasAll(['id', 'title', 'content', 'blog_id'])->etc();
+                });
             });
     }
 
@@ -72,7 +72,7 @@ class PostTest extends TestCase
         ];
 
         $this->withToken($token)
-            ->postJson("/api/blogs/{$user->blogs[0]->name}/posts", $data + [
+            ->postJson("/api/blogs/{$user->blogs()->first()->name}/posts", $data + [
                 'attachments' => [
                     $attachment
                 ]
@@ -96,13 +96,12 @@ class PostTest extends TestCase
     {
         [$user, $token] = $this->userWithToken(TokenAbility::POST_READ);
 
-        foreach ($user->blogs[0]->posts as $post) {
+        foreach ($user->blogs()->first()->posts as $post) {
             $this->withToken($token)
                 ->getJson("/api/posts/{$post->id}")
                 ->assertOk()
                 ->assertJson(function (AssertableJson $json) {
-                    $json->hasAll(['id', 'title', 'content', 'blog_id'])
-                        ->etc();
+                    $json->hasAll(['id', 'title', 'content', 'blog_id'])->etc();
                 });
         }
     }
@@ -116,7 +115,7 @@ class PostTest extends TestCase
     {
         [$user, $token] = $this->userWithToken(TokenAbility::POST_UPDATE);
 
-        foreach ($user->blogs[0]->posts as $post) {
+        foreach ($user->blogs()->first()->posts as $post) {
             $data = [
                 'title' => $this->faker->text(50),
                 'content' => $this->faker->text
@@ -137,7 +136,7 @@ class PostTest extends TestCase
     {
         [$user, $token] = $this->userWithToken(TokenAbility::POST_DELETE);
 
-        foreach ($user->blogs[0]->posts as $post) {
+        foreach ($user->blogs()->first()->posts as $post) {
             $this->withToken($token)
                 ->deleteJson("/api/posts/{$post->id}")
                 ->assertNoContent();
@@ -151,9 +150,7 @@ class PostTest extends TestCase
     private function userWithToken(TokenAbility $ability)
     {
         $user = User::factory()
-            ->has(
-                Blog::factory()->hasPosts(3)
-            )
+            ->has(Blog::factory()->hasPosts(3))
             ->create();
 
         $token = $user->createToken(

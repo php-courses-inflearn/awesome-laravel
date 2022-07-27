@@ -19,10 +19,9 @@ class TokenTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard/tokens');
-
-        $response->assertViewIs('dashboard.tokens');
+            ->get('/dashboard/tokens')
+            ->assertViewIs('dashboard.tokens');
     }
 }

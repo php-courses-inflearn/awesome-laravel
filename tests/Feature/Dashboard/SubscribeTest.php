@@ -21,11 +21,10 @@ class SubscribeTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard/subscribers');
-
-        $response->assertViewIs('dashboard.subscribers');
+            ->get('/dashboard/subscribers')
+            ->assertViewIs('dashboard.subscribers');
     }
 
     /**
@@ -37,10 +36,9 @@ class SubscribeTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard/subscriptions');
-
-        $response->assertViewIs('dashboard.subscriptions');
+            ->get('/dashboard/subscriptions')
+            ->assertViewIs('dashboard.subscriptions');
     }
 }

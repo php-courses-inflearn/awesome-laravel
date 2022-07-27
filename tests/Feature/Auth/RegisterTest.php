@@ -19,9 +19,8 @@ class RegisterTest extends TestCase
      */
     public function testShowRegistrationForm()
     {
-        $response = $this->get('/register');
-
-        $response->assertViewIs('auth.register');
+        $this->get('/register')
+            ->assertViewIs('auth.register');
     }
 
     /**
@@ -41,6 +40,10 @@ class RegisterTest extends TestCase
             'password' => 'password'
         ]);
 
+        $response->assertRedirect(
+            route('verification.notice')
+        );
+
         $this->assertDatabaseHas('users', [
             'email' => $email
         ]);
@@ -48,9 +51,5 @@ class RegisterTest extends TestCase
         $this->assertAuthenticated();
 
         Event::assertDispatched(Registered::class);
-
-        $response->assertRedirect(
-            route('verification.notice')
-        );
     }
 }

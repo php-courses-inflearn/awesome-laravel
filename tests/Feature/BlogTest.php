@@ -24,10 +24,9 @@ class BlogTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
-            ->get('/blogs');
-
-        $response->assertViewIs('blogs.index');
+        $this->actingAs($user)
+            ->get('/blogs')
+            ->assertViewIs('blogs.index');
     }
 
     /**
@@ -39,10 +38,9 @@ class BlogTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
-            ->get('/blogs/create');
-
-        $response->assertViewIs('blogs.create');
+        $this->actingAs($user)
+            ->get('/blogs/create')
+            ->assertViewIs('blogs.create');
     }
 
     /**
@@ -59,12 +57,11 @@ class BlogTest extends TestCase
             'display_name' => $this->faker->words(3, true)
         ];
 
-        $response = $this->actingAs($user)
-            ->post('/blogs', $data);
+        $this->actingAs($user)
+            ->post('/blogs', $data)
+            ->assertRedirect();
 
         $this->assertDatabaseHas('blogs', $data);
-
-        $response->assertRedirect();
     }
 
     /**
@@ -76,10 +73,9 @@ class BlogTest extends TestCase
     {
         $blog = Blog::factory()->forUser()->create();
 
-        $response = $this->actingAs($blog->user)
-            ->get("/blogs/{$blog->name}");
-
-        $response->assertViewIs('blogs.show');
+        $this->actingAs($blog->user)
+            ->get("/blogs/{$blog->name}")
+            ->assertViewIs('blogs.show');
     }
 
     /**
@@ -91,10 +87,9 @@ class BlogTest extends TestCase
     {
         $blog = Blog::factory()->forUser()->create();
 
-        $response = $this->actingAs($blog->user)
-            ->get("/blogs/{$blog->name}/edit");
-
-        $response->assertViewIs('blogs.edit');
+        $this->actingAs($blog->user)
+            ->get("/blogs/{$blog->name}/edit")
+            ->assertViewIs('blogs.edit');
     }
 
     /**
@@ -111,12 +106,11 @@ class BlogTest extends TestCase
             'display_name' => $this->faker->unique()->words(3, true)
         ];
 
-        $response = $this->actingAs($blog->user)
-            ->put("/blogs/{$blog->name}", $data);
+        $this->actingAs($blog->user)
+            ->put("/blogs/{$blog->name}", $data)
+            ->assertRedirect();
 
         $this->assertDatabaseHas('blogs', $data);
-
-        $response->assertRedirect();
     }
 
     /**
@@ -128,13 +122,12 @@ class BlogTest extends TestCase
     {
         $blog = Blog::factory()->forUser()->create();
 
-        $response = $this->actingAs($blog->user)
-            ->delete("/blogs/{$blog->name}");
+        $this->actingAs($blog->user)
+            ->delete("/blogs/{$blog->name}")
+            ->assertRedirect();
 
         $this->assertDatabaseMissing('blogs', [
             'name' => $blog->name
         ]);
-
-        $response->assertRedirect();
     }
 }

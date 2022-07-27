@@ -23,10 +23,9 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard');
-
-        $response->assertViewIs('dashboard.user');
+            ->get('/dashboard')
+            ->assertViewIs('dashboard.user');
     }
 }

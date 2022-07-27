@@ -21,10 +21,9 @@ class BlogTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard/blogs');
-
-        $response->assertViewIs('dashboard.blogs');
+            ->get('/dashboard/blogs')
+            ->assertViewIs('dashboard.blogs');
     }
 }

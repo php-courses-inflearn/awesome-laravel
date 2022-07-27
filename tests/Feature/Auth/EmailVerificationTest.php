@@ -27,13 +27,12 @@ class EmailVerificationTest extends TestCase
         $id = $user->id;
         $hash = sha1($user->email);
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->withoutMiddleware(ValidateSignature::class)
-            ->get("/email/verify/{$id}/{$hash}");
+            ->get("/email/verify/{$id}/{$hash}")
+            ->assertRedirect();
 
         $this->assertTrue($user->hasVerifiedEmail());
-
-        $response->assertRedirect();
     }
 
     /**
@@ -43,10 +42,9 @@ class EmailVerificationTest extends TestCase
      */
     public function testNotice()
     {
-        $response = $this->withoutMiddleware(Authenticate::class)
-            ->get('/email/verify');
-
-        $response->assertViewIs('auth.verify-email');
+        $this->withoutMiddleware(Authenticate::class)
+            ->get('/email/verify')
+            ->assertViewIs('auth.verify-email');
     }
 
     /**
@@ -60,12 +58,11 @@ class EmailVerificationTest extends TestCase
 
         $user = User::factory()->unverified()->create();
 
-        $response = $this->actingAs($user)
-            ->post('/email/verification-notification');
+        $this->actingAs($user)
+            ->post('/email/verification-notification')
+            ->assertRedirect();
 
         Notification::assertSentTo(
             [$user], VerifyEmail::class);
-
-        $response->assertRedirect();
     }
 }

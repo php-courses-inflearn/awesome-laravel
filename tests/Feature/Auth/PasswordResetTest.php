@@ -27,9 +27,8 @@ class PasswordResetTest extends TestCase
      */
     public function testRequest()
     {
-        $response = $this->get('/forgot-password');
-
-        $response->assertViewIs('auth.forgot-password');
+        $this->get('/forgot-password')
+            ->assertViewIs('auth.forgot-password');
     }
 
     /**
@@ -86,9 +85,8 @@ class PasswordResetTest extends TestCase
     {
         [, $token] = $credentials;
 
-        $response = $this->get("/reset-password/{$token}");
-
-        $response->assertViewIs('auth.reset-password');
+        $this->get("/reset-password/{$token}")
+            ->assertViewIs('auth.reset-password');
     }
 
     /**

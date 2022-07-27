@@ -19,10 +19,9 @@ class CommentTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard/comments');
-
-        $response->assertViewIs('dashboard.comments');
+            ->get('/dashboard/comments')
+            ->assertViewIs('dashboard.comments');
     }
 }

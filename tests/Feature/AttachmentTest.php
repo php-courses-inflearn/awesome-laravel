@@ -33,7 +33,8 @@ class AttachmentTest extends TestCase
                 'attachments' => [
                     $attachment
                 ]
-            ]);
+            ])
+            ->assertSuccessful();
 
         $this->assertDatabaseHas('attachments', [
             'original_name' => $attachment->getClientOriginalName(),
@@ -65,13 +66,14 @@ class AttachmentTest extends TestCase
             )
             ->create();
 
-        $response = $this->actingAs($post->blog->user)
-            ->delete("/attachments/{$post->attachments[0]->id}");
+        $id = $post->attachments()->first()->id;
+
+        $this->actingAs($post->blog->user)
+            ->delete("/attachments/{$id}")
+            ->assertRedirect();
 
         $this->assertDatabaseMissing('attachments', [
-            'id' => $post->attachments[0]->id
+            'id' => $id
         ]);
-
-        $response->assertRedirect();
     }
 }

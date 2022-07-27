@@ -27,10 +27,9 @@ class PostTest extends TestCase
         $user = User::factory()->hasBlogs(3)->create();
 
         foreach ($user->blogs as $blog) {
-            $response = $this->actingAs($user)
-                ->get("/blogs/{$blog->name}/posts");
-
-            $response->assertViewIs('blogs.posts.index');
+            $this->actingAs($user)
+                ->get("/blogs/{$blog->name}/posts")
+                ->assertViewIs('blogs.posts.index');
         }
     }
 
@@ -44,10 +43,9 @@ class PostTest extends TestCase
         $user = User::factory()->hasBlogs(3)->create();
 
         foreach ($user->blogs as $blog) {
-            $response = $this->actingAs($user)
-                ->get("/blogs/{$blog->name}/posts/create");
-
-            $response->assertViewIs('blogs.posts.create');
+            $this->actingAs($user)
+                ->get("/blogs/{$blog->name}/posts/create")
+                ->assertViewIs('blogs.posts.create');
         }
     }
 
@@ -76,7 +74,8 @@ class PostTest extends TestCase
                     'attachments' => [
                         $attachment
                     ]
-                ]);
+                ])
+                ->assertRedirect();
 
             $this->assertDatabaseHas('posts', $data);
 
@@ -100,10 +99,9 @@ class PostTest extends TestCase
     {
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
-        $response = $this->actingAs($post->blog->user)
-            ->get("/posts/{$post->id}");
-
-        $response->assertViewIs('blogs.posts.show');
+        $this->actingAs($post->blog->user)
+            ->get("/posts/{$post->id}")
+            ->assertViewIs('blogs.posts.show');
     }
 
     /**
@@ -115,10 +113,9 @@ class PostTest extends TestCase
     {
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
-        $response = $this->actingAs($post->blog->user)
-            ->get("/posts/{$post->id}/edit");
-
-        $response->assertViewIs('blogs.posts.edit');
+        $this->actingAs($post->blog->user)
+            ->get("/posts/{$post->id}/edit")
+            ->assertViewIs('blogs.posts.edit');
     }
 
     /**
@@ -135,12 +132,11 @@ class PostTest extends TestCase
             'content' => $this->faker->text
         ];
 
-        $response = $this->actingAs($post->blog->user)
-            ->put("/posts/{$post->id}", $data);
+        $this->actingAs($post->blog->user)
+            ->put("/posts/{$post->id}", $data)
+            ->assertRedirect();
 
         $this->assertDatabaseHas('posts', $data);
-
-        $response->assertRedirect();
     }
 
     /**
@@ -152,13 +148,12 @@ class PostTest extends TestCase
     {
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
-        $response = $this->actingAs($post->blog->user)
-            ->delete("/posts/{$post->id}");
+        $this->actingAs($post->blog->user)
+            ->delete("/posts/{$post->id}")
+            ->assertRedirect();
 
         $this->assertDatabaseMissing('posts', [
             'id' => $post->id
         ]);
-
-        $response->assertRedirect();
     }
 }

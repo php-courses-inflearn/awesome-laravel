@@ -30,9 +30,8 @@ class WelcomeTest extends TestCase
             relationship: 'subscriptions'
         )->create();
 
-        $response = $this->actingAs($user)
-            ->get('/');
-
-        $response->assertViewIs('welcome');
+        $this->actingAs($user)
+            ->get('/')
+            ->assertViewIs('welcome');
     }
 }

@@ -18,9 +18,8 @@ class LoginTest extends TestCase
      */
     public function testShowLoginForm()
     {
-        $response = $this->get('/login');
-
-        $response->assertViewIs('auth.login');
+        $this->get('/login')
+            ->assertViewIs('auth.login');
     }
 
     /**
@@ -67,11 +66,10 @@ class LoginTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
-            ->post('/logout');
+        $this->actingAs($user)
+            ->post('/logout')
+            ->assertRedirect();
 
         $this->assertGuest();
-
-        $response->assertRedirect();
     }
 }

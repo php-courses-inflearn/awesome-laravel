@@ -54,15 +54,14 @@ class UserTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->delete('/user');
+            ->delete('/user')
+            ->assertRedirect();
 
         $this->assertDatabaseMissing('users', [
             'email' => $user->email
         ]);
-
-        $response->assertRedirect();
     }
 
     /**
@@ -75,9 +74,10 @@ class UserTest extends TestCase
      */
     private function update(Authenticatable $user, array $data, string $password)
     {
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->put('/user', $data);
+            ->put('/user', $data)
+            ->assertRedirect();
 
         $this->assertTrue(
             Hash::check($password, $user->getAuthPassword())
@@ -86,7 +86,5 @@ class UserTest extends TestCase
         $this->assertDatabaseHas($user, [
             'name' => $data['name']
         ]);
-
-        $response->assertRedirect();
     }
 }

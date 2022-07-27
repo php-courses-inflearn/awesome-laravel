@@ -21,9 +21,8 @@ class GithubLoginTest extends TestCase
      */
     public function testRedirect()
     {
-        $response = $this->get('/login/github');
-
-        $response->assertRedirectContains('https://github.com/login/oauth/authorize');
+        $this->get('/login/github')
+            ->assertRedirectContains('https://github.com/login/oauth/authorize');
     }
 
     /**
@@ -46,7 +45,8 @@ class GithubLoginTest extends TestCase
         Socialite::shouldReceive('driver->user')
             ->andReturn($githubUser);
 
-        $response = $this->get("/login/github/callback");
+        $this->get("/login/github/callback")
+            ->assertRedirect();
 
         $this->assertAuthenticated();
 
@@ -57,7 +57,5 @@ class GithubLoginTest extends TestCase
             'provider_token' => $githubUser->token,
             'provider_refresh_token' => $githubUser->refreshToken
         ]);
-
-        $response->assertRedirect();
     }
 }
