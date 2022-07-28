@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Castables\Link;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +21,15 @@ class Attachment extends Model
     protected $fillable = [
         'original_name',
         'name'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'link' => Link::class
     ];
 
     /**
@@ -77,20 +87,6 @@ class Attachment extends Model
     {
         return Attribute::make(
             get: fn () => join('/', ['attachments', $this->name])
-        );
-    }
-
-    /**
-     * 다운로드 링크
-     *
-     * @return Attribute
-     */
-    public function link(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->external
-                ? $this->name
-                : Storage::disk('public')->url($this->path)
         );
     }
 }
