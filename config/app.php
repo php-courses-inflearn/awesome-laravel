@@ -198,7 +198,8 @@ return [
         App\Providers\TelescopeServiceProvider::class,
 
         App\Providers\PasswordServiceProvider::class,
-        App\Providers\PaginateServiceProvider::class
+        App\Providers\PaginateServiceProvider::class,
+        App\Providers\HttpClientServiceProvider::class,
 
     ],
 
