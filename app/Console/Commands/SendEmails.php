@@ -45,7 +45,7 @@ class SendEmails extends Command
      */
     private function users()
     {
-        return User::all();
+        return User::verified()->get();
     }
 
     /**

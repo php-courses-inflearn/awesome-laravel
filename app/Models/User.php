@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\VerifiedScope;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,6 +48,27 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Perform any actions required after the model boots.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        // static::addGlobalScope(new VerifiedScope());
+    }
+
+    /**
+     * 이메일이 인증된 사용자만
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeVerified(Builder $query, ...$params)
+    {
+        return $query->whereNotNull('email_verified_at');
+    }
 
     /**
      * 서비스 제공자
