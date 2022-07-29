@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\PostCollection;
+use App\Http\Resources\PostResource;
 use App\Models\Blog;
 use App\Models\Post;
 use App\Services\PostService;
@@ -26,9 +28,13 @@ class PostController extends Controller
      */
     public function index(Blog $blog)
     {
-        return $blog->posts()
+         $posts = $blog->posts()
             ->latest()
-            ->paginate(5);
+            ->get();
+            //->paginate(5);
+
+        // return $posts;
+        return new PostCollection($posts);
     }
 
     /**
@@ -41,7 +47,9 @@ class PostController extends Controller
     {
         $post = $this->postService->store($request, $blog);
 
-        return response()->json($post, 201);
+        return (new PostResource($post))
+                ->response()
+                ->setStatusCode(201);
     }
 
     /**
@@ -52,7 +60,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return $post;
+        return new PostResource($post);
     }
 
     /**
