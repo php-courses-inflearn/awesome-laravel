@@ -20,6 +20,9 @@
         <testsuite name="Api">
             <directory suffix="Test.php">./tests/Feature/Api</directory>
         </testsuite>
+        <testsuite name="Console">
+            <directory suffix="Test.php">./tests/Feature/Console</directory>
+        </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
