@@ -26,7 +26,9 @@ class AttachmentTest extends TestCase
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()
+            ->for(Blog::factory()->forUser())
+            ->create();
 
         $this->actingAs($post->blog->user)
             ->post("/posts/{$post->id}/attachments", [

@@ -21,7 +21,9 @@ class CommentTest extends TestCase
      */
     public function testStore()
     {
-        $user = User::factory()->has(Blog::factory()->hasPosts(3))->create();
+        $user = User::factory()
+            ->has(Blog::factory()->hasPosts(3))
+            ->create();
 
         $data = [
             'content' => $this->faker->text
@@ -44,8 +46,7 @@ class CommentTest extends TestCase
              */
             $this->actingAs($user)
                 ->post("/posts/{$post->id}/comments", [
-                    'parent_id' => $post->comments()->first()->id,
-                    'content' => $this->faker->text,
+                    'parent_id' => $post->comments()->first()->id, 'content' => $this->faker->text,
                 ])
                 ->assertRedirect();
 

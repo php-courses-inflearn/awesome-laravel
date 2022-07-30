@@ -12,9 +12,8 @@ if (! function_exists('etag')) {
      * @param Model $model
      * @param string $etag
      * @param array $ifNoneMatch
-     * @param \Closure(Model|array|string|JsonResource): mixed $content
-     * @return mixed
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @param Closure $callback
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     function etag(Model $model, string $etag, array $ifNoneMatch, Closure $callback)
     {

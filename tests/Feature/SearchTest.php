@@ -19,14 +19,9 @@ class SearchTest extends TestCase
      */
     public function testSearch()
     {
-        $data = [
-            'title' => $this->faker->text(50),
-            'content' => $this->faker->text
-        ];
-
         $post = Post::factory()
             ->for(Blog::factory()->forUser())
-            ->create($data);
+            ->create();
 
         $query = $post->title;
 

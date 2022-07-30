@@ -20,8 +20,8 @@ class WelcomeTest extends TestCase
      */
     public function testWelome()
     {
-        $response = $this->get('/');
-        $response->assertViewIs('welcome');
+        $this->get('/')
+            ->assertViewIs('welcome');
 
         $user = User::factory()->hasAttached(
             factory: Blog::factory(2)
