@@ -58,6 +58,27 @@ class LoginTest extends TestCase
     }
 
     /**
+     * Ajax 로그인 테스트
+     *
+     * @return void
+     */
+    public function testLoginWithAjax()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->postJson('/login', [
+            'email' => $user->email,
+            'password' => 'password'
+        ], [
+            'X-Requested-With' => 'XMLHttpRequest'
+        ]);
+
+        $this->assertAuthenticated();
+
+        $response->assertOk();
+    }
+
+    /**
      * 로그아웃 테스트
      *
      * @return void

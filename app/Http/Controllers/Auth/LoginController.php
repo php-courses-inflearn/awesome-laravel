@@ -34,6 +34,10 @@ class LoginController extends Controller
             ]);
         }
 
+        if ($request->ajax()) {
+            return response()->json('', 200);
+        }
+
         return redirect()->intended();
     }
 
