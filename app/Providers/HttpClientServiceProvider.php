@@ -29,7 +29,8 @@ class HttpClientServiceProvider extends ServiceProvider
 
             return Http::withToken($token)
                 ->withHeaders([
-                    'Content-Type' => 'application/json'
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json'
                 ])
                 ->baseUrl($baseUrl);
         });

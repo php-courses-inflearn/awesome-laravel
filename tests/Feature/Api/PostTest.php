@@ -29,27 +29,10 @@ class PostTest extends TestCase
             ->getJson("/api/blogs/{$user->blogs()->first()->name}/posts")
             ->assertOk()
             ->assertJson(function (AssertableJson $json) {
-                $json->hasAll([
-                    'current_page',
-                    'data',
-                    'first_page_url',
-                    'from',
-                    'last_page',
-                    'last_page_url',
-                    'links',
-                    'next_page_url',
-                    'path',
-                    'per_page',
-                    'prev_page_url',
-                    'to',
-                    'total'
-                ])
-                ->whereAllType([
-                    'data' => 'array', 'links' => 'array'
-                ])
-                ->has('data', 3, function (AssertableJson $json) {
-                    $json->hasAll(['id', 'title', 'content', 'blog_id'])->etc();
-                });
+                $json->whereType('data', 'array')
+                    ->has('data', 3, function (AssertableJson $json) {
+                        $json->hasAll(['id', 'title', 'content'])->etc();
+                    });
             });
     }
 
@@ -79,9 +62,11 @@ class PostTest extends TestCase
             ])
             ->assertCreated()
             ->assertJson(function (AssertableJson $json) use ($data) {
-                $json->whereAll($data)
-                    ->hasAll(['id', 'title', 'content', 'blog_id'])
-                    ->etc();
+                $json->has('data', function (AssertableJson $json) use ($data) {
+                    $json->whereAll($data)
+                        ->hasAll(['id', 'title', 'content'])
+                        ->etc();
+                });
             });
 
         Storage::disk('public')->assertExists('attachments/' . $attachment->hashName());
@@ -97,12 +82,30 @@ class PostTest extends TestCase
         [$user, $token] = $this->userWithToken(TokenAbility::POST_READ);
 
         foreach ($user->blogs()->first()->posts as $post) {
+            $etag = sha1($post->updated_at);
+
+            /**
+             * Etag 가 없을 때
+             */
             $this->withToken($token)
                 ->getJson("/api/posts/{$post->id}")
                 ->assertOk()
                 ->assertJson(function (AssertableJson $json) {
-                    $json->hasAll(['id', 'title', 'content', 'blog_id'])->etc();
-                });
+                    $json->has('data', function (AssertableJson $json) {
+                        $json->hasAll(['id', 'title', 'content'])
+                            ->etc();
+                    });
+                })
+                ->assertHeader('Etag', "\"{$etag}\"");
+
+            /**
+             * Etag
+             */
+            $this->withToken($token)
+                ->getJson("/api/posts/{$post->id}", [
+                    'If-None-Match' => $etag
+                ])
+                ->assertStatus(304);
         }
     }
 

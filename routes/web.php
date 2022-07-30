@@ -33,6 +33,7 @@ Route::controller(\App\Http\Controllers\Auth\EmailVerificationController::class)
                 ->middleware('signed')
                 ->name('verify');
             Route::post('/verification-notification', 'send')
+                ->middleware('throttle:6,1')
                 ->name('send');
         });
     });

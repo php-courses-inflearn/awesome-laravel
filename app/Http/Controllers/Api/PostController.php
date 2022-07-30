@@ -10,6 +10,8 @@ use App\Http\Resources\PostResource;
 use App\Models\Blog;
 use App\Models\Post;
 use App\Services\PostService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
@@ -33,7 +35,7 @@ class PostController extends Controller
             ->get();
             //->paginate(5);
 
-        // return $posts;
+        //return $posts;
         return new PostCollection($posts);
     }
 
@@ -58,9 +60,12 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Request $request, Post $post)
     {
-        return new PostResource($post);
+        $etag = sha1($post->updated_at);
+        $ifNoneMatch = $request->getETags();
+
+        return etag($post, $etag, $ifNoneMatch, fn () => new PostResource($post));
     }
 
     /**
