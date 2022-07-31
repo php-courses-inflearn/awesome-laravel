@@ -103,7 +103,7 @@ class PostTest extends TestCase
              */
             $this->withToken($token)
                 ->getJson("/api/posts/{$post->id}", [
-                    'If-None-Match' => $etag
+                    'If-None-Match' => "\"{$etag}\""
                 ])
                 ->assertStatus(304);
         }

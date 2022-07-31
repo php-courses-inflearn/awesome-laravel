@@ -22,7 +22,7 @@ if (! function_exists('etag')) {
         $key = $model->getKey();
 
         if ($taggedCache->has($key) && $cachedEtag = $taggedCache->get($key)) {
-            if ($etag === $cachedEtag && in_array($etag, $ifNoneMatch)) {
+            if ($etag === $cachedEtag && in_array("\"{$etag}\"", $ifNoneMatch)) {
                 return Response::make('', 304);
             }
         }
