@@ -22,7 +22,7 @@ class EmailVerificationTest extends TestCase
      */
     public function testVerify()
     {
-        $user = User::factory()->unverified()->create();
+        $user = $this->user();
 
         $id = $user->id;
         $hash = sha1($user->email);
@@ -56,7 +56,7 @@ class EmailVerificationTest extends TestCase
     {
         Notification::fake();
 
-        $user = User::factory()->unverified()->create();
+        $user = $this->user();
 
         $this->actingAs($user)
             ->post('/email/verification-notification')
@@ -64,5 +64,17 @@ class EmailVerificationTest extends TestCase
 
         Notification::assertSentTo(
             [$user], VerifyEmail::class);
+    }
+
+    /**
+     * User
+     *
+     * @return mixed
+     */
+    private function user()
+    {
+        $factory = User::factory()->unverified();
+
+        return $factory->create();
     }
 }

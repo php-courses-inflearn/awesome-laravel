@@ -29,24 +29,8 @@ class LoginTest extends TestCase
      */
     public function testLogin()
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
-        /**
-         * 로그인 실패
-         */
-        $response = $this->post('/login', [
-            'email' => $user->email,
-            'password' => $this->faker->password(8)
-        ]);
-
-        $this->assertGuest();
-
-        $response->assertRedirect();
-        $response->assertSessionHasErrors('failed');
-
-        /**
-         * 로그인
-         */
         $response = $this->post('/login', [
             'email' => $user->email,
             'password' => 'password'
@@ -58,13 +42,33 @@ class LoginTest extends TestCase
     }
 
     /**
+     * 로그인 실패 테스트
+     *
+     * @return void
+     */
+    public function testLoginFailed()
+    {
+        $user = $this->user();
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => $this->faker->password(8)
+        ]);
+
+        $this->assertGuest();
+
+        $response->assertRedirect();
+        $response->assertSessionHasErrors('failed');
+    }
+
+    /**
      * Ajax 로그인 테스트
      *
      * @return void
      */
     public function testLoginWithAjax()
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
         $response = $this->postJson('/login', [
             'email' => $user->email,
@@ -85,12 +89,24 @@ class LoginTest extends TestCase
      */
     public function testLogout()
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
         $this->actingAs($user)
             ->post('/logout')
             ->assertRedirect();
 
         $this->assertGuest();
+    }
+
+    /**
+     * User
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function user()
+    {
+        $factory = User::factory();
+
+        return $factory->create();
     }
 }

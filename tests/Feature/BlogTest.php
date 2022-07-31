@@ -22,7 +22,7 @@ class BlogTest extends TestCase
      */
     public function testIndex()
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
         $this->actingAs($user)
             ->get('/blogs')
@@ -36,7 +36,7 @@ class BlogTest extends TestCase
      */
     public function testCreate()
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
         $this->actingAs($user)
             ->get('/blogs/create')
@@ -50,7 +50,7 @@ class BlogTest extends TestCase
      */
     public function testStore()
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
         $data = [
             'name' => $this->faker->userName,
@@ -71,9 +71,10 @@ class BlogTest extends TestCase
      */
     public function testShow()
     {
-        $blog = Blog::factory()->forUser()->create();
+        $user = $this->user();
+        $blog = $this->blog();
 
-        $this->actingAs($blog->user)
+        $this->actingAs($user)
             ->get("/blogs/{$blog->name}")
             ->assertViewIs('blogs.show');
     }
@@ -85,7 +86,7 @@ class BlogTest extends TestCase
      */
     public function testEdit()
     {
-        $blog = Blog::factory()->forUser()->create();
+        $blog = $this->blog();
 
         $this->actingAs($blog->user)
             ->get("/blogs/{$blog->name}/edit")
@@ -99,7 +100,7 @@ class BlogTest extends TestCase
      */
     public function testUpdate()
     {
-        $blog = Blog::factory()->forUser()->create();
+        $blog = $this->blog();
 
         $data = [
             'name' => $this->faker->userName,
@@ -120,7 +121,7 @@ class BlogTest extends TestCase
      */
     public function testDestroy()
     {
-        $blog = Blog::factory()->forUser()->create();
+        $blog = $this->blog();
 
         $this->actingAs($blog->user)
             ->delete("/blogs/{$blog->name}")
@@ -129,5 +130,29 @@ class BlogTest extends TestCase
         $this->assertDatabaseMissing('blogs', [
             'name' => $blog->name
         ]);
+    }
+
+    /**
+     * User
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function user()
+    {
+        $factory = User::factory();
+
+        return $factory->create();
+    }
+
+    /**
+     * Blog
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function blog()
+    {
+        $factory = Blog::factory()->forUser();
+
+        return $factory->create();
     }
 }

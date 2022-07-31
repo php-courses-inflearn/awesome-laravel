@@ -26,9 +26,7 @@ class AttachmentTest extends TestCase
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        $post = Post::factory()
-            ->for(Blog::factory()->forUser())
-            ->create();
+        $post = $this->article();
 
         $this->actingAs($post->blog->user)
             ->post("/posts/{$post->id}/attachments", [
@@ -57,25 +55,40 @@ class AttachmentTest extends TestCase
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        $post = Post::factory()
-            ->for(Blog::factory()->forUser())
-            ->has(
+        $post = $this->article($attachment);
+
+        foreach ($post->attachments as $attachment) {
+            $this->actingAs($post->blog->user)
+                ->delete("/attachments/{$attachment->id}")
+                ->assertRedirect();
+
+            $this->assertDatabaseMissing('attachments', [
+                'id' => $attachment->id
+            ]);
+        }
+    }
+
+    /**
+     * Article
+     *
+     * @param UploadedFile $hasAttachment
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function article(UploadedFile $attachment = null)
+    {
+        $factory = Post::factory()
+            ->for(Blog::factory()->forUser());
+
+        if ($attachment) {
+            $factory = $factory->has(
                 Attachment::factory()
                     ->state([
                         'original_name' => $attachment->getClientOriginalName(),
                         'name' => $attachment->hashName()
                     ])
-            )
-            ->create();
+            );
+        }
 
-        $id = $post->attachments()->first()->id;
-
-        $this->actingAs($post->blog->user)
-            ->delete("/attachments/{$id}")
-            ->assertRedirect();
-
-        $this->assertDatabaseMissing('attachments', [
-            'id' => $id
-        ]);
+        return $factory->create();
     }
 }

@@ -21,33 +21,17 @@ class CommentTest extends TestCase
      */
     public function testStore()
     {
-        $user = User::factory()
-            ->has(Blog::factory()->hasPosts(3))
-            ->create();
+        $blog = $this->blog();
 
-        $data = [
-            'content' => $this->faker->text
-        ];
+        foreach ($blog->posts as $post) {
+            $data = [
+                'content' => $this->faker->text
+            ];
 
-        foreach ($user->blogs()->first()->posts as $post) {
-            /**
-             * 부모 댓글 생성
-             */
+            $user = $this->user();
+
             $this->actingAs($user)
                 ->post("/posts/{$post->id}/comments", $data)
-                ->assertRedirect();
-
-            $this->assertDatabaseHas('comments', $data + [
-                'commentable_type' => Post::class, 'commentable_id' => $post->id
-            ]);
-
-            /**
-             * 자식 댓글 생성
-             */
-            $this->actingAs($user)
-                ->post("/posts/{$post->id}/comments", [
-                    'parent_id' => $post->comments()->first()->id, 'content' => $this->faker->text,
-                ])
                 ->assertRedirect();
 
             $this->assertDatabaseHas('comments', $data + [
@@ -57,19 +41,38 @@ class CommentTest extends TestCase
     }
 
     /**
+     * 자식 댓글 생성 테스트
+     *
+     * @return void
+     */
+    public function testStoreChildComment()
+    {
+        $comment = $this->comment();
+        $user = $this->user();
+
+        $data = [
+            'content' => $this->faker->text
+        ];
+
+        $this->actingAs($user)
+            ->post("/posts/{$comment->commentable->id}/comments", [
+                'parent_id' => $comment->id, 'content' => $data['content']
+            ])
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('comments', $data + [
+            'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id
+        ]);
+    }
+
+    /**
      * 댓글 수정 테스트
      *
      * @return void
      */
     public function testUpdate()
     {
-        $comment = Comment::factory()
-            ->forUser()
-            ->for(
-                Post::factory()->for(
-                    Blog::factory()->forUser()
-                ), 'commentable')
-            ->create();
+        $comment = $this->comment();
 
         $data = [
             'content' => $this->faker->text
@@ -91,13 +94,7 @@ class CommentTest extends TestCase
      */
     public function testDestroy()
     {
-        $comment = Comment::factory()
-            ->forUser()
-            ->for(
-                Post::factory()->for(
-                    Blog::factory()->forUser()
-                ), 'commentable')
-            ->create();
+        $comment = $this->comment();
 
         $this->actingAs($comment->user)
             ->delete("/comments/{$comment->id}")
@@ -106,5 +103,50 @@ class CommentTest extends TestCase
         $this->assertDatabaseHas('comments', [
             'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id
         ]);
+    }
+
+    /**
+     * User
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function blog()
+    {
+        $factory = Blog::factory()
+            ->forUser()
+            ->hasPosts(3);
+
+        return $factory->create();
+    }
+
+    /**
+     * User
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function user()
+    {
+        $factory = User::factory();
+
+        return $factory->create();
+    }
+
+    /**
+     * Comment
+     *
+     * @return mixed
+     */
+    private function comment()
+    {
+        $factory = Comment::factory()
+            ->forUser()
+            ->for(
+                Post::factory()->for(
+                    Blog::factory()->forUser()
+                ),
+                'commentable'
+            );
+
+        return $factory->create();
     }
 }

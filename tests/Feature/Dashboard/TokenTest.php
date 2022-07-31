@@ -17,11 +17,23 @@ class TokenTest extends TestCase
      */
     public function testDashboard()
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
             ->get('/dashboard/tokens')
             ->assertViewIs('dashboard.tokens');
+    }
+
+    /**
+     * User
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function user()
+    {
+        $factory = User::factory();
+
+        return $factory->create();
     }
 }

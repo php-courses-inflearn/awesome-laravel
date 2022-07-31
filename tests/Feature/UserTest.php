@@ -17,25 +17,32 @@ class UserTest extends TestCase
     /**
      * 사용자 정보 갱신 테스트
      *
-     * @param User $user
      * @return void
      */
     public function testUpdate()
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
         $data = [
             'name' => $this->faker->name
         ];
 
-        /**
-         * 비밀번호 변경 요청 제외
-         */
         $this->update($user, $data, 'password');
+    }
 
-        /**
-         * 비밀번호 변경 요청
-         */
+    /**
+     * 사용자 정보 갱신 (비밀번호) 테스트
+     *
+     * @return void
+     */
+    public function testUpdateWithPassword()
+    {
+        $user = $this->user();
+
+        $data = [
+            'name' => $this->faker->name
+        ];
+
         $password = $this->faker->password(8);
         $data = $data + [
                 'password' => $password,
@@ -52,7 +59,7 @@ class UserTest extends TestCase
      */
     public function testDestroy()
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
@@ -86,5 +93,17 @@ class UserTest extends TestCase
         $this->assertDatabaseHas($user, [
             'name' => $data['name']
         ]);
+    }
+
+    /**
+     * User
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function user()
+    {
+        $factory = User::factory();
+
+        return $factory->create();
     }
 }

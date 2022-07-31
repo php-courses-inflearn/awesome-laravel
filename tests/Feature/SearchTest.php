@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class SearchTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use RefreshDatabase;
 
     /**
      * A basic feature test example.
@@ -19,9 +19,7 @@ class SearchTest extends TestCase
      */
     public function testSearch()
     {
-        $post = Post::factory()
-            ->for(Blog::factory()->forUser())
-            ->create();
+        $post = $this->article();
 
         $query = $post->title;
 
@@ -29,5 +27,18 @@ class SearchTest extends TestCase
             ->assertOk()
             ->assertViewIs('search')
             ->assertSeeText($post->title);
+    }
+
+    /**
+     * Article
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function article()
+    {
+        $factory = Post::factory()
+            ->for(Blog::factory()->forUser());
+
+        return $factory->create();
     }
 }

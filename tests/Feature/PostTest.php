@@ -24,7 +24,7 @@ class PostTest extends TestCase
      */
     public function testIndex()
     {
-        $user = User::factory()->hasBlogs(3)->create();
+        $user = $this->user();
 
         foreach ($user->blogs as $blog) {
             $this->actingAs($user)
@@ -40,7 +40,7 @@ class PostTest extends TestCase
      */
     public function testCreate()
     {
-        $user = User::factory()->hasBlogs(3)->create();
+        $user = $this->user();;
 
         foreach ($user->blogs as $blog) {
             $this->actingAs($user)
@@ -61,7 +61,7 @@ class PostTest extends TestCase
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        $user = User::factory()->hasBlogs(3)->create();
+        $user = $this->user();
 
         foreach ($user->blogs as $blog) {
             $data = [
@@ -97,7 +97,7 @@ class PostTest extends TestCase
      */
     public function testShow()
     {
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = $this->article();
 
         $this->actingAs($post->blog->user)
             ->get("/posts/{$post->id}")
@@ -111,7 +111,7 @@ class PostTest extends TestCase
      */
     public function testEdit()
     {
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = $this->article();
 
         $this->actingAs($post->blog->user)
             ->get("/posts/{$post->id}/edit")
@@ -125,7 +125,7 @@ class PostTest extends TestCase
      */
     public function testUpdate()
     {
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = $this->article();
 
         $data = [
             'title' => $this->faker->text(50),
@@ -146,7 +146,7 @@ class PostTest extends TestCase
      */
     public function testDestroy()
     {
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = $this->article();
 
         $this->actingAs($post->blog->user)
             ->delete("/posts/{$post->id}")
@@ -155,5 +155,30 @@ class PostTest extends TestCase
         $this->assertDatabaseMissing('posts', [
             'id' => $post->id
         ]);
+    }
+
+    /**
+     * User
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function user()
+    {
+        $factory = User::factory()->hasBlogs(3);
+
+        return $factory->create();
+    }
+
+    /**
+     * Article
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function article()
+    {
+        $factory = Post::factory()
+            ->for(Blog::factory()->forUser());
+
+        return $factory->create();
     }
 }

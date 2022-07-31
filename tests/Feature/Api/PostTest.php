@@ -23,10 +23,11 @@ class PostTest extends TestCase
      */
     public function testIndex()
     {
-        [$user, $token] = $this->userWithToken(TokenAbility::POST_READ);
+        $blog = $this->blog();
+        $token = $this->token($blog, TokenAbility::POST_READ);
 
         $this->withToken($token)
-            ->getJson("/api/blogs/{$user->blogs()->first()->name}/posts")
+            ->getJson("/api/blogs/{$blog->name}/posts")
             ->assertOk()
             ->assertJson(function (AssertableJson $json) {
                 $json->whereType('data', 'array')
@@ -47,7 +48,8 @@ class PostTest extends TestCase
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        [$user, $token] = $this->userWithToken(TokenAbility::POST_CREATE);
+        $blog = $this->blog();
+        $token = $this->token($blog, TokenAbility::POST_CREATE);
 
         $data = [
             'title' => $this->faker->text(50),
@@ -55,7 +57,7 @@ class PostTest extends TestCase
         ];
 
         $this->withToken($token)
-            ->postJson("/api/blogs/{$user->blogs()->first()->name}/posts", $data + [
+            ->postJson("/api/blogs/{$blog->name}/posts", $data + [
                 'attachments' => [
                     $attachment
                 ]
@@ -79,14 +81,12 @@ class PostTest extends TestCase
      */
     public function testShow()
     {
-        [$user, $token] = $this->userWithToken(TokenAbility::POST_READ);
+        $blog = $this->blog();
+        $token = $this->token($blog, TokenAbility::POST_READ);
 
-        foreach ($user->blogs()->first()->posts as $post) {
+        foreach ($blog->posts as $post) {
             $etag = sha1($post->updated_at);
 
-            /**
-             * Etag 가 없을 때
-             */
             $this->withToken($token)
                 ->getJson("/api/posts/{$post->id}")
                 ->assertOk()
@@ -116,9 +116,10 @@ class PostTest extends TestCase
      */
     public function testUpdate()
     {
-        [$user, $token] = $this->userWithToken(TokenAbility::POST_UPDATE);
+        $blog = $this->blog();
+        $token = $this->token($blog, TokenAbility::POST_UPDATE);
 
-        foreach ($user->blogs()->first()->posts as $post) {
+        foreach ($blog->posts as $post) {
             $data = [
                 'title' => $this->faker->text(50),
                 'content' => $this->faker->text
@@ -137,9 +138,10 @@ class PostTest extends TestCase
      */
     public function testDestroy()
     {
-        [$user, $token] = $this->userWithToken(TokenAbility::POST_DELETE);
+        $blog = $this->blog();
+        $token = $this->token($blog, TokenAbility::POST_DELETE);
 
-        foreach ($user->blogs()->first()->posts as $post) {
+        foreach ($blog->posts as $post) {
             $this->withToken($token)
                 ->deleteJson("/api/posts/{$post->id}")
                 ->assertNoContent();
@@ -147,19 +149,29 @@ class PostTest extends TestCase
     }
 
     /**
-     * @param TokenAbility $ability
-     * @return array
+     * @return mixed
      */
-    private function userWithToken(TokenAbility $ability)
+    private function blog()
     {
-        $user = User::factory()
-            ->has(Blog::factory()->hasPosts(3))
-            ->create();
+        $factory = Blog::factory()
+            ->forUser()
+            ->hasPosts(3);
 
-        $token = $user->createToken(
+        return $factory->create();
+    }
+
+    /**
+     * @param Blog $blog
+     * @param TokenAbility $ability
+     *
+     * @return string
+     */
+    private function token(Blog $blog, TokenAbility $ability)
+    {
+        $token = $blog->user->createToken(
             $this->faker->word, [$ability->value]
         );
 
-        return [$user, $token->plainTextToken];
+        return $token->plainTextToken;
     }
 }

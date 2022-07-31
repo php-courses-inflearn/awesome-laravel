@@ -19,7 +19,7 @@ class TokenTest extends TestCase
      */
     public function testCreate()
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
         $this->actingAs($user)
             ->get('/tokens/create')
@@ -33,13 +33,13 @@ class TokenTest extends TestCase
      */
     public function testStore()
     {
-        $user = User::factory()->create();
-
-        $name = $this->faker->word;
+        $user = $this->user();
 
         $abilities = $this->faker->randomElements(
             collect(TokenAbility::cases())->pluck('value')->toArray()
         );
+
+        $name = $this->faker->word;
 
         $this->actingAs($user)
             ->post('/tokens', [
@@ -61,19 +61,31 @@ class TokenTest extends TestCase
      */
     public function testDestroy()
     {
-        $name = $this->faker->word;
+        $user = $this->user();
 
-        $user = User::factory()->create();
+        $name = $this->faker->word;
         $user->createToken($name);
 
-        $token = $user->tokens()->first();
+        foreach ($user->tokens as $token) {
+            $this->actingAs($user)
+                ->delete("/tokens/{$token->id}")
+                ->assertRedirect();
 
-        $this->actingAs($user)
-            ->delete("/tokens/{$token->id}")
-            ->assertRedirect();
+            $this->assertDatabaseMissing('personal_access_tokens', [
+                'name' => $name
+            ]);
+        }
+    }
 
-        $this->assertDatabaseMissing('personal_access_tokens', [
-            'name' => $name
-        ]);
+    /**
+     * User
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function user()
+    {
+        $factory = User::factory();
+
+        return $factory->create();
     }
 }

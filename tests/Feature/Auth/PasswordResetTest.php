@@ -39,23 +39,7 @@ class PasswordResetTest extends TestCase
     public function testEmail()
     {
         Notification::fake();
-        Mail::fake();
 
-        /**
-         * 이메일 보내기 실패
-         */
-        $response = $this->post('/forgot-password', [
-            'email' => $this->faker->safeEmail
-        ]);
-
-        Mail::assertNothingSent();
-
-        $response->assertRedirect();
-        $response->assertSessionHasErrors('email');
-
-        /**
-         * 이메일 보내기
-         */
         $user = User::factory()->create();
 
         $response = $this->post('/forgot-password', [
@@ -74,6 +58,25 @@ class PasswordResetTest extends TestCase
         $token = Password::createToken($user);
 
         return [$user, $token];
+    }
+
+    /**
+     * 비밀번호 재설정 이메일 전송 실패 테스트
+     *
+     * @return void
+     */
+    public function testEmailFailed()
+    {
+        Mail::fake();
+
+        $response = $this->post('/forgot-password', [
+            'email' => $this->faker->safeEmail
+        ]);
+
+        Mail::assertNothingSent();
+
+        $response->assertRedirect();
+        $response->assertSessionHasErrors('email');
     }
 
     /**
@@ -98,23 +101,6 @@ class PasswordResetTest extends TestCase
     {
         Event::fake();
 
-        /**
-         * 비밀번호 재설정 실패
-         */
-        $response = $this->post('/reset-password', [
-            'email' => $this->faker->safeEmail,
-            'password' => 'password',
-            'password_confirmation' => 'password',
-            'token' => Str::random()
-        ]);
-
-        Event::assertNotDispatched(PasswordReset::class);
-
-        $response->assertRedirect();
-
-        /**
-         * 비밀번호 재설정
-         */
         [$user, $token] = $credentials;
 
         $response = $this->post('/reset-password', [
@@ -127,6 +113,27 @@ class PasswordResetTest extends TestCase
         $user->delete();
 
         Event::assertDispatched(PasswordReset::class);
+
+        $response->assertRedirect();
+    }
+
+    /**
+     * 비밀번호 재설정 실패 테스트
+     *
+     * @return void
+     */
+    public function testUpdateFailed()
+    {
+        Event::fake();
+
+        $response = $this->post('/reset-password', [
+            'email' => $this->faker->safeEmail,
+            'password' => 'password',
+            'password_confirmation' => 'password',
+            'token' => Str::random()
+        ]);
+
+        Event::assertNotDispatched(PasswordReset::class);
 
         $response->assertRedirect();
     }

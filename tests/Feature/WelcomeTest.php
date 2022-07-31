@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Http\Middleware\RequirePassword;
 use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,20 +17,40 @@ class WelcomeTest extends TestCase
      *
      * @return void
      */
-    public function testWelome()
+    public function testWelcome()
     {
         $this->get('/')
             ->assertViewIs('welcome');
+    }
 
-        $user = User::factory()->hasAttached(
-            factory: Blog::factory(2)
-                ->forUser()
-                ->hasPosts(5),
-            relationship: 'subscriptions'
-        )->create();
+    /**
+     * 피드 (인증) 테스트
+     *
+     * @return void
+     */
+    public function testWelcomeAuthenticated()
+    {
+        $user = $this->user();
 
         $this->actingAs($user)
             ->get('/')
             ->assertViewIs('welcome');
+    }
+
+    /**
+     * User
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function user()
+    {
+        $factory = User::factory()->hasAttached(
+            factory: Blog::factory(2)
+                ->forUser()
+                ->hasPosts(5),
+            relationship: 'subscriptions'
+        );
+
+        return $factory->create();
     }
 }

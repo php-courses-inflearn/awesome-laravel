@@ -29,11 +29,25 @@ class PasswordConfirmTest extends TestCase
      */
     public function testConfirm()
     {
-        $user = User::factory()->create();
+        $user = $this->user();
 
-        /**
-         * 비밀번호 확인 실패
-         */
+        $response = $this->actingAs($user)
+            ->post('/confirm-password', [
+                'password' => 'password'
+            ]);
+
+        $response->assertRedirect();
+    }
+
+    /**
+     * 비밀번호 확인 실패 테스트
+     *
+     * @return void
+     */
+    public function testConfirmFailed()
+    {
+        $user = $this->user();
+
         $response = $this->actingAs($user)
             ->post('/confirm-password', [
                 'password' => $this->faker->password(8)
@@ -41,14 +55,17 @@ class PasswordConfirmTest extends TestCase
 
         $response->assertRedirect();
         $response->assertSessionHasErrors('password');
+    }
 
-        /**
-         * 비밀번호 확인
-         */
-        $response = $this->post('/confirm-password', [
-            'password' => 'password'
-        ]);
+    /**
+     * User
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function user()
+    {
+        $factory = User::factory();
 
-        $response->assertRedirect();
+        return $factory->create();
     }
 }

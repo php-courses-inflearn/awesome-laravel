@@ -5,8 +5,10 @@ namespace Tests\Feature;
 use App\Events\Subscribed;
 use App\Models\Blog;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
@@ -29,8 +31,8 @@ class SubscribeTest extends TestCase
         //Notification::fake();
         Event::fake();
 
-        $user = User::factory()->create();
-        $blog = Blog::factory()->forUser()->create();
+        $user = $this->user();
+        $blog = $this->blog();
 
         $this->actingAs($user)
             ->post("/subscribe/{$blog->name}")
@@ -53,12 +55,8 @@ class SubscribeTest extends TestCase
      */
     public function testUnsubscribe()
     {
-        $user = User::factory()->create();
-
-        $blog = Blog::factory()
-            ->forUser()
-            ->hasAttached(factory: $user, relationship: 'subscribers')
-            ->create();
+        $user = $this->user();
+        $blog = $this->blog($user);
 
         $this->actingAs($user)
             ->delete("/unsubscribe/{$blog->name}")
@@ -68,5 +66,36 @@ class SubscribeTest extends TestCase
             'user_id' => $user->id,
             'blog_id' => $blog->id
         ]);
+    }
+
+    /**
+     * User
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    private function user()
+    {
+        $factory = User::factory();
+
+        return $factory->create();
+    }
+
+    /**
+     * Blog
+     *
+     * @param User|Collection|null $subscribers
+     * @return mixed
+     */
+    private function blog(User|Collection $subscribers = null)
+    {
+        $factory = Blog::factory()->forUser();
+
+        if ($subscribers) {
+            $factory = $factory->hasAttached(
+                factory: $subscribers, relationship: 'subscribers'
+            );
+        }
+
+        return $factory->create();
     }
 }
