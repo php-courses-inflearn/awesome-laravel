@@ -11,6 +11,8 @@ use Tests\TestCase;
 
 class SendEmailsTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * mail:send 테스트
      *

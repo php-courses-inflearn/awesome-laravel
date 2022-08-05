@@ -10,6 +10,8 @@ use Tests\TestCase;
 
 class TokenTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * 토큰 대시보드 테스트
      *

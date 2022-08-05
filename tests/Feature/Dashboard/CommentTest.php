@@ -10,6 +10,8 @@ use Tests\TestCase;
 
 class CommentTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * 댓글 대시보드 테스트
      *
