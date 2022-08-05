@@ -21,8 +21,8 @@ class LoginController extends Controller
     /**
      * 로그인
      *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param LoginRequest $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function login(LoginRequest $request)
     {
@@ -53,6 +53,6 @@ class LoginController extends Controller
         session()->invalidate();
         session()->regenerateToken();
 
-        return to_route('home');
+        return redirect()->to('/');
     }
 }

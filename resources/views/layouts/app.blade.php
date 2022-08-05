@@ -13,7 +13,7 @@
     <body>
         <nav>
             <ul>
-                <li><a href="{{ route('home') }}">홈</a></li>
+                <li><a href="{{ url('/') }}">홈</a></li>
                 <li>
                     <form action="{{ route('search') }}" method="GET">
                         <input type="search" name="query" placeholder="search...">

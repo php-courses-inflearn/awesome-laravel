@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Http\Middleware\RequirePassword;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -62,7 +61,6 @@ class UserTest extends TestCase
         $user = $this->user();
 
         $this->actingAs($user)
-            ->withoutMiddleware(RequirePassword::class)
             ->delete('/user')
             ->assertRedirect();
 
@@ -82,7 +80,6 @@ class UserTest extends TestCase
     private function update(Authenticatable $user, array $data, string $password)
     {
         $this->actingAs($user)
-            ->withoutMiddleware(RequirePassword::class)
             ->put('/user', $data)
             ->assertRedirect();
 

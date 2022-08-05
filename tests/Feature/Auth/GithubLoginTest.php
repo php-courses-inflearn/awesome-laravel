@@ -43,10 +43,12 @@ class GithubLoginTest extends TestCase
         $githubUser->refreshToken = null;
 
         Socialite::shouldReceive('driver->user')
+            ->once()
             ->andReturn($githubUser);
 
         $this->get("/login/github/callback")
-            ->assertRedirect();
+            ->assertRedirect()
+            ->assertSessionHas('Socialite');
 
         $this->assertAuthenticated();
 

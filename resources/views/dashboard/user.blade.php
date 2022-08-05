@@ -11,10 +11,10 @@
         <input type="text" name="name" value="{{ old('name', $user->name) }}">
         <input type="email" name="email" value="{{ $user->email }}" readonly disabled>
 
-        @unless($user->provider)
+        @if(session()->missing('Socialite'))
             <input type="password" name="password">
             <input type="password" name="password_confirmation">
-        @endunless
+        @endif
 
         <button type="submit">개인정보 변경하기</button>
     </form>

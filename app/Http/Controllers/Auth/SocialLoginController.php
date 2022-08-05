@@ -40,6 +40,8 @@ class SocialLoginController extends Controller
 
         auth()->login($user);
 
+        session()->put('Socialite', $this->provider->name);
+
         return redirect()->intended();
     }
 
@@ -51,15 +53,15 @@ class SocialLoginController extends Controller
      */
     protected function register(SocialiteUser $socialUser)
     {
-        $user = Provider::find($this->provider)->users()
-            ->updateOrCreate([
-                'email' => $socialUser->email
-            ], [
-                'name' => $socialUser->name,
-                'provider_uid' => $socialUser->id,
-                'provider_token' => $socialUser?->token,
-                'provider_refresh_token' => $socialUser?->refreshToken
-            ]);
+        $user = User::updateOrCreate([
+            'email' => $socialUser->email
+        ], [
+            'name' => $socialUser->name,
+            'provider_id' => $this->provider->value,
+            'provider_uid' => $socialUser->id,
+            'provider_token' => $socialUser?->token,
+            'provider_refresh_token' => $socialUser?->refreshToken
+        ]);
 
         if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();

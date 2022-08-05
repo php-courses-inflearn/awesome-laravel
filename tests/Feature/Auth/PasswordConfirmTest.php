@@ -19,8 +19,11 @@ class PasswordConfirmTest extends TestCase
      */
     public function testShowPasswordConfirmationForm()
     {
-        $this->withoutMiddleware(Authenticate::class)
+        $user = $this->user();
+
+        $this->actingAs($user)
             ->get('/confirm-password')
+            ->assertOk()
             ->assertViewIs('auth.confirm-password');
     }
 

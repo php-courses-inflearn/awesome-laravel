@@ -19,6 +19,7 @@ class LoginTest extends TestCase
     public function testShowLoginForm()
     {
         $this->get('/login')
+            ->assertOk()
             ->assertViewIs('auth.login');
     }
 

@@ -26,13 +26,14 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return to_route('home');
+        return redirect()->to('/');
     }
 
     /**
      * 회원탈퇴
      *
-     * @return void
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request)
     {
@@ -40,6 +41,6 @@ class UserController extends Controller
 
         $user->delete();
 
-        return to_route('home');
+        return redirect()->to('/');
     }
 }

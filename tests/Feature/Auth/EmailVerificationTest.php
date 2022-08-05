@@ -44,6 +44,7 @@ class EmailVerificationTest extends TestCase
     {
         $this->withoutMiddleware(Authenticate::class)
             ->get('/email/verify')
+            ->assertOk()
             ->assertViewIs('auth.verify-email');
     }
 

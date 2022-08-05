@@ -28,6 +28,7 @@ class PasswordResetTest extends TestCase
     public function testRequest()
     {
         $this->get('/forgot-password')
+            ->assertOk()
             ->assertViewIs('auth.forgot-password');
     }
 

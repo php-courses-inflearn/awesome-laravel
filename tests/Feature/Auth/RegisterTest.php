@@ -20,6 +20,7 @@ class RegisterTest extends TestCase
     public function testShowRegistrationForm()
     {
         $this->get('/register')
+            ->assertOk()
             ->assertViewIs('auth.register');
     }
 

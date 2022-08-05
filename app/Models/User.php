@@ -25,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'name',
         'email',
         'password',
+        'provider_id',
         'provider_uid',
         'provider_token',
         'provider_refresh_token'
@@ -104,7 +105,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     /**
      * 댓글
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments()
     {

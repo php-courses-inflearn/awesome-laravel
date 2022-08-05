@@ -26,6 +26,7 @@ class UserTest extends TestCase
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
             ->get('/dashboard')
+            ->assertOk()
             ->assertViewIs('dashboard.user');
     }
 

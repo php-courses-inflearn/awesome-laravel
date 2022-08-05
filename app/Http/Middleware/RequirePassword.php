@@ -17,7 +17,7 @@ class RequirePassword extends Middleware
      */
     protected function shouldConfirmPassword($request, $passwordTimeoutSeconds = null)
     {
-        if (auth()->check() && $request->user()->provider) {
+        if ($request->session()->has('Socialite')) {
             return false;
         }
 

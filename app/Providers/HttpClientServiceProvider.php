@@ -25,7 +25,7 @@ class HttpClientServiceProvider extends ServiceProvider
     public function boot()
     {
         Http::macro('api', function ($token) {
-            $baseUrl = env('APP_API_URL');
+            $baseUrl = config('app.url') . '/api';
 
             return Http::withToken($token)
                 ->withHeaders([
