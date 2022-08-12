@@ -27,9 +27,10 @@ class CommentController extends Controller
     {
         $user = $request->user();
 
-        $comment = $user->comments()->make(
-            $request->only(['parent_id', 'content'])
-        );
+        $comment = $user->comments()
+            ->make(
+                $request->only(['parent_id', 'content'])
+            );
 
         $post->comments()->save($comment);
 

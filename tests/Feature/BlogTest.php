@@ -26,6 +26,7 @@ class BlogTest extends TestCase
 
         $this->actingAs($user)
             ->get('/blogs')
+            ->assertOk()
             ->assertViewIs('blogs.index');
     }
 
@@ -40,6 +41,7 @@ class BlogTest extends TestCase
 
         $this->actingAs($user)
             ->get('/blogs/create')
+            ->assertOk()
             ->assertViewIs('blogs.create');
     }
 
@@ -76,6 +78,7 @@ class BlogTest extends TestCase
 
         $this->actingAs($user)
             ->get("/blogs/{$blog->name}")
+            ->assertOk()
             ->assertViewIs('blogs.show');
     }
 
@@ -90,6 +93,7 @@ class BlogTest extends TestCase
 
         $this->actingAs($blog->user)
             ->get("/blogs/{$blog->name}/edit")
+            ->assertOk()
             ->assertViewIs('blogs.edit');
     }
 

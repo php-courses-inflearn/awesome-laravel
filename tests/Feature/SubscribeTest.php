@@ -59,7 +59,7 @@ class SubscribeTest extends TestCase
         $blog = $this->blog($user);
 
         $this->actingAs($user)
-            ->delete("/unsubscribe/{$blog->name}")
+            ->delete("/subscribe/{$blog->name}")
             ->assertRedirect();
 
         $this->assertDatabaseMissing('blog_user', [

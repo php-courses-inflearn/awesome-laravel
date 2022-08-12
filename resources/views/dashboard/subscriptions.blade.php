@@ -7,7 +7,7 @@
 
     <ul>
         @foreach ($blogs as $blog)
-            <li>{{ $blog->name }}</li>
+            <li><a href="{{ route('blogs.show', $blog->name) }}">{{ $blog->name }}</a></li>
         @endforeach
     </ul>
 @endsection

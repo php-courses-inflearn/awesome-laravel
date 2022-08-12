@@ -24,6 +24,7 @@ class BlogTest extends TestCase
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
             ->get('/dashboard/blogs')
+            ->assertOk()
             ->assertViewIs('dashboard.blogs');
     }
 

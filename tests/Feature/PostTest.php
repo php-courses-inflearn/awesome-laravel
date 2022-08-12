@@ -26,11 +26,11 @@ class PostTest extends TestCase
     {
         $user = $this->user();
 
-        foreach ($user->blogs as $blog) {
-            $this->actingAs($user)
-                ->get("/blogs/{$blog->name}/posts")
-                ->assertViewIs('blogs.posts.index');
-        }
+        $user->blogs->each(fn (Blog $blog) => $this->actingAs($user)
+            ->get("/blogs/{$blog->name}/posts")
+            ->assertOk()
+            ->assertViewIs('blogs.posts.index')
+        );
     }
 
     /**
@@ -42,11 +42,11 @@ class PostTest extends TestCase
     {
         $user = $this->user();;
 
-        foreach ($user->blogs as $blog) {
-            $this->actingAs($user)
-                ->get("/blogs/{$blog->name}/posts/create")
-                ->assertViewIs('blogs.posts.create');
-        }
+        $user->blogs->each(fn (Blog $blog) => $this->actingAs($user)
+            ->get("/blogs/{$blog->name}/posts/create")
+            ->assertOk()
+            ->assertViewIs('blogs.posts.create')
+        );
     }
 
     /**
@@ -63,7 +63,7 @@ class PostTest extends TestCase
 
         $user = $this->user();
 
-        foreach ($user->blogs as $blog) {
+        $user->blogs->each(function (Blog $blog) use ($user, $attachment) {
             $data = [
                 'title' => $this->faker->text(50),
                 'content' => $this->faker->text
@@ -87,7 +87,7 @@ class PostTest extends TestCase
             Storage::disk('public')->assertExists('attachments/' . $attachment->hashName());
 
             Event::assertDispatched(Published::class);
-        }
+        });
     }
 
     /**
@@ -101,6 +101,7 @@ class PostTest extends TestCase
 
         $this->actingAs($post->blog->user)
             ->get("/posts/{$post->id}")
+            ->assertOk()
             ->assertViewIs('blogs.posts.show');
     }
 

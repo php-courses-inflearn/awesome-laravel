@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Auth\Passwords\CanResetPassword as ResettablePassword;
 
@@ -110,5 +111,27 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * 피드
+     *
+     * @param int $count
+     * @return Collection
+     */
+    private function feed(int $count)
+    {
+        return $this->subscriptions
+            ->reduce(function (Collection $feed, Blog $subscription) use ($count) {
+                $posts = $subscription->posts()
+                    ->latest()
+                    ->limit($count)
+                    ->get();
+
+                return $feed->merge($posts);
+            }, collect())
+            ->sort(function ($a, $b) {
+                return $a['created_at']->lessThan($b['created_at']);
+            });
     }
 }

@@ -17,12 +17,17 @@ class BlogSeeder extends Seeder
     public function run()
     {
         User::all()->each(function (User $user) {
-            $subscribers = User::where('id', '<>', $user->id)->get()->random(3);
+            $subscribers = User::whereNot('id', $user->id)
+                ->get()
+                ->random(3);
 
-            Blog::factory()->for($user)->hasAttached(
-                factory: $subscribers,
-                relationship: 'subscribers'
-            )->create();
+            Blog::factory()
+                ->for($user)
+                ->hasAttached(
+                    factory: $subscribers,
+                    relationship: 'subscribers'
+                )
+                ->create();
 
             //Blog::factory()->for($user)->create()
             //    ->subscribers()

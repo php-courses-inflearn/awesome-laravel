@@ -19,21 +19,11 @@ class WelcomeTest extends TestCase
      */
     public function testWelcome()
     {
-        $this->get('/')
-            ->assertViewIs('welcome');
-    }
-
-    /**
-     * 피드 (인증) 테스트
-     *
-     * @return void
-     */
-    public function testWelcomeAuthenticated()
-    {
         $user = $this->user();
 
         $this->actingAs($user)
             ->get('/')
+            ->assertOk()
             ->assertViewIs('welcome');
     }
 

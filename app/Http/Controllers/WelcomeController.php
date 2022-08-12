@@ -22,38 +22,16 @@ class WelcomeController extends Controller
     {
         $posts = Post::latest()->limit(20)->get();
 
-        if (auth()->check()) {
-            $user = $request->user();
+        $user = $request->user();
 
-            if ($user->subscriptions()->exists()) {
-                $posts = $this->feed($user, 5);
-            }
+        if ($user->subscriptions()->exists()) {
+            $posts = $user->feed(5);
         }
 
         return view('welcome', [
             'posts' => $posts->paginate(5, $request->page ?? 1)
             //'posts' => $this->paginate($posts, $posts->count(), 5, $request->page ?? 1)
         ]);
-    }
-
-    /**
-     * 피드
-     *
-     * @param User $user
-     * @param int $count
-     * @return mixed
-     */
-    private function feed(User $user, int $count)
-    {
-        return $user->subscriptions
-            ->reduce(function (Collection $feed, Blog $subscription) use ($count) {
-                $posts = $subscription->posts()->latest()->limit($count)->get();
-
-                return $feed->merge($posts);
-            }, collect())
-            ->sort(function ($a, $b) {
-                return $a['created_at']->lessThan($b['created_at']);
-            });
     }
 }
 

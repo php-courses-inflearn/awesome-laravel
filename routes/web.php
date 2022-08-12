@@ -119,7 +119,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::controller(\App\Http\Controllers\SubscribeController::class)->group(function () {
         Route::post('subscribe/{blog}', 'subscribe')
             ->name('subscribe');
-        Route::delete('unsubscribe/{blog}', 'unsubscribe')
+        Route::delete('subscribe/{blog}', 'unsubscribe')
             ->name('unsubscribe');
     });
     Route::resource('blogs.posts', \App\Http\Controllers\PostController::class)

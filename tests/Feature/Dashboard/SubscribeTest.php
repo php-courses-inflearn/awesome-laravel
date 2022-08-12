@@ -24,6 +24,7 @@ class SubscribeTest extends TestCase
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
             ->get('/dashboard/subscribers')
+            ->assertOk()
             ->assertViewIs('dashboard.subscribers');
     }
 
@@ -39,6 +40,7 @@ class SubscribeTest extends TestCase
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
             ->get('/dashboard/subscriptions')
+            ->assertOk()
             ->assertViewIs('dashboard.subscriptions');
     }
 
