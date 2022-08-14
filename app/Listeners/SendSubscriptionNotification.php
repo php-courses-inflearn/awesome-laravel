@@ -9,8 +9,6 @@ use App\Notifications\Subscribed as SubscribedNotification;
 
 class SendSubscriptionNotification implements ShouldQueue
 {
-    public $connection = 'database';
-
     public $queue = 'listeners';
 
     /**

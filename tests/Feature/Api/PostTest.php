@@ -4,6 +4,7 @@ namespace Tests\Feature\Api;
 
 use App\Enums\TokenAbility;
 use App\Models\Blog;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -84,7 +85,7 @@ class PostTest extends TestCase
         $blog = $this->blog();
         $token = $this->token($blog, TokenAbility::POST_READ);
 
-        foreach ($blog->posts as $post) {
+        $blog->posts->each(function (Post $post) use ($token) {
             $etag = sha1($post->updated_at);
 
             $this->withToken($token)
@@ -106,7 +107,7 @@ class PostTest extends TestCase
                     'If-None-Match' => "\"{$etag}\""
                 ])
                 ->assertStatus(304);
-        }
+        });
     }
 
     /**
@@ -119,7 +120,7 @@ class PostTest extends TestCase
         $blog = $this->blog();
         $token = $this->token($blog, TokenAbility::POST_UPDATE);
 
-        foreach ($blog->posts as $post) {
+        $blog->posts->each(function (Post $post) use ($token) {
             $data = [
                 'title' => $this->faker->text(50),
                 'content' => $this->faker->text
@@ -128,7 +129,7 @@ class PostTest extends TestCase
             $this->withToken($token)
                 ->putJson("/api/posts/{$post->id}", $data)
                 ->assertNoContent();
-        }
+        });
     }
 
     /**
@@ -141,11 +142,11 @@ class PostTest extends TestCase
         $blog = $this->blog();
         $token = $this->token($blog, TokenAbility::POST_DELETE);
 
-        foreach ($blog->posts as $post) {
+        $blog->posts->each(function (Post $post) use ($token) {
             $this->withToken($token)
                 ->deleteJson("/api/posts/{$post->id}")
                 ->assertNoContent();
-        }
+        });
     }
 
     /**

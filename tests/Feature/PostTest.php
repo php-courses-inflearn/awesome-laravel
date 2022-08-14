@@ -26,11 +26,12 @@ class PostTest extends TestCase
     {
         $user = $this->user();
 
-        $user->blogs->each(fn (Blog $blog) => $this->actingAs($user)
-            ->get("/blogs/{$blog->name}/posts")
-            ->assertOk()
-            ->assertViewIs('blogs.posts.index')
-        );
+        $user->blogs->each(function (Blog $blog) use ($user) {
+            $this->actingAs($user)
+                ->get("/blogs/{$blog->name}/posts")
+                ->assertOk()
+                ->assertViewIs('blogs.posts.index');
+        });
     }
 
     /**
@@ -40,13 +41,14 @@ class PostTest extends TestCase
      */
     public function testCreate()
     {
-        $user = $this->user();;
+        $user = $this->user();
 
-        $user->blogs->each(fn (Blog $blog) => $this->actingAs($user)
-            ->get("/blogs/{$blog->name}/posts/create")
-            ->assertOk()
-            ->assertViewIs('blogs.posts.create')
-        );
+        $user->blogs->each(function (Blog $blog) use ($user) {
+            $this->actingAs($user)
+                ->get("/blogs/{$blog->name}/posts/create")
+                ->assertOk()
+                ->assertViewIs('blogs.posts.create');
+        });
     }
 
     /**

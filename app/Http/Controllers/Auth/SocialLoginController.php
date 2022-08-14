@@ -59,8 +59,7 @@ class SocialLoginController extends Controller
             'name' => $socialUser->name,
             'provider_id' => $this->provider->value,
             'provider_uid' => $socialUser->id,
-            'provider_token' => $socialUser?->token,
-            'provider_refresh_token' => $socialUser?->refreshToken
+            'provider_token' => $socialUser->token
         ]);
 
         if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {

@@ -28,8 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'password',
         'provider_id',
         'provider_uid',
-        'provider_token',
-        'provider_refresh_token'
+        'provider_token'
     ];
 
     /**
@@ -119,7 +118,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
      * @param int $count
      * @return Collection
      */
-    private function feed(int $count)
+    public function feed(int $count)
     {
         return $this->subscriptions
             ->reduce(function (Collection $feed, Blog $subscription) use ($count) {

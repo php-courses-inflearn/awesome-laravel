@@ -14,120 +14,33 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', \App\Http\Controllers\WelcomeController::class);
+
 Route::get('/search', \App\Http\Controllers\SearchController::class)
     ->name('search');
 
-Route::controller(\App\Http\Controllers\Auth\RegisterController::class)->group(function () {
-    Route::middleware('guest')->group(function () {
-        Route::get('/register', 'showRegistrationForm')
-            ->name('register');
-        Route::post('/register', 'register');
-    });
-});
-Route::controller(\App\Http\Controllers\Auth\EmailVerificationController::class)->group(function () {
-    Route::name('verification.')->prefix('/email')->group(function () {
-        Route::middleware('auth')->group(function () {
-            Route::get('/verify', 'notice')
-                ->name('notice');
-            Route::get('/verify/{id}/{hash}', 'verify')
-                ->middleware('signed')
-                ->name('verify');
-            Route::post('/verification-notification', 'send')
-                ->middleware('throttle:6,1')
-                ->name('send');
-        });
-    });
-});
-Route::controller(\App\Http\Controllers\Auth\LoginController::class)->group(function () {
-    Route::middleware('guest')->group(function () {
-        Route::get('/login', 'showLoginForm')
-            ->name('login');
-        Route::post('/login', 'login');
-    });
-    Route::post('/logout', 'logout')
-        ->name('logout')
-        ->middleware('auth');
-});
-Route::controller(\App\Http\Controllers\Auth\GithubLoginController::class)->group(function () {
-    Route::middleware('guest')->group(function () {
-        Route::get('/login/github', 'redirect')
-            ->name('login.github');
-        Route::get('/login/github/callback', 'callback');
-    });
-});
-Route::controller(\App\Http\Controllers\Auth\PasswordResetController::class)->group(function () {
-    Route::middleware('guest')->group(function () {
-        Route::get('/forgot-password', 'request')
-            ->name('password.request');
-        Route::post('/forgot-password', 'email')
-            ->name('password.email');
-        Route::get('/reset-password/{token}', 'reset')
-            ->name('password.reset');
-        Route::post('/reset-password', 'update')
-            ->name('password.update');
-    });
-});
-Route::controller(\App\Http\Controllers\Auth\PasswordConfirmController::class)->group(function () {
-    Route::middleware('auth')->group(function () {
-        Route::get('/confirm-password', 'showPasswordConfirmationForm')
-            ->name('password.confirm');
-        Route::post('/confirm-password', 'confirm');
-    });
-});
 Route::controller(\App\Http\Controllers\UserController::class)->group(function () {
-    Route::middleware('auth')->group(function () {
-        Route::put('/user', 'update')
-            ->name('user.update');
-        Route::delete('/user', 'destroy')
-            ->name('user.destroy');
-    });
-});
-Route::middleware('auth')->group(function () {
-    Route::resource('tokens', \App\Http\Controllers\Auth\TokenController::class)
-        ->only(['create', 'store', 'destroy']);
+    Route::put('/user', 'update')
+        ->name('user.update');
+    Route::delete('/user', 'destroy')
+        ->name('user.destroy');
 });
 
-Route::prefix('/dashboard')->group(function () {
-    Route::middleware(['auth', 'password.confirm'])->group(function () {
-        Route::controller(\App\Http\Controllers\Dashboard\UserController::class)->group(function () {
-            Route::get('/', 'dashboard')
-                ->name('dashboard');
-        });
-        Route::controller(\App\Http\Controllers\Dashboard\BlogController::class)->group(function () {
-            Route::get('/blogs', 'dashboard')
-                ->name('dashboard.blogs');
-        });
-        Route::controller(\App\Http\Controllers\Dashboard\SubscribeController::class)->group(function () {
-            Route::get('/subscribers', 'subscribers')
-                ->name('dashboard.subscribers');
-            Route::get('/subscriptions', 'subscriptions')
-                ->name('dashboard.subscriptions');
-        });
-        Route::controller(\App\Http\Controllers\Dashboard\CommentController::class)->group(function () {
-            Route::get('/comments', 'dashboard')
-                ->name('dashboard.comments');
-        });
-        Route::controller(\App\Http\Controllers\Dashboard\TokenController::class)->group(function () {
-            Route::get('/tokens', 'dashboard')
-                ->name('dashboard.tokens');
-        });
-    });
+Route::resource('blogs', \App\Http\Controllers\BlogController::class);
+
+Route::controller(\App\Http\Controllers\SubscribeController::class)->group(function () {
+    Route::post('subscribe/{blog}', 'subscribe')
+        ->name('subscribe');
+    Route::delete('subscribe/{blog}', 'unsubscribe')
+        ->name('unsubscribe');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::resource('blogs', \App\Http\Controllers\BlogController::class);
-    Route::controller(\App\Http\Controllers\SubscribeController::class)->group(function () {
-        Route::post('subscribe/{blog}', 'subscribe')
-            ->name('subscribe');
-        Route::delete('subscribe/{blog}', 'unsubscribe')
-            ->name('unsubscribe');
-    });
-    Route::resource('blogs.posts', \App\Http\Controllers\PostController::class)
-        ->shallow();
-    Route::resource('posts.comments', \App\Http\Controllers\CommentController::class)
-        ->shallow()
-        ->only(['store', 'update', 'destroy']);
-    Route::resource('posts.attachments', \App\Http\Controllers\AttachmentController::class)
-        ->shallow()
-        ->only(['store', 'destroy']);
-});
+Route::resource('blogs.posts', \App\Http\Controllers\PostController::class)
+    ->shallow();
+
+Route::resource('posts.comments', \App\Http\Controllers\CommentController::class)
+    ->shallow()
+    ->only(['store', 'update', 'destroy']);
+
+Route::resource('posts.attachments', \App\Http\Controllers\AttachmentController::class)
+    ->shallow()
+    ->only(['store', 'destroy']);

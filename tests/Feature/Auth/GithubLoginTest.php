@@ -40,7 +40,6 @@ class GithubLoginTest extends TestCase
         $githubUser->name = $this->faker->name;
         $githubUser->id = Str::random();
         $githubUser->token = Str::random(32);
-        $githubUser->refreshToken = null;
 
         Socialite::shouldReceive('driver->user')
             ->once()
@@ -56,8 +55,7 @@ class GithubLoginTest extends TestCase
             'email' => $githubUser->email,
             'name' => $githubUser->name,
             'provider_uid' => $githubUser->id,
-            'provider_token' => $githubUser->token,
-            'provider_refresh_token' => $githubUser->refreshToken
+            'provider_token' => $githubUser->token
         ]);
     }
 }

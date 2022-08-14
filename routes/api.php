@@ -14,8 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('blogs.posts', \App\Http\Controllers\Api\PostController::class)
-        ->shallow();
-});
-
+Route::apiResource('blogs.posts', \App\Http\Controllers\Api\PostController::class)
+    ->shallow();

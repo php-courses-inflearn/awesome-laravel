@@ -19,7 +19,6 @@ return new class extends Migration
                 ->constrained();
             $table->string('provider_uid')->nullable();
             $table->string('provider_token')->nullable();
-            $table->string('provider_refresh_token')->nullable();
         });
     }
 
@@ -34,7 +33,6 @@ return new class extends Migration
             $table->dropForeignIdFor(\App\Models\Provider::class);
             $table->dropColumn('provider_uid');
             $table->dropColumn('provider_token');
-            $table->dropColumn('provider_refresh_token');
         });
     }
 };

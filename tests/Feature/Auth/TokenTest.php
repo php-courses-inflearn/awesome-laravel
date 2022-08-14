@@ -1,11 +1,12 @@
 <?php
 
-namespace Auth;
+namespace Tests\Feature\Auth;
 
 use App\Enums\TokenAbility;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\PersonalAccessToken;
 use Tests\TestCase;
 
 class TokenTest extends TestCase
@@ -23,7 +24,8 @@ class TokenTest extends TestCase
 
         $this->actingAs($user)
             ->get('/tokens/create')
-            ->assertSuccessful();
+            ->assertOk()
+            ->assertViewIs('tokens.create');
     }
 
     /**
@@ -66,15 +68,15 @@ class TokenTest extends TestCase
         $name = $this->faker->word;
         $user->createToken($name);
 
-        foreach ($user->tokens as $token) {
-            $this->actingAs($user)
-                ->delete("/tokens/{$token->id}")
-                ->assertRedirect();
+        $token = $user->tokens()->first();
 
-            $this->assertDatabaseMissing('personal_access_tokens', [
-                'name' => $name
-            ]);
-        }
+        $this->actingAs($user)
+            ->delete("/tokens/{$token->id}")
+            ->assertRedirect();
+
+        $this->assertDatabaseMissing('personal_access_tokens', [
+            'name' => $name
+        ]);
     }
 
     /**
