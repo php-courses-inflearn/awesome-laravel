@@ -2,10 +2,10 @@
 
 namespace App\Casts;
 
-use http\Exception\InvalidArgumentException;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Support\Facades\Storage;
 use App\Castables\Link as LinkCastable;
+use Exception;
 
 class Link implements CastsAttributes
 {
@@ -20,13 +20,11 @@ class Link implements CastsAttributes
      */
     public function get($model, string $key, $value, array $attributes)
     {
-        if (! $value) {
-            return new LinkCastable($model->external
-                ? $model->name
-                : Storage::disk('public')->url($model->path));
-        }
+        $path = $model->external
+            ? $attributes['name']
+            : Storage::disk('public')->url($attributes['name']);
 
-        return new LinkCastable($attributes['link_path']);
+        return new LinkCastable($path);
     }
 
     /**
@@ -41,11 +39,11 @@ class Link implements CastsAttributes
     public function set($model, string $key, $value, array $attributes)
     {
         if (! $value instanceof LinkCastable) {
-            throw new InvalidArgumentException('The given value is not an Link instance.');
+            throw new Exception('The given value is not an Link instance.');
         }
 
         return [
-            'link_path' => $value->path
+            'name' => $value->path
         ];
     }
 }

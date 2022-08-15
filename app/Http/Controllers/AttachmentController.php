@@ -29,7 +29,7 @@ class AttachmentController extends Controller
 
             $post->attachments()->create([
                 'original_name' => $attachment->getClientOriginalName(),
-                'name' => $attachment->hashName()
+                'name' => $attachment->hashName('attachments')
             ]);
         }
     }

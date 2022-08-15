@@ -83,10 +83,10 @@ class PostTest extends TestCase
 
             $this->assertDatabaseHas('attachments', [
                 'original_name' => $attachment->getClientOriginalName(),
-                'name' => $attachment->hashName()
+                'name' => $attachment->hashName('attachments')
             ]);
 
-            Storage::disk('public')->assertExists('attachments/' . $attachment->hashName());
+            Storage::disk('public')->assertExists($attachment->hashName('attachments'));
 
             Event::assertDispatched(Published::class);
         });

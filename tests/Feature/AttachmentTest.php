@@ -38,10 +38,10 @@ class AttachmentTest extends TestCase
 
         $this->assertDatabaseHas('attachments', [
             'original_name' => $attachment->getClientOriginalName(),
-            'name' => $attachment->hashName()
+            'name' => $attachment->hashName('attachments')
         ]);
 
-        Storage::disk('public')->assertExists('attachments/'. $attachment->hashName());
+        Storage::disk('public')->assertExists($attachment->hashName('attachments'));
     }
 
     /**
@@ -84,7 +84,7 @@ class AttachmentTest extends TestCase
                 Attachment::factory()
                     ->state([
                         'original_name' => $attachment->getClientOriginalName(),
-                        'name' => $attachment->hashName()
+                        'name' => $attachment->hashName('attachments')
                     ])
             );
         }

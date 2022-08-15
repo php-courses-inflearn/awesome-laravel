@@ -77,16 +77,4 @@ class Attachment extends Model
             get: fn () => preg_match('/^https?/', $this->name)
         );
     }
-
-    /**
-     * 파일의 경로
-     *
-     * @return Attribute
-     */
-    public function path(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => join('/', ['attachments', $this->name])
-        );
-    }
 }
