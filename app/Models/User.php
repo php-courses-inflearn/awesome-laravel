@@ -115,16 +115,16 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     /**
      * 피드
      *
-     * @param int $count
+     * @param int $perBlog
      * @return Collection
      */
-    public function feed(int $count)
+    public function feed(int $perBlog = 5)
     {
         return $this->subscriptions
-            ->reduce(function (Collection $feed, Blog $subscription) use ($count) {
+            ->reduce(function (Collection $feed, Blog $subscription) use ($perBlog) {
                 $posts = $subscription->posts()
                     ->latest()
-                    ->limit($count)
+                    ->limit($perBlog)
                     ->get();
 
                 return $feed->merge($posts);
