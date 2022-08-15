@@ -86,9 +86,7 @@ class PostTest extends TestCase
         $token = $this->token($blog, TokenAbility::POST_READ);
 
         $blog->posts->each(function (Post $post) use ($token) {
-            $etag = sha1($post->updated_at);
-
-            $this->withToken($token)
+            $response = $this->withToken($token)
                 ->getJson("/api/posts/{$post->id}")
                 ->assertOk()
                 ->assertJson(function (AssertableJson $json) {
@@ -97,14 +95,16 @@ class PostTest extends TestCase
                             ->etc();
                     });
                 })
-                ->assertHeader('Etag', "\"{$etag}\"");
+                ->assertHeader('Etag');
+
+            $etag = $response->getEtag();
 
             /**
              * Etag
              */
             $this->withToken($token)
                 ->getJson("/api/posts/{$post->id}", [
-                    'If-None-Match' => "\"{$etag}\""
+                    'If-None-Match' => $etag
                 ])
                 ->assertStatus(304);
         });
