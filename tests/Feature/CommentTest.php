@@ -21,23 +21,20 @@ class CommentTest extends TestCase
      */
     public function testStore()
     {
-        $blog = $this->blog();
+        $post = $this->article();
+        $user = $this->user();
 
-        foreach ($blog->posts as $post) {
-            $data = [
-                'content' => $this->faker->text,
-            ];
+        $data = [
+            'content' => $this->faker->text,
+        ];
 
-            $user = $this->user();
+        $this->actingAs($user)
+            ->post("/posts/{$post->id}/comments", $data)
+            ->assertRedirect();
 
-            $this->actingAs($user)
-                ->post("/posts/{$post->id}/comments", $data)
-                ->assertRedirect();
-
-            $this->assertDatabaseHas('comments', $data + [
-                'commentable_type' => Post::class, 'commentable_id' => $post->id,
-            ]);
-        }
+        $this->assertDatabaseHas('comments', $data + [
+            'commentable_type' => Post::class, 'commentable_id' => $post->id,
+        ]);
     }
 
     /**
@@ -51,13 +48,12 @@ class CommentTest extends TestCase
         $user = $this->user();
 
         $data = [
+            'parent_id' => $comment->id,
             'content' => $this->faker->text,
         ];
 
         $this->actingAs($user)
-            ->post("/posts/{$comment->commentable->id}/comments", [
-                'parent_id' => $comment->id, 'content' => $data['content'],
-            ])
+            ->post("/posts/{$comment->commentable->id}/comments", $data)
             ->assertRedirect();
 
         $this->assertDatabaseHas('comments', $data + [
@@ -83,7 +79,9 @@ class CommentTest extends TestCase
             ->assertRedirect();
 
         $this->assertDatabaseHas('comments', $data + [
-            'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id,
+            'id' => $comment->id,
+            'commentable_type' => Post::class,
+            'commentable_id' => $comment->commentable->id,
         ]);
     }
 
@@ -100,8 +98,10 @@ class CommentTest extends TestCase
             ->delete("/comments/{$comment->id}")
             ->assertRedirect();
 
-        $this->assertDatabaseHas('comments', [
-            'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id,
+        $this->assertSoftDeleted('comments', [
+            'id' => $comment->id,
+            'commentable_type' => Post::class,
+            'commentable_id' => $comment->commentable->id,
         ]);
     }
 
@@ -110,11 +110,10 @@ class CommentTest extends TestCase
      *
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private function blog()
+    private function article()
     {
-        $factory = Blog::factory()
-            ->forUser()
-            ->hasPosts(3);
+        $factory = Post::factory()
+            ->for(Blog::factory()->forUser());
 
         return $factory->create();
     }

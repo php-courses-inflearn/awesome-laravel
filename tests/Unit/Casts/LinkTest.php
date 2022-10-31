@@ -56,8 +56,6 @@ class LinkTest extends TestCase
         $url = $this->faker->imageUrl;
         $attachment->link = new Link($url);
 
-        $attachment->save();
-
         $this->assertEquals($url, $attachment->link->path);
         $this->assertInstanceOf(Link::class, $attachment->link);
     }

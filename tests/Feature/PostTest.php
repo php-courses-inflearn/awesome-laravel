@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Events\Published;
 use App\Models\Blog;
 use App\Models\Post;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -24,14 +23,12 @@ class PostTest extends TestCase
      */
     public function testIndex()
     {
-        $user = $this->user();
+        $blog = $this->blog();
 
-        $user->blogs->each(function (Blog $blog) use ($user) {
-            $this->actingAs($user)
-                ->get("/blogs/{$blog->name}/posts")
-                ->assertOk()
-                ->assertViewIs('blogs.posts.index');
-        });
+        $this->actingAs($blog->user)
+            ->get("/blogs/{$blog->name}/posts")
+            ->assertOk()
+            ->assertViewIs('blogs.posts.index');
     }
 
     /**
@@ -41,14 +38,12 @@ class PostTest extends TestCase
      */
     public function testCreate()
     {
-        $user = $this->user();
+        $blog = $this->blog();
 
-        $user->blogs->each(function (Blog $blog) use ($user) {
-            $this->actingAs($user)
-                ->get("/blogs/{$blog->name}/posts/create")
-                ->assertOk()
-                ->assertViewIs('blogs.posts.create');
-        });
+        $this->actingAs($blog->user)
+            ->get("/blogs/{$blog->name}/posts/create")
+            ->assertOk()
+            ->assertViewIs('blogs.posts.create');
     }
 
     /**
@@ -63,33 +58,31 @@ class PostTest extends TestCase
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        $user = $this->user();
+        $blog = $this->blog();
 
-        $user->blogs->each(function (Blog $blog) use ($user, $attachment) {
-            $data = [
-                'title' => $this->faker->text(50),
-                'content' => $this->faker->text,
-            ];
+        $data = [
+            'title' => $this->faker->text(50),
+            'content' => $this->faker->text,
+        ];
 
-            $this->actingAs($user)
-                ->post("/blogs/{$blog->name}/posts", $data + [
-                    'attachments' => [
-                        $attachment,
-                    ],
-                ])
-                ->assertRedirect();
+        $this->actingAs($blog->user)
+            ->post("/blogs/{$blog->name}/posts", $data + [
+                'attachments' => [
+                    $attachment,
+                ],
+            ])
+            ->assertRedirect();
 
-            $this->assertDatabaseHas('posts', $data);
+        $this->assertDatabaseHas('posts', $data);
 
-            $this->assertDatabaseHas('attachments', [
-                'original_name' => $attachment->getClientOriginalName(),
-                'name' => $attachment->hashName('attachments'),
-            ]);
+        $this->assertDatabaseHas('attachments', [
+            'original_name' => $attachment->getClientOriginalName(),
+            'name' => $attachment->hashName('attachments'),
+        ]);
 
-            Storage::disk('public')->assertExists($attachment->hashName('attachments'));
+        Storage::disk('public')->assertExists($attachment->hashName('attachments'));
 
-            Event::assertDispatched(Published::class);
-        });
+        Event::assertDispatched(Published::class);
     }
 
     /**
@@ -161,13 +154,13 @@ class PostTest extends TestCase
     }
 
     /**
-     * User
+     * Blog
      *
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
      */
-    private function user()
+    private function blog()
     {
-        $factory = User::factory()->hasBlogs(3);
+        $factory = Blog::factory()->forUser();
 
         return $factory->create();
     }
