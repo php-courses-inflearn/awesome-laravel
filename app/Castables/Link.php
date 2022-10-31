@@ -2,8 +2,8 @@
 
 namespace App\Castables;
 
-use Illuminate\Contracts\Database\Eloquent\Castable;
 use App\Casts\Link as LinkCast;
+use Illuminate\Contracts\Database\Eloquent\Castable;
 
 class Link implements Castable
 {

@@ -4,12 +4,12 @@ namespace Tests\Unit\Casts;
 
 use App\Castables\Link;
 use App\Models\Attachment;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
-use Exception;
 
 class LinkTest extends TestCase
 {
@@ -41,7 +41,7 @@ class LinkTest extends TestCase
         $attachment = $this->attachment($file);
         $this->assertInstanceOf(Link::class, $attachment->link);
 
-        $this->assertEquals('/storage/' . $file->hashName(), $attachment->link->path);
+        $this->assertEquals('/storage/'.$file->hashName(), $attachment->link->path);
     }
 
     /**
@@ -87,7 +87,7 @@ class LinkTest extends TestCase
         if ($attachment) {
             $factory = $factory->state([
                 'original_name' => $attachment->getClientOriginalName(),
-                'name' => $attachment->hashName()
+                'name' => $attachment->hashName(),
             ]);
         }
 

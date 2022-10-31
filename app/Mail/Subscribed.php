@@ -20,8 +20,7 @@ class Subscribed extends Mailable implements ShouldQueue
      */
     public function __construct(
         public readonly User $user, public readonly Blog $blog
-    )
-    {
+    ) {
         //
     }
 

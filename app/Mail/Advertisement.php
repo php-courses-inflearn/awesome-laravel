@@ -31,7 +31,7 @@ class Advertisement extends Mailable implements ShouldQueue
     {
         return $this->subject('(광고) 라라벨 커뮤니티의 최신글 살펴보기!')
             ->view('emails.advertisement', [
-                'posts' => $this->posts()
+                'posts' => $this->posts(),
             ]);
     }
 

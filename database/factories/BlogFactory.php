@@ -21,7 +21,7 @@ class BlogFactory extends Factory
             'name' => function (array $attributes) {
                 return Str::slug($attributes['display_name']);
             },
-            'display_name' => fake()->unique()->words(3, true)
+            'display_name' => fake()->unique()->words(3, true),
         ];
     }
 }

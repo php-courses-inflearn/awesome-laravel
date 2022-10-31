@@ -24,11 +24,11 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         Subscribed::class => [
-            SendSubscriptionNotification::class
+            SendSubscriptionNotification::class,
         ],
         Published::class => [
-            SendPublishingNotification::class
-        ]
+            SendPublishingNotification::class,
+        ],
     ];
 
     /**
@@ -37,7 +37,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $observers = [
-        Post::class => PostObserver::class
+        Post::class => PostObserver::class,
     ];
 
     /**

@@ -6,7 +6,6 @@ use App\Enums\TokenAbility;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Laravel\Sanctum\PersonalAccessToken;
 use Tests\TestCase;
 
 class TokenTest extends TestCase
@@ -46,13 +45,13 @@ class TokenTest extends TestCase
         $this->actingAs($user)
             ->post('/tokens', [
                 'name' => $name,
-                'abilities' => $abilities
+                'abilities' => $abilities,
             ])
             ->assertRedirect();
 
         $this->assertDatabaseHas('personal_access_tokens', [
             'name' => $name,
-            'abilities' => json_encode($abilities)
+            'abilities' => json_encode($abilities),
         ]);
     }
 
@@ -75,7 +74,7 @@ class TokenTest extends TestCase
             ->assertRedirect();
 
         $this->assertDatabaseMissing('personal_access_tokens', [
-            'name' => $name
+            'name' => $name,
         ]);
     }
 

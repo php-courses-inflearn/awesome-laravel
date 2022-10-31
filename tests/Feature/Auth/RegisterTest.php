@@ -38,7 +38,7 @@ class RegisterTest extends TestCase
         $response = $this->post('/register', [
             'name' => $this->faker->name,
             'email' => $email,
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
         $response->assertRedirect(
@@ -46,7 +46,7 @@ class RegisterTest extends TestCase
         );
 
         $this->assertDatabaseHas('users', [
-            'email' => $email
+            'email' => $email,
         ]);
 
         $this->assertAuthenticated();

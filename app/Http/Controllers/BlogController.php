@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class BlogController extends Controller
 {
@@ -27,7 +25,7 @@ class BlogController extends Controller
     public function index()
     {
         return view('blogs.index', [
-            'blogs' => Blog::with('user')->paginate(5)
+            'blogs' => Blog::with('user')->paginate(5),
         ]);
     }
 
@@ -44,7 +42,7 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreBlogRequest $request
+     * @param  StoreBlogRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreBlogRequest $request)
@@ -72,7 +70,7 @@ class BlogController extends Controller
             'blog' => $blog,
             'owned' => $user->blogs()->find($blog->id),
             'subscribed' => $blog->subscribers()->find($user->id),
-            'posts' => $blog->posts()->latest()->paginate(5)
+            'posts' => $blog->posts()->latest()->paginate(5),
         ]);
     }
 
@@ -86,16 +84,16 @@ class BlogController extends Controller
         return view('blogs.edit', [
             'blog' => $blog->load([
                 'comments.user',
-                'comments.commentable'
-            ])
+                'comments.commentable',
+            ]),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateBlogRequest $request
-     * @param Blog $blog
+     * @param  UpdateBlogRequest  $request
+     * @param  Blog  $blog
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateBlogRequest $request, Blog $blog)
@@ -120,5 +118,3 @@ class BlogController extends Controller
         return to_route('dashboard.blogs');
     }
 }
-
-

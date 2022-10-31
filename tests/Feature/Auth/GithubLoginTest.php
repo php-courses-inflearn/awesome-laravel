@@ -6,8 +6,8 @@ use Database\Seeders\ProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
+use Laravel\Socialite\Facades\Socialite;
 use Tests\TestCase;
 
 class GithubLoginTest extends TestCase
@@ -45,7 +45,7 @@ class GithubLoginTest extends TestCase
             ->once()
             ->andReturn($githubUser);
 
-        $this->get("/login/github/callback")
+        $this->get('/login/github/callback')
             ->assertRedirect()
             ->assertSessionHas('Socialite');
 
@@ -55,7 +55,7 @@ class GithubLoginTest extends TestCase
             'email' => $githubUser->email,
             'name' => $githubUser->name,
             'provider_uid' => $githubUser->id,
-            'provider_token' => $githubUser->token
+            'provider_token' => $githubUser->token,
         ]);
     }
 }

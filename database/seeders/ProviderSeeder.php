@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\SocialiteProvider;
 use App\Models\Provider;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ProviderSeeder extends Seeder

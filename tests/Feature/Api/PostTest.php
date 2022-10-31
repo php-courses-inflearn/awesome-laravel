@@ -5,7 +5,6 @@ namespace Tests\Feature\Api;
 use App\Enums\TokenAbility;
 use App\Models\Blog;
 use App\Models\Post;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -54,14 +53,14 @@ class PostTest extends TestCase
 
         $data = [
             'title' => $this->faker->text(50),
-            'content' => $this->faker->text
+            'content' => $this->faker->text,
         ];
 
         $this->withToken($token)
             ->postJson("/api/blogs/{$blog->name}/posts", $data + [
                 'attachments' => [
-                    $attachment
-                ]
+                    $attachment,
+                ],
             ])
             ->assertCreated()
             ->assertJson(function (AssertableJson $json) use ($data) {
@@ -72,7 +71,7 @@ class PostTest extends TestCase
                 });
             });
 
-        Storage::disk('public')->assertExists('attachments/' . $attachment->hashName());
+        Storage::disk('public')->assertExists('attachments/'.$attachment->hashName());
     }
 
     /**
@@ -104,7 +103,7 @@ class PostTest extends TestCase
              */
             $this->withToken($token)
                 ->getJson("/api/posts/{$post->id}", [
-                    'If-None-Match' => $etag
+                    'If-None-Match' => $etag,
                 ])
                 ->assertStatus(304);
         });
@@ -123,7 +122,7 @@ class PostTest extends TestCase
         $blog->posts->each(function (Post $post) use ($token) {
             $data = [
                 'title' => $this->faker->text(50),
-                'content' => $this->faker->text
+                'content' => $this->faker->text,
             ];
 
             $this->withToken($token)
@@ -162,9 +161,8 @@ class PostTest extends TestCase
     }
 
     /**
-     * @param Blog $blog
-     * @param TokenAbility $ability
-     *
+     * @param  Blog  $blog
+     * @param  TokenAbility  $ability
      * @return string
      */
     private function token(Blog $blog, TokenAbility $ability)

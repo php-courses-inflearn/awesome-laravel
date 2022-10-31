@@ -10,7 +10,7 @@ class CommentController extends Controller
     /**
      * 댓글
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function dashboard(Request $request)
@@ -18,7 +18,7 @@ class CommentController extends Controller
         $user = $request->user();
 
         return view('dashboard.comments', [
-            'comments' => $user->comments()->with('commentable')->get()
+            'comments' => $user->comments()->with('commentable')->get(),
         ]);
     }
 }

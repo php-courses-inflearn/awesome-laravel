@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 class Locale
 {
     /**
-     * @var array|string[] $locales
+     * @var array|string[]
      */
     private array $locales = ['ko', 'en'];
 
     /**
-     * @var string $Key
+     * @var string
      */
     private string $key = 'locale';
 
@@ -40,7 +40,7 @@ class Locale
     /**
      * 로케일
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return mixed|string|null
      */
     private function locale(Request $request)

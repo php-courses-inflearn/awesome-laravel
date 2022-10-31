@@ -5,17 +5,14 @@ namespace App\Http\Controllers;
 use App\Events\Subscribed;
 use App\Models\Blog;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\Subscribed as SubscribedMailable;
-use App\Notifications\Subscribed as SubscribedNotification;
 
 class SubscribeController extends Controller
 {
     /**
      * 구독
      *
-     * @param Request $request
-     * @param Blog $blog
+     * @param  Request  $request
+     * @param  Blog  $blog
      * @return \Illuminate\Http\RedirectResponse
      */
     public function subscribe(Request $request, Blog $blog)
@@ -32,8 +29,8 @@ class SubscribeController extends Controller
     /**
      * 구독취소
      *
-     * @param Request $request
-     * @param Blog $blog
+     * @param  Request  $request
+     * @param  Blog  $blog
      * @return \Illuminate\Http\RedirectResponse
      */
     public function unsubscribe(Request $request, Blog $blog)

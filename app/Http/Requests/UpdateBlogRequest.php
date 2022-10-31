@@ -25,7 +25,7 @@ class UpdateBlogRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:blogs,name|max:255|min:4',
-            'display_name' => 'required|max:255'
+            'display_name' => 'required|max:255',
         ];
     }
 }

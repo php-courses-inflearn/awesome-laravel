@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Scopes\VerifiedScope;
+use Illuminate\Auth\Passwords\CanResetPassword as ResettablePassword;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,7 +12,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Auth\Passwords\CanResetPassword as ResettablePassword;
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
@@ -28,7 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'password',
         'provider_id',
         'provider_uid',
-        'provider_token'
+        'provider_token',
     ];
 
     /**
@@ -63,7 +63,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     /**
      * 이메일이 인증된 사용자만
      *
-     * @param Builder $query
+     * @param  Builder  $query
      * @return Builder
      */
     public function scopeVerified(Builder $query, ...$params)
@@ -115,7 +115,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     /**
      * 피드
      *
-     * @param int $perBlog
+     * @param  int  $perBlog
      * @return Collection
      */
     public function feed(int $perBlog = 5)

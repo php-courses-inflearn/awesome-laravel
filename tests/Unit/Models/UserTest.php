@@ -5,21 +5,21 @@ namespace Tests\Unit\Models;
 use App\Models\Blog;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
-     * @var int $count
+     * @var int
      */
     private int $count = 3;
 
     /**
-     * @var Carbon $now
+     * @var Carbon
      */
     private Carbon $now;
 

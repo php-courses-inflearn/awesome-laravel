@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\SendResetLinkRequest;
 use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -26,7 +25,7 @@ class PasswordResetController extends Controller
     /**
      * 비밀번호 재설정 이메일 전송
      *
-     * @param SendResetLinkRequest $request
+     * @param  SendResetLinkRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function email(SendResetLinkRequest $request)
@@ -41,20 +40,20 @@ class PasswordResetController extends Controller
     /**
      * 비밀번호 재설정 폼
      *
-     * @param string $token
+     * @param  string  $token
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function reset(string $token)
     {
         return view('auth.reset-password', [
-            'token' => $token
+            'token' => $token,
         ]);
     }
 
     /**
      * 비밀번호 재설정
      *
-     * @param ResetPasswordRequest $request
+     * @param  ResetPasswordRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ResetPasswordRequest $request)
@@ -68,7 +67,7 @@ class PasswordResetController extends Controller
 
         $status = Password::reset($credentials, function ($user, $password) {
             $user->forceFill([
-                'password' => Hash::make($password)
+                'password' => Hash::make($password),
             ])->setRememberToken(Str::random(60));
 
             $user->save();

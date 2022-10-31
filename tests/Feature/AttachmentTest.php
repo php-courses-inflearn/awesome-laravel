@@ -31,14 +31,14 @@ class AttachmentTest extends TestCase
         $this->actingAs($post->blog->user)
             ->post("/posts/{$post->id}/attachments", [
                 'attachments' => [
-                    $attachment
-                ]
+                    $attachment,
+                ],
             ])
             ->assertSuccessful();
 
         $this->assertDatabaseHas('attachments', [
             'original_name' => $attachment->getClientOriginalName(),
-            'name' => $attachment->hashName('attachments')
+            'name' => $attachment->hashName('attachments'),
         ]);
 
         Storage::disk('public')->assertExists($attachment->hashName('attachments'));
@@ -63,7 +63,7 @@ class AttachmentTest extends TestCase
                 ->assertRedirect();
 
             $this->assertDatabaseMissing('attachments', [
-                'id' => $attachment->id
+                'id' => $attachment->id,
             ]);
         }
     }
@@ -71,7 +71,7 @@ class AttachmentTest extends TestCase
     /**
      * Article
      *
-     * @param UploadedFile $hasAttachment
+     * @param  UploadedFile  $hasAttachment
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
     private function article(UploadedFile $attachment = null)
@@ -84,7 +84,7 @@ class AttachmentTest extends TestCase
                 Attachment::factory()
                     ->state([
                         'original_name' => $attachment->getClientOriginalName(),
-                        'name' => $attachment->hashName('attachments')
+                        'name' => $attachment->hashName('attachments'),
                     ])
             );
         }

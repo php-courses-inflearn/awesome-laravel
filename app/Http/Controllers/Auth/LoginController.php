@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -21,7 +20,7 @@ class LoginController extends Controller
     /**
      * 로그인
      *
-     * @param LoginRequest $request
+     * @param  LoginRequest  $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function login(LoginRequest $request)
@@ -30,7 +29,7 @@ class LoginController extends Controller
 
         if (! auth()->attempt($credentials, $request->boolean('remember'))) {
             return back()->withErrors([
-                'failed' => __('auth.failed')
+                'failed' => __('auth.failed'),
             ]);
         }
 

@@ -20,7 +20,7 @@ class Attachment extends Model
      */
     protected $fillable = [
         'original_name',
-        'name'
+        'name',
     ];
 
     /**
@@ -29,7 +29,7 @@ class Attachment extends Model
      * @var array
      */
     protected $casts = [
-        'link' => Link::class
+        'link' => Link::class,
     ];
 
     /**

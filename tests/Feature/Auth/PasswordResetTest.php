@@ -42,7 +42,7 @@ class PasswordResetTest extends TestCase
         $user = $this->user();
 
         $response = $this->post('/forgot-password', [
-            'email' => $user->email
+            'email' => $user->email,
         ]);
 
         Notification::assertSentTo(
@@ -63,7 +63,7 @@ class PasswordResetTest extends TestCase
         Mail::fake();
 
         $response = $this->post('/forgot-password', [
-            'email' => $this->faker->safeEmail
+            'email' => $this->faker->safeEmail,
         ]);
 
         Mail::assertNothingSent();
@@ -101,7 +101,7 @@ class PasswordResetTest extends TestCase
             'email' => $user->email,
             'password' => 'password',
             'password_confirmation' => 'password',
-            'token' => $token
+            'token' => $token,
         ]);
 
         Event::assertDispatched(PasswordReset::class);
@@ -122,7 +122,7 @@ class PasswordResetTest extends TestCase
             'email' => $this->faker->safeEmail,
             'password' => 'password',
             'password_confirmation' => 'password',
-            'token' => Str::random()
+            'token' => Str::random(),
         ]);
 
         Event::assertNotDispatched(PasswordReset::class);

@@ -17,7 +17,7 @@ class Comment extends Model
      */
     protected $fillable = [
         'parent_id',
-        'content'
+        'content',
     ];
 
     /**

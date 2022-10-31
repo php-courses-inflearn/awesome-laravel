@@ -5,7 +5,6 @@ namespace Tests\Feature\Dashboard;
 use App\Http\Middleware\RequirePassword;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class TokenTest extends TestCase

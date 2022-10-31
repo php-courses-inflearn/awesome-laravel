@@ -1,18 +1,18 @@
 <?php
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 if (! function_exists('etag')) {
     /**
      * Etag
      *
-     * @param Model $model
-     * @param string $etag
-     * @param array $ifNoneMatch
-     * @param Closure $callback
+     * @param  Model  $model
+     * @param  string  $etag
+     * @param  array  $ifNoneMatch
+     * @param  Closure  $callback
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     function etag(Model $model, string $etag, array $ifNoneMatch, Closure $callback)

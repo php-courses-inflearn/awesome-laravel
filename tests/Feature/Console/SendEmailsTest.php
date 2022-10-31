@@ -4,8 +4,6 @@ namespace Tests\Feature\Console;
 
 use App\Mail\Advertisement;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Queue\Queue;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 

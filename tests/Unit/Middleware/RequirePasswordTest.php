@@ -25,7 +25,8 @@ class RequirePasswordTest extends TestCase
         $request = app(Request::class);
         $request->setLaravelSession(app(Session::class));
 
-        $response = $requirePasswordMiddleware->handle($request, function () {});
+        $response = $requirePasswordMiddleware->handle($request, function () {
+        });
 
         $this->assertEquals($response->getStatusCode(), 302);
     }
@@ -37,13 +38,14 @@ class RequirePasswordTest extends TestCase
      */
     public function testRequirePasswordNotRedirect()
     {
-        $requirePasswordMiddleware = app(RequirePassword::Class);
+        $requirePasswordMiddleware = app(RequirePassword::class);
 
         $request = app(Request::class);
         $request->setLaravelSession(app(Session::class));
         $request->session()->put('Socialite', SocialiteProvider::GITHUB->name);
 
-        $response = $requirePasswordMiddleware->handle($request, function () {});
+        $response = $requirePasswordMiddleware->handle($request, function () {
+        });
 
         $this->assertEquals($response, null);
     }

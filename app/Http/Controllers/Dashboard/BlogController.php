@@ -17,7 +17,7 @@ class BlogController extends Controller
         $user = $request->user();
 
         return view('dashboard.blogs', [
-            'blogs' => $user->blogs
+            'blogs' => $user->blogs,
         ]);
     }
 }

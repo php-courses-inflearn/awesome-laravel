@@ -2,10 +2,10 @@
 
 namespace App\Casts;
 
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Support\Facades\Storage;
 use App\Castables\Link as LinkCastable;
 use Exception;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Support\Facades\Storage;
 
 class Link implements CastsAttributes
 {
@@ -43,7 +43,7 @@ class Link implements CastsAttributes
         }
 
         return [
-            'name' => $value->path
+            'name' => $value->path,
         ];
     }
 }

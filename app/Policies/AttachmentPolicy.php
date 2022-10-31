@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Models\Attachment;
-use App\Models\Blog;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -19,7 +18,7 @@ class AttachmentPolicy
     private Post|null $post;
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      */
     public function __construct(Request $request)
     {

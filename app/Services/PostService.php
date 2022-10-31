@@ -15,8 +15,8 @@ class PostService
     /**
      * 글쓰기
      *
-     * @param StorePostRequest $request
-     * @param Blog $blog
+     * @param  StorePostRequest  $request
+     * @param  Blog  $blog
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function store(StorePostRequest $request, Blog $blog)
@@ -35,8 +35,8 @@ class PostService
     /**
      * 글 수정
      *
-     * @param UpdatePostRequest $request
-     * @param Post $post
+     * @param  UpdatePostRequest  $request
+     * @param  Post  $post
      * @return void
      */
     public function update(UpdatePostRequest $request, Post $post)
@@ -51,7 +51,7 @@ class PostService
     /**
      * 글 삭제
      *
-     * @param Post $post
+     * @param  Post  $post
      * @return void
      */
     public function destroy(Post $post)
@@ -62,7 +62,7 @@ class PostService
     /**
      * 파일 업로드
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param $post
      * @return void
      */

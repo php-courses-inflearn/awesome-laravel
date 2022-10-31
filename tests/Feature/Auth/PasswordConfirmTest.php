@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Http\Middleware\Authenticate;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -36,7 +35,7 @@ class PasswordConfirmTest extends TestCase
 
         $response = $this->actingAs($user)
             ->post('/confirm-password', [
-                'password' => 'password'
+                'password' => 'password',
             ]);
 
         $response->assertRedirect();
@@ -53,7 +52,7 @@ class PasswordConfirmTest extends TestCase
 
         $response = $this->actingAs($user)
             ->post('/confirm-password', [
-                'password' => $this->faker->password(8)
+                'password' => $this->faker->password(8),
             ]);
 
         $response->assertRedirect();

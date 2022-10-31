@@ -20,7 +20,7 @@ class AttachmentFactory extends Factory
             'original_name' => function (array $attributes) {
                 return explode('=', parse_url($attributes['name'])['query'])[1];
             },
-            'name' => fake()->imageUrl
+            'name' => fake()->imageUrl,
         ];
     }
 }

@@ -18,7 +18,7 @@ class TokenController extends Controller
     public function create()
     {
         return view('tokens.create', [
-            'abilities' => TokenAbility::cases()
+            'abilities' => TokenAbility::cases(),
         ]);
     }
 

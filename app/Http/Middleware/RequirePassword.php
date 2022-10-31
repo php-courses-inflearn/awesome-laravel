@@ -2,8 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Auth\Middleware\RequirePassword as Middleware;
 
 class RequirePassword extends Middleware

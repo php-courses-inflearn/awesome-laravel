@@ -19,9 +19,7 @@ class SearchController extends Controller
 
         return view('search', [
             'q' => $query,
-            'posts' => Post::search($query)->paginate(5)
+            'posts' => Post::search($query)->paginate(5),
         ]);
     }
 }
-
-

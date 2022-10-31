@@ -3,18 +3,16 @@
 namespace Tests\Feature;
 
 use App\Events\Subscribed;
+use App\Mail\Subscribed as SubscribedMailable;
 use App\Models\Blog;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
+use App\Notifications\Subscribed as SubscribedNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
-use App\Mail\Subscribed as SubscribedMailable;
-use App\Notifications\Subscribed as SubscribedNotification;
 
 class SubscribeTest extends TestCase
 {
@@ -40,7 +38,7 @@ class SubscribeTest extends TestCase
 
         $this->assertDatabaseHas('blog_user', [
             'user_id' => $user->id,
-            'blog_id' => $blog->id
+            'blog_id' => $blog->id,
         ]);
 
         Event::assertDispatched(Subscribed::class);
@@ -64,7 +62,7 @@ class SubscribeTest extends TestCase
 
         $this->assertDatabaseMissing('blog_user', [
             'user_id' => $user->id,
-            'blog_id' => $blog->id
+            'blog_id' => $blog->id,
         ]);
     }
 
@@ -83,7 +81,7 @@ class SubscribeTest extends TestCase
     /**
      * Blog
      *
-     * @param User|Collection|null $subscribers
+     * @param  User|Collection|null  $subscribers
      * @return mixed
      */
     private function blog(User|Collection $subscribers = null)

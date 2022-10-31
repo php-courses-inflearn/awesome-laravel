@@ -21,7 +21,7 @@ class PasswordConfirmController extends Controller
     /**
      * 비밀번호 확인
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function confirm(Request $request)
@@ -30,7 +30,7 @@ class PasswordConfirmController extends Controller
 
         if (! Hash::check($request->password, $user->password)) {
             return back()->withErrors([
-                'password' => __('auth.password')
+                'password' => __('auth.password'),
             ]);
         }
 

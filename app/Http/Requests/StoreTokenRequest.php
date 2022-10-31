@@ -27,7 +27,7 @@ class StoreTokenRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'abilities.*' => [new Enum(TokenAbility::class)]
+            'abilities.*' => [new Enum(TokenAbility::class)],
         ];
     }
 }

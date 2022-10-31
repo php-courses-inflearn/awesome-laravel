@@ -25,7 +25,7 @@ class CommentTest extends TestCase
 
         foreach ($blog->posts as $post) {
             $data = [
-                'content' => $this->faker->text
+                'content' => $this->faker->text,
             ];
 
             $user = $this->user();
@@ -35,7 +35,7 @@ class CommentTest extends TestCase
                 ->assertRedirect();
 
             $this->assertDatabaseHas('comments', $data + [
-                'commentable_type' => Post::class, 'commentable_id' => $post->id
+                'commentable_type' => Post::class, 'commentable_id' => $post->id,
             ]);
         }
     }
@@ -51,17 +51,17 @@ class CommentTest extends TestCase
         $user = $this->user();
 
         $data = [
-            'content' => $this->faker->text
+            'content' => $this->faker->text,
         ];
 
         $this->actingAs($user)
             ->post("/posts/{$comment->commentable->id}/comments", [
-                'parent_id' => $comment->id, 'content' => $data['content']
+                'parent_id' => $comment->id, 'content' => $data['content'],
             ])
             ->assertRedirect();
 
         $this->assertDatabaseHas('comments', $data + [
-            'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id
+            'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id,
         ]);
     }
 
@@ -75,7 +75,7 @@ class CommentTest extends TestCase
         $comment = $this->comment();
 
         $data = [
-            'content' => $this->faker->text
+            'content' => $this->faker->text,
         ];
 
         $this->actingAs($comment->user)
@@ -83,7 +83,7 @@ class CommentTest extends TestCase
             ->assertRedirect();
 
         $this->assertDatabaseHas('comments', $data + [
-            'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id
+            'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id,
         ]);
     }
 
@@ -101,7 +101,7 @@ class CommentTest extends TestCase
             ->assertRedirect();
 
         $this->assertDatabaseHas('comments', [
-            'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id
+            'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id,
         ]);
     }
 

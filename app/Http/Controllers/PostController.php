@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\Published;
-use App\Models\Blog;
-use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Blog;
+use App\Models\Post;
 use App\Services\PostService;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class PostController extends Controller
 {
@@ -29,7 +26,7 @@ class PostController extends Controller
     public function index(Blog $blog)
     {
         return view('blogs.posts.index', [
-            'posts' => $blog->posts()->latest()->paginate()
+            'posts' => $blog->posts()->latest()->paginate(),
         ]);
     }
 
@@ -41,7 +38,7 @@ class PostController extends Controller
     public function create(Blog $blog)
     {
         return view('blogs.posts.create', [
-           'blog' => $blog
+            'blog' => $blog,
         ]);
     }
 
@@ -71,7 +68,7 @@ class PostController extends Controller
             'comments' => $post->comments()
                 ->doesntHave('parent')
                 ->with(['user', 'replies.user'])
-                ->get()
+                ->get(),
         ]);
     }
 
@@ -84,7 +81,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         return view('blogs.posts.edit', [
-            'post' => $post
+            'post' => $post,
         ]);
     }
 

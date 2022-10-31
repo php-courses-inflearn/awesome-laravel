@@ -51,7 +51,7 @@ class SendEmails extends Command
     /**
      * 이메일 전송
      *
-     * @param string $queue
+     * @param  string  $queue
      * @return void
      */
     private function sendEmails(string $queue)

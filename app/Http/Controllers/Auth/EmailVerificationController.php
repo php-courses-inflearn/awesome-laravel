@@ -11,7 +11,7 @@ class EmailVerificationController extends Controller
     /**
      * 이메일 인증
      *
-     * @param EmailVerificationRequest $request
+     * @param  EmailVerificationRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function verify(EmailVerificationRequest $request)
@@ -34,7 +34,7 @@ class EmailVerificationController extends Controller
     /**
      * 인증 이메일 재전송
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function send(Request $request)

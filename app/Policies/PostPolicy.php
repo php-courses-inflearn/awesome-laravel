@@ -18,7 +18,7 @@ class PostPolicy
     private Blog|null $Blog;
 
     /**
-     * @param Request $request
+     * @param  Request  $request
      */
     public function __construct(Request $request)
     {

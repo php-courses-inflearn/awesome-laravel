@@ -11,7 +11,6 @@ use App\Models\Blog;
 use App\Models\Post;
 use App\Services\PostService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
@@ -33,10 +32,10 @@ class PostController extends Controller
      */
     public function index(Blog $blog)
     {
-         $posts = $blog->posts()
-            ->latest()
-            ->get();
-            //->paginate(5);
+        $posts = $blog->posts()
+           ->latest()
+           ->get();
+        //->paginate(5);
 
         //return $posts;
         return new PostCollection($posts);

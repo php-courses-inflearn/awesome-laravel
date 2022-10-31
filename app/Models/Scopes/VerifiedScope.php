@@ -19,5 +19,4 @@ class VerifiedScope implements Scope
     {
         $builder->whereNotNull('email_verified_at');
     }
-
 }

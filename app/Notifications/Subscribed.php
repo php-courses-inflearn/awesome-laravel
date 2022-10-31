@@ -2,15 +2,14 @@
 
 namespace App\Notifications;
 
+use App\Mail\Subscribed as SubscribedMailable;
 use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\BroadcastMessage;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\AnonymousNotifiable;
-use App\Mail\Subscribed as SubscribedMailable;
+use Illuminate\Notifications\Messages\BroadcastMessage;
+use Illuminate\Notifications\Notification;
 
 class Subscribed extends Notification implements ShouldQueue
 {
@@ -23,8 +22,7 @@ class Subscribed extends Notification implements ShouldQueue
      */
     public function __construct(
         public readonly User $user, public readonly Blog $blog
-    )
-    {
+    ) {
         //
     }
 

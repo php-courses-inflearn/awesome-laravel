@@ -27,7 +27,8 @@ class LocaleTest extends TestCase
         $request->setLaravelSession(app(Session::class));
         $request->header('Accept-Language', 'en');
 
-        $localeMiddleware->handle($request, function () {});
+        $localeMiddleware->handle($request, function () {
+        });
 
         $this->assertTrue(app()->isLocale('en'));
     }
@@ -47,10 +48,11 @@ class LocaleTest extends TestCase
         $request->setLaravelSession(app(Session::class));
 
         $request->merge([
-            'lang' => 'en'
+            'lang' => 'en',
         ]);
 
-        $localeMiddleware->handle($request, function () {});
+        $localeMiddleware->handle($request, function () {
+        });
 
         $this->assertTrue(app()->isLocale('en'));
     }

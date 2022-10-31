@@ -26,7 +26,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => 'required|email|exists:users|max:255',
-            'password' => ['required', 'max:255', Password::defaults()]
+            'password' => ['required', 'max:255', Password::defaults()],
         ];
     }
 }

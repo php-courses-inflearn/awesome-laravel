@@ -2,13 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\Http\Middleware\Authenticate;
 use App\Models\Blog;
 use App\Models\User;
-use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class BlogTest extends TestCase
@@ -56,7 +53,7 @@ class BlogTest extends TestCase
 
         $data = [
             'name' => $this->faker->userName,
-            'display_name' => $this->faker->words(3, true)
+            'display_name' => $this->faker->words(3, true),
         ];
 
         $this->actingAs($user)
@@ -108,7 +105,7 @@ class BlogTest extends TestCase
 
         $data = [
             'name' => $this->faker->userName,
-            'display_name' => $this->faker->unique()->words(3, true)
+            'display_name' => $this->faker->unique()->words(3, true),
         ];
 
         $this->actingAs($blog->user)
@@ -132,7 +129,7 @@ class BlogTest extends TestCase
             ->assertRedirect();
 
         $this->assertDatabaseMissing('blogs', [
-            'name' => $blog->name
+            'name' => $blog->name,
         ]);
     }
 

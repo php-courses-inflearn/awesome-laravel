@@ -59,7 +59,7 @@ class Published extends Notification implements ShouldQueue
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'post' => $this->post
+            'post' => $this->post,
         ]);
     }
 

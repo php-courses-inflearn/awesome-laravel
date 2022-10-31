@@ -35,7 +35,7 @@ class PaginateServiceProvider extends ServiceProvider
                 'total' => $this->count(),
                 'perPage' => $perPage,
                 'currentPage' => $currentPage,
-                'options' => $options
+                'options' => $options,
             ]);
         });
     }

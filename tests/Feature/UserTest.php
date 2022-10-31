@@ -23,7 +23,7 @@ class UserTest extends TestCase
         $user = $this->user();
 
         $data = [
-            'name' => $this->faker->name
+            'name' => $this->faker->name,
         ];
 
         $this->update($user, $data, 'password');
@@ -39,14 +39,14 @@ class UserTest extends TestCase
         $user = $this->user();
 
         $data = [
-            'name' => $this->faker->name
+            'name' => $this->faker->name,
         ];
 
         $password = $this->faker->password(8);
         $data = $data + [
-                'password' => $password,
-                'password_confirmation' => $password
-            ];
+            'password' => $password,
+            'password_confirmation' => $password,
+        ];
 
         $this->update($user, $data, $password);
     }
@@ -65,16 +65,16 @@ class UserTest extends TestCase
             ->assertRedirect();
 
         $this->assertDatabaseMissing('users', [
-            'email' => $user->email
+            'email' => $user->email,
         ]);
     }
 
     /**
      * 비밀번호 변경
      *
-     * @param Authenticatable $user
-     * @param array $data
-     * @param string $password
+     * @param  Authenticatable  $user
+     * @param  array  $data
+     * @param  string  $password
      * @return void
      */
     private function update(Authenticatable $user, array $data, string $password)
@@ -88,7 +88,7 @@ class UserTest extends TestCase
         );
 
         $this->assertDatabaseHas($user, [
-            'name' => $data['name']
+            'name' => $data['name'],
         ]);
     }
 

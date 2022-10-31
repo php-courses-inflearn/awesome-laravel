@@ -16,7 +16,7 @@ class Blog extends Model
      */
     protected $fillable = [
         'name',
-        'display_name'
+        'display_name',
     ];
 
     /**
@@ -71,5 +71,3 @@ class Blog extends Model
             ->where('commentable_type', Post::class);
     }
 }
-
-

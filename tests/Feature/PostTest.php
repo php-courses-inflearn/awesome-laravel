@@ -68,14 +68,14 @@ class PostTest extends TestCase
         $user->blogs->each(function (Blog $blog) use ($user, $attachment) {
             $data = [
                 'title' => $this->faker->text(50),
-                'content' => $this->faker->text
+                'content' => $this->faker->text,
             ];
 
             $this->actingAs($user)
                 ->post("/blogs/{$blog->name}/posts", $data + [
                     'attachments' => [
-                        $attachment
-                    ]
+                        $attachment,
+                    ],
                 ])
                 ->assertRedirect();
 
@@ -83,7 +83,7 @@ class PostTest extends TestCase
 
             $this->assertDatabaseHas('attachments', [
                 'original_name' => $attachment->getClientOriginalName(),
-                'name' => $attachment->hashName('attachments')
+                'name' => $attachment->hashName('attachments'),
             ]);
 
             Storage::disk('public')->assertExists($attachment->hashName('attachments'));
@@ -132,7 +132,7 @@ class PostTest extends TestCase
 
         $data = [
             'title' => $this->faker->text(50),
-            'content' => $this->faker->text
+            'content' => $this->faker->text,
         ];
 
         $this->actingAs($post->blog->user)
@@ -156,7 +156,7 @@ class PostTest extends TestCase
             ->assertRedirect();
 
         $this->assertDatabaseMissing('posts', [
-            'id' => $post->id
+            'id' => $post->id,
         ]);
     }
 

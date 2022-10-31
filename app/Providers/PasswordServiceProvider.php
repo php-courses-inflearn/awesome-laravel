@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
+use App\Rules\Password as PasswordRule;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
-use App\Rules\Password as PasswordRule;
 
 class PasswordServiceProvider extends ServiceProvider
 {
@@ -26,7 +26,7 @@ class PasswordServiceProvider extends ServiceProvider
     public function boot()
     {
         Password::defaults(function () {
-           $rule = Password::min(8);
+            $rule = Password::min(8);
 
             return $this->app->isProduction()
                 ? $rule->letters()->mixedCase()->numbers()->symbols()->uncompromised()

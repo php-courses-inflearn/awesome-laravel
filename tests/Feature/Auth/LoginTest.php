@@ -34,7 +34,7 @@ class LoginTest extends TestCase
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
         $this->assertAuthenticated();
@@ -53,7 +53,7 @@ class LoginTest extends TestCase
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => $this->faker->password(8)
+            'password' => $this->faker->password(8),
         ]);
 
         $this->assertGuest();
@@ -73,9 +73,9 @@ class LoginTest extends TestCase
 
         $response = $this->postJson('/login', [
             'email' => $user->email,
-            'password' => 'password'
+            'password' => 'password',
         ], [
-            'X-Requested-With' => 'XMLHttpRequest'
+            'X-Requested-With' => 'XMLHttpRequest',
         ]);
 
         $this->assertAuthenticated();

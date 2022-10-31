@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
     /**
      * 사용자 정보 갱신
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateUserRequest $request)
@@ -32,7 +31,7 @@ class UserController extends Controller
     /**
      * 회원탈퇴
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request)

@@ -7,11 +7,7 @@ use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use App\Rules\Password as PasswordRule;
-use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
@@ -28,14 +24,14 @@ class RegisterController extends Controller
     /**
      * 회원가입
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function register(RegisterUserRequest $request)
     {
         $user = User::create(
             $request->only(['name', 'email']) + [
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
             ]
         );
 

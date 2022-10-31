@@ -10,7 +10,7 @@ class TokenController extends Controller
     /**
      * 토큰
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function dashboard(Request $request)
@@ -18,7 +18,7 @@ class TokenController extends Controller
         $user = $request->user();
 
         return view('dashboard.tokens', [
-            'tokens' => $user->tokens
+            'tokens' => $user->tokens,
         ]);
     }
 }

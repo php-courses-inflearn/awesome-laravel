@@ -25,9 +25,9 @@ class PostResource extends JsonResource
                 [
                     'rel' => 'self',
                     'href' => route('posts.show', $this->id),
-                    'method' => 'GET'
-                ]
-            ]
+                    'method' => 'GET',
+                ],
+            ],
         ];
     }
 }
