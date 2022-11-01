@@ -46,7 +46,7 @@ class PasswordResetTest extends TestCase
         ]);
 
         Notification::assertSentTo(
-            [$user], ResetPassword::class
+            $user, ResetPassword::class
         );
 
         $response->assertRedirect();

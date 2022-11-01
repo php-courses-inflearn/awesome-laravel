@@ -24,8 +24,8 @@ class EmailVerificationTest extends TestCase
     {
         $user = $this->user();
 
-        $id = $user->id;
-        $hash = sha1($user->email);
+        $id = $user->getKey();
+        $hash = sha1($user->getEmailForVerification());
 
         $this->actingAs($user)
             ->withoutMiddleware(ValidateSignature::class)
@@ -64,7 +64,7 @@ class EmailVerificationTest extends TestCase
             ->assertRedirect();
 
         Notification::assertSentTo(
-            [$user], VerifyEmail::class);
+            $user, VerifyEmail::class);
     }
 
     /**
