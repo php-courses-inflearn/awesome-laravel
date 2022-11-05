@@ -7,6 +7,9 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * @mixin \Illuminate\Support\Collection
+ */
 class PaginateServiceProvider extends ServiceProvider
 {
     /**

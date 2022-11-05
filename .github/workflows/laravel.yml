@@ -40,5 +40,7 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
-    - name: Pint
+    - name: Execute laravel Pint
       run: vendor/bin/pint --test
+    - name: Execute Larastan
+      run: vendor/bin/phpstan analyse --xdebug
