@@ -5,6 +5,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Response;
 
+// @codeCoverageIgnoreStart
 if (! function_exists('etag')) {
     /**
      * Etag
@@ -38,3 +39,4 @@ if (! function_exists('etag')) {
         return $response->setEtag($etag);
     }
 }
+// @codeCoverageIgnoreEnd
