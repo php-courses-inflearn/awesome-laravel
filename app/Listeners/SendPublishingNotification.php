@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Notification;
 
 class SendPublishingNotification implements ShouldQueue
 {
+    /**
+     * The name of the queue the job should be sent to.
+     *
+     * @var string|null
+     */
     public $queue = 'listeners';
 
     /**
@@ -24,7 +29,7 @@ class SendPublishingNotification implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param  \App\Events\Published  $event
      * @return void
      */
     public function handle(Published $event)

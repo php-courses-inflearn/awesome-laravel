@@ -10,7 +10,7 @@ class LoginController extends Controller
     /**
      * 로그인 폼
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\View\View
      */
     public function showLoginForm()
     {
@@ -20,8 +20,8 @@ class LoginController extends Controller
     /**
      * 로그인
      *
-     * @param  LoginRequest  $request
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @param  \App\Http\Requests\LoginRequest  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function login(LoginRequest $request)
     {

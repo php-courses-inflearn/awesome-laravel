@@ -10,8 +10,8 @@ class CommentController extends Controller
     /**
      * 댓글
      *
-     * @param  Request  $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
      */
     public function dashboard(Request $request)
     {

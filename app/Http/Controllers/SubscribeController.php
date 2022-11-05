@@ -11,8 +11,8 @@ class SubscribeController extends Controller
     /**
      * 구독
      *
-     * @param  Request  $request
-     * @param  Blog  $blog
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\RedirectResponse
      */
     public function subscribe(Request $request, Blog $blog)
@@ -27,10 +27,10 @@ class SubscribeController extends Controller
     }
 
     /**
-     * 구독취소
+     * 구독 취소
      *
-     * @param  Request  $request
-     * @param  Blog  $blog
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\RedirectResponse
      */
     public function unsubscribe(Request $request, Blog $blog)

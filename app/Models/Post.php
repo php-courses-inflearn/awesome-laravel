@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
+/**
+ * @property int $id
+ * @property \Illuminate\Database\Eloquent\Collection $comments
+ * @property int $blog_id
+ * @property Blog $blog
+ * @property \Illuminate\Database\Eloquent\Collection $attachments
+ * @property string $title
+ * @property string $content
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ */
 class Post extends Model
 {
     use HasFactory, Searchable;

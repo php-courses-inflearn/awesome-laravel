@@ -10,8 +10,8 @@ class SubscribeController extends Controller
     /**
      * 내 구독자
      *
-     * @param  Request  $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
      */
     public function subscribers(Request $request)
     {
@@ -25,8 +25,8 @@ class SubscribeController extends Controller
     /**
      * 내가 구독한 블로그
      *
-     * @param  Request  $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
      */
     public function subscriptions(Request $request)
     {

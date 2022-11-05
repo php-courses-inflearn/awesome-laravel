@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
@@ -14,7 +13,7 @@ class RegisterController extends Controller
     /**
      * 회원가입 폼
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\View\View
      */
     public function showRegistrationForm()
     {
@@ -24,7 +23,7 @@ class RegisterController extends Controller
     /**
      * 회원가입
      *
-     * @param  Request  $request
+     * @param  RegisterUserRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function register(RegisterUserRequest $request)

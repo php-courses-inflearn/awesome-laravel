@@ -10,7 +10,7 @@ class BlogController extends Controller
     /**
      * 블로그 수정 폼
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\View\View
      */
     public function dashboard(Request $request)
     {

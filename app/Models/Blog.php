@@ -5,6 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $display_name
+ * @property int $user_id
+ * @property User $user
+ * @property \Illuminate\Database\Eloquent\Collection $subscribers
+ * @property \Illuminate\Database\Eloquent\Collection $posts
+ * @property \Illuminate\Database\Eloquent\Collection $comments
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ */
 class Blog extends Model
 {
     use HasFactory;

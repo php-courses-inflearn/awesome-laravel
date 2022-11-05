@@ -18,10 +18,10 @@ class CommentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 댓글 쓰기
      *
      * @param  \App\Http\Requests\StoreCommentRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreCommentRequest $request, Post $post)
     {
@@ -38,11 +38,11 @@ class CommentController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 댓글 수정
      *
      * @param  \App\Http\Requests\UpdateCommentRequest  $request
      * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
@@ -54,10 +54,10 @@ class CommentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 댓글 삭제
      *
      * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Comment $comment)
     {

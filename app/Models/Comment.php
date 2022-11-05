@@ -6,6 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property int $id
+
+ * @property string $content
+ * @property int $user_id
+ * @property User $user
+ * @property int $commentable_id
+ * @property string $commentable_type
+ * @property Post $commentable
+ * @property int $parent_id
+ * @property Comment $parent
+ * @property \Illuminate\Database\Eloquent\Collection $replies
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Illuminate\Support\Carbon $deleted_at
+ */
 class Comment extends Model
 {
     use HasFactory, SoftDeletes;

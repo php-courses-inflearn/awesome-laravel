@@ -18,9 +18,9 @@ class BlogController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * 블로그 목록
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -30,9 +30,9 @@ class BlogController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 블로그 생성 폼
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -40,9 +40,9 @@ class BlogController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 블로그 생성
      *
-     * @param  StoreBlogRequest  $request
+     * @param  \App\Http\Requests\StoreBlogRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreBlogRequest $request)
@@ -57,10 +57,11 @@ class BlogController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 블로그
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show(Request $request, Blog $blog)
     {
@@ -75,9 +76,9 @@ class BlogController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 블로그 수정 폼
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit(Blog $blog)
     {
@@ -90,10 +91,10 @@ class BlogController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 블로그 수정
      *
-     * @param  UpdateBlogRequest  $request
-     * @param  Blog  $blog
+     * @param  \App\Http\Requests\UpdateBlogRequest  $request
+     * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateBlogRequest $request, Blog $blog)
@@ -106,10 +107,10 @@ class BlogController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 블로그 삭제
      *
      * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Blog $blog)
     {

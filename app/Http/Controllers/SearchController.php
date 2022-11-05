@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
     /**
-     * Handle the incoming request.
+     * 검색
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function __invoke(Request $request)
     {

@@ -11,7 +11,7 @@ class PasswordConfirmController extends Controller
     /**
      * 비밀번호 확인 폼
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\View\View
      */
     public function showPasswordConfirmationForm()
     {
@@ -21,7 +21,7 @@ class PasswordConfirmController extends Controller
     /**
      * 비밀번호 확인
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function confirm(Request $request)

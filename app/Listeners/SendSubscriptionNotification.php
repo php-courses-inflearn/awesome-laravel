@@ -8,6 +8,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendSubscriptionNotification implements ShouldQueue
 {
+    /**
+     * The name of the queue the job should be sent to.
+     *
+     * @var string|null
+     */
     public $queue = 'listeners';
 
     /**
@@ -23,7 +28,7 @@ class SendSubscriptionNotification implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param  \App\Events\Subscribed  $event
      * @return void
      */
     public function handle(Subscribed $event)

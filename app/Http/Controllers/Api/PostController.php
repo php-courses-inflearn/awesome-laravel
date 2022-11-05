@@ -16,6 +16,8 @@ class PostController extends Controller
 {
     /**
      * PostController
+     *
+     * @param  \App\Services\PostService  $postService
      */
     public function __construct(private readonly PostService $postService)
     {
@@ -26,9 +28,9 @@ class PostController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * 글 목록
      *
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\PostCollection
      */
     public function index(Blog $blog)
     {
@@ -42,10 +44,10 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 글 쓰기
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\StorePostRequest  $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function store(StorePostRequest $request, Blog $blog)
     {
@@ -57,10 +59,11 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 글 읽기
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\PostResource
      */
     public function show(Request $request, Post $post)
     {
@@ -73,9 +76,9 @@ class PostController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 글 수정
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdatePostRequest  $request
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
@@ -87,7 +90,7 @@ class PostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 글 삭제
      *
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response

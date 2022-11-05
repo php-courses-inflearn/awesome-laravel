@@ -17,10 +17,11 @@ class AttachmentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 파일첨부
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Post  $post
+     * @return void
      */
     public function store(Request $request, Post $post)
     {
@@ -35,10 +36,10 @@ class AttachmentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 첨부파일 삭제
      *
      * @param  \App\Models\Attachment  $attachment
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Attachment $attachment)
     {

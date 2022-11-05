@@ -40,7 +40,7 @@ class Locale
     /**
      * 로케일
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed|string|null
      */
     private function locale(Request $request)

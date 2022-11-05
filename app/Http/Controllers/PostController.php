@@ -11,7 +11,7 @@ use App\Services\PostService;
 class PostController extends Controller
 {
     /**
-     * PostController
+     * @param  \App\Services\PostService  $postService
      */
     public function __construct(private readonly PostService $postService)
     {
@@ -19,9 +19,9 @@ class PostController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * 글 목록
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index(Blog $blog)
     {
@@ -31,9 +31,9 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 글 쓰기 폼
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create(Blog $blog)
     {
@@ -43,10 +43,10 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 글 쓰기
      *
      * @param  \App\Http\Requests\StorePostRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StorePostRequest $request, Blog $blog)
     {
@@ -56,10 +56,10 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 글 읽기
      *
      * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function show(Post $post)
     {
@@ -73,10 +73,10 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 글 수정 폼
      *
      * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit(Post $post)
     {
@@ -86,11 +86,11 @@ class PostController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 글 수정
      *
      * @param  \App\Http\Requests\UpdatePostRequest  $request
      * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
@@ -103,7 +103,7 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Post $post)
     {

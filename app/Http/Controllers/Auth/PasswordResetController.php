@@ -15,7 +15,7 @@ class PasswordResetController extends Controller
     /**
      * 비밀번호를 찾을 이메일을 입력하는 폼
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\View\View
      */
     public function request()
     {
@@ -41,7 +41,7 @@ class PasswordResetController extends Controller
      * 비밀번호 재설정 폼
      *
      * @param  string  $token
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\View\View
      */
     public function reset(string $token)
     {

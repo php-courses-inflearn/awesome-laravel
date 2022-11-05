@@ -41,7 +41,7 @@ class Subscribed extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @return \App\Mail\Subscribed
      */
     public function toMail($notifiable)
     {

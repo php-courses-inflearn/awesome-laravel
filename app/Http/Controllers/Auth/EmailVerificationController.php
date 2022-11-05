@@ -11,7 +11,7 @@ class EmailVerificationController extends Controller
     /**
      * 이메일 인증
      *
-     * @param  EmailVerificationRequest  $request
+     * @param  \Illuminate\Foundation\Auth\EmailVerificationRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function verify(EmailVerificationRequest $request)
@@ -24,7 +24,7 @@ class EmailVerificationController extends Controller
     /**
      * 이메일이 인증되지 않은 경우
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\View\View
      */
     public function notice()
     {
@@ -34,7 +34,7 @@ class EmailVerificationController extends Controller
     /**
      * 인증 이메일 재전송
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function send(Request $request)
