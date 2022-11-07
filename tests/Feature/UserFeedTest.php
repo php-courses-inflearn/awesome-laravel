@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models;
+namespace Tests\Feature;
 
 use App\Models\Blog;
 use App\Models\Post;
@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+class UserFeedTest extends TestCase
 {
     use RefreshDatabase;
 
