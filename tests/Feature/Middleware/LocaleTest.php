@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Middleware;
+namespace Tests\Feature\Middleware;
 
 use App\Http\Middleware\Locale;
 use Illuminate\Contracts\Session\Session;

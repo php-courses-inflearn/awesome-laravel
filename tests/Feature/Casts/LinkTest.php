@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Casts;
+namespace Tests\Feature\Casts;
 
 use App\Castables\Link;
 use App\Models\Attachment;
@@ -24,7 +24,6 @@ class LinkTest extends TestCase
     {
         $attachment = $this->attachment();
 
-        $this->assertEquals(1, $attachment->external);
         $this->assertInstanceOf(Link::class, $attachment->link);
     }
 
@@ -76,7 +75,7 @@ class LinkTest extends TestCase
     /**
      * Attachment
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\Attachment
      */
     public function attachment(UploadedFile $attachment = null)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Middleware;
+namespace Tests\Feature\Middleware;
 
 use App\Enums\SocialiteProvider;
 use App\Http\Middleware\RequirePassword;
