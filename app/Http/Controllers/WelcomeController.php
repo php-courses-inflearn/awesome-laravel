@@ -15,13 +15,16 @@ class WelcomeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $posts = Post::latest()->limit(20)->get();
-
         $user = $request->user();
 
-        if ($user->subscriptions()->exists()) {
-            $posts = $user->feed(5);
-        }
+        $posts = $user->subscriptions()->exists()
+            ? $user->subscriptions()
+                ->with('posts', fn ($query) => $query->limit(20))
+                ->get()
+                ->flatMap
+                ->posts
+                ->sortByDesc('created_at')
+            : Post::latest()->limit(20)->get();
 
         return view('welcome', [
             'posts' => $posts->paginate(5, $request->page ?? 1),

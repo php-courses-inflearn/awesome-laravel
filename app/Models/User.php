@@ -126,26 +126,4 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->hasMany(Comment::class);
     }
-
-    /**
-     * 피드
-     *
-     * @param  int  $perBlog
-     * @return Collection
-     */
-    public function feed(int $perBlog = 5)
-    {
-        return $this->subscriptions
-            ->reduce(function (Collection $feed, Blog $subscription) use ($perBlog) {
-                $posts = $subscription->posts()
-                    ->latest()
-                    ->limit($perBlog)
-                    ->get();
-
-                return $feed->merge($posts);
-            }, collect())
-            ->sort(function ($a, $b) {
-                return $a['created_at']->lessThan($b['created_at']);
-            });
-    }
 }
