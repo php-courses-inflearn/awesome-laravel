@@ -43,8 +43,6 @@ jobs:
       run: vendor/bin/phpunit --coverage-clover coverage.xml
     - name: Upload coverage reports to Codecov with GitHub Action
       uses: codecov/codecov-action@v3
-      with:
-        files: ./coverage.xml
     - name: Check code style via Laravel Pint
       run: vendor/bin/pint --test
     - name: Execute static code analysis (L5) via Larastan
