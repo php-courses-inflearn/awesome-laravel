@@ -2,12 +2,11 @@
 
 namespace Tests\Feature\Casts;
 
-use App\Castables\Link;
-use App\Models\Attachment;
+use App\Castables\Link as LinkCastable;
+use App\Casts\Link;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -22,25 +21,39 @@ class LinkTest extends TestCase
      */
     public function testLink()
     {
-        $attachment = $this->attachment();
+        $link = new Link();
 
-        $this->assertInstanceOf(Link::class, $attachment->link);
+        $attributes = [
+            'name' => $this->faker->imageUrl,
+        ];
+
+        $linkCastable = $link->get(null, '', null, $attributes);
+
+        $this->assertInstanceOf(LinkCastable::class, $linkCastable);
+        $this->assertEquals($attributes['name'], $linkCastable->path);
     }
 
     /**
-     * Link 캐스트 접근자 테스트 (UploadedFile)
+     * Link 캐스트 접근자 테스트 (FilePath)
      *
      * @return void
      */
-    public function testLinkWithUploadedFile()
+    public function testLinkWithFilePath()
     {
-        Storage::fake('public');
-        $file = UploadedFile::fake()->image('file.jpg');
+        $link = new Link();
 
-        $attachment = $this->attachment($file);
-        $this->assertInstanceOf(Link::class, $attachment->link);
+        $attributes = [
+            'name' => $this->faker->filePath(),
+        ];
 
-        $this->assertEquals('/storage/'.$file->hashName(), $attachment->link->path);
+        $linkCastable = $link->get(null, '', null, $attributes);
+
+        $this->assertEquals(
+            Storage::disk('public')->url($attributes['name']),
+            $linkCastable->path
+        );
+
+        $this->assertInstanceOf(LinkCastable::class, $linkCastable);
     }
 
     /**
@@ -50,13 +63,14 @@ class LinkTest extends TestCase
      */
     public function testLinkSetCastable()
     {
-        $attachment = $this->attachment();
+        $link = new Link();
+        $linkCastable = new LinkCastable(
+            $this->faker->imageUrl
+        );
 
-        $url = $this->faker->imageUrl;
-        $attachment->link = new Link($url);
+        $attributes = $link->set(null, '', $linkCastable, []);
 
-        $this->assertEquals($url, $attachment->link->path);
-        $this->assertInstanceOf(Link::class, $attachment->link);
+        $this->assertEquals($attributes['name'], $linkCastable->path);
     }
 
     /**
@@ -66,28 +80,10 @@ class LinkTest extends TestCase
      */
     public function testLinkSetNull()
     {
-        $attachment = $this->attachment();
+        $link = new Link();
 
         $this->expectException(Exception::class);
-        $attachment->link = null;
-    }
 
-    /**
-     * Attachment
-     *
-     * @return \App\Models\Attachment
-     */
-    public function attachment(UploadedFile $attachment = null)
-    {
-        $factory = Attachment::factory();
-
-        if ($attachment) {
-            $factory = $factory->state([
-                'original_name' => $attachment->getClientOriginalName(),
-                'name' => $attachment->hashName(),
-            ]);
-        }
-
-        return $factory->create();
+        $link->set(null, '', null, []);
     }
 }

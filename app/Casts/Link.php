@@ -20,10 +20,11 @@ class Link implements CastsAttributes
      */
     public function get($model, string $key, $value, array $attributes)
     {
-        $path = $model->external
+        $path = $this->external($attributes['name'])
             ? $attributes['name']
             : Storage::disk('public')->url($attributes['name']);
 
+        //return $value ?? $path;
         return new LinkCastable($path);
     }
 
@@ -42,8 +43,20 @@ class Link implements CastsAttributes
             throw new Exception('The given value is not an Link instance.');
         }
 
+        //return $value;
         return [
             'name' => $value->path,
         ];
+    }
+
+    /**
+     * 파일이 링크인가?
+     *
+     * @param  string  $name
+     * @return false|int
+     */
+    private function external(string $name)
+    {
+        return preg_match('/^https?/', $name);
     }
 }
