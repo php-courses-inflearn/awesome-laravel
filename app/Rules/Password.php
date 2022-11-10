@@ -4,9 +4,6 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-/**
- * @codeCoverageIgnore
- */
 class Password implements Rule
 {
     /**
