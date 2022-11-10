@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Middleware;
+namespace Tests\Feature\Http\Middleware;
 
 use App\Enums\SocialiteProvider;
 use App\Http\Middleware\RequirePassword;
@@ -42,7 +42,7 @@ class RequirePasswordTest extends TestCase
 
         $request = app(Request::class);
         $request->setLaravelSession(app(Session::class));
-        $request->session()->put('Socialite', SocialiteProvider::GITHUB->name);
+        $request->session()->put('Socialite', SocialiteProvider::Github->name);
 
         $response = $requirePasswordMiddleware->handle($request, function () {
         });

@@ -26,6 +26,16 @@ class Provider extends Model
     ];
 
     /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
+
+    /**
      * 사용자
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

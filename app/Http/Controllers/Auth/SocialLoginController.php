@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Enums\SocialiteProvider;
 use App\Http\Controllers\Controller;
+use App\Models\Provider;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
@@ -12,33 +12,30 @@ use Laravel\Socialite\Facades\Socialite;
 class SocialLoginController extends Controller
 {
     /**
-     * @var SocialiteProvider 서비스 제공자
-     */
-    protected SocialiteProvider $provider;
-
-    /**
      * 서비스 제공자 리다이렉트
      *
-     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @param  \App\Models\Provider  $provider
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function redirect()
+    public function create(Provider $provider)
     {
-        return Socialite::driver($this->provider->name)->redirect();
+        return Socialite::driver($provider->name)->redirect();
     }
 
     /**
      * 소셜 로그인
      *
+     * @param  \App\Models\Provider  $provider
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function callback()
+    public function store(Provider $provider)
     {
-        $socialUser = Socialite::driver($this->provider->name)->user();
-        $user = $this->register($socialUser);
+        $socialUser = Socialite::driver($provider->name)->user();
+        $user = $this->register($provider, $socialUser);
 
         auth()->login($user);
 
-        session()->put('Socialite', $this->provider->name);
+        session()->put('Socialite', $provider->name);
 
         return redirect()->intended();
     }
@@ -46,19 +43,20 @@ class SocialLoginController extends Controller
     /**
      * 소셜 사용자 등록
      *
-     * @param  SocialiteUser  $socialUser
-     * @return User
+     * @param  \App\Models\Provider  $provider
+     * @param  \Laravel\Socialite\Contracts\User  $socialUser
+     * @return \App\Models\User
      */
-    protected function register(SocialiteUser $socialUser)
+    private function register(Provider $provider, SocialiteUser $socialUser)
     {
         $user = User::updateOrCreate([
-            'email' => $socialUser->email,
+            'email' => $socialUser->getEmail(),
         ], [
-            'name' => $socialUser->name,
-            'provider_id' => $this->provider->value,
-            'provider_uid' => $socialUser->id,
-            'provider_token' => $socialUser->token,
+            'name' => $socialUser->getName(),
+            'provider_uid' => $socialUser->getId(),
         ]);
+
+        $provider->users()->save($user);
 
         if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\SocialiteProvider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 
@@ -12,9 +13,11 @@ class LoginController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function showLoginForm()
+    public function create()
     {
-        return view('auth.login');
+        return view('auth.login', [
+            'providers' => SocialiteProvider::cases(),
+        ]);
     }
 
     /**
@@ -23,7 +26,7 @@ class LoginController extends Controller
      * @param  \App\Http\Requests\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function login(LoginRequest $request)
+    public function store(LoginRequest $request)
     {
         $credentials = $request->only(['email', 'password']);
 
@@ -34,7 +37,7 @@ class LoginController extends Controller
         }
 
         if ($request->ajax()) {
-            return response()->json('', 200);
+            return response()->json('');
         }
 
         return redirect()->intended();
@@ -45,7 +48,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function logout()
+    public function destroy()
     {
         auth()->logout();
 

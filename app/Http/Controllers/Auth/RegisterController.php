@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\SocialiteProvider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
@@ -15,9 +16,11 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function showRegistrationForm()
+    public function create()
     {
-        return view('auth.register');
+        return view('auth.register', [
+            'providers' => SocialiteProvider::cases(),
+        ]);
     }
 
     /**
@@ -26,7 +29,7 @@ class RegisterController extends Controller
      * @param  RegisterUserRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function register(RegisterUserRequest $request)
+    public function store(RegisterUserRequest $request)
     {
         $user = User::create(
             $request->only(['name', 'email']) + [

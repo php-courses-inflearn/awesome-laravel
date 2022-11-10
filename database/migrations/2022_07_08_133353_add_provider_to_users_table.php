@@ -18,7 +18,6 @@ return new class extends Migration
                 ->nullable()
                 ->constrained();
             $table->string('provider_uid')->nullable();
-            $table->string('provider_token')->nullable();
         });
     }
 
@@ -32,7 +31,6 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeignIdFor(\App\Models\Provider::class);
             $table->dropColumn('provider_uid');
-            $table->dropColumn('provider_token');
         });
     }
 };

@@ -5,8 +5,8 @@ namespace App\Enums;
 /**
  * 소셜 로그인 서비스 제공자 목록
  */
-enum SocialiteProvider: int
+enum SocialiteProvider: string
 {
-    case GITHUB = 1;
+    case Github = 'github';
     //case FACEBOOK = 2;
 }

@@ -13,6 +13,22 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $remember_token
+ * @property string $provider_uid
+ * @property \Illuminate\Support\Carbon $email_verified_at
+ * @property int $provider_id
+ * @property Provider $provider
+ * @property \Illuminate\Database\Eloquent\Collection $blogs
+ * @property \Illuminate\Database\Eloquent\Collection $subscriptions
+ * @property \Illuminate\Database\Eloquent\Collection $comments
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ */
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
     use HasApiTokens, HasFactory, Notifiable, ResettablePassword;
@@ -28,7 +44,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         'password',
         'provider_id',
         'provider_uid',
-        'provider_token',
     ];
 
     /**

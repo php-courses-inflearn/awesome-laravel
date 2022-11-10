@@ -18,7 +18,7 @@ class ProviderSeeder extends Seeder
         $providers = SocialiteProvider::cases();
 
         collect($providers)->each(function ($case) {
-            Provider::create(['name' => $case->name]);
+            Provider::create(['name' => $case->value]);
         });
     }
 }
