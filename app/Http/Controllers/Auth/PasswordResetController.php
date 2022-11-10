@@ -17,7 +17,7 @@ class PasswordResetController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function request()
+    public function create()
     {
         return view('auth.forgot-password');
     }
@@ -28,7 +28,7 @@ class PasswordResetController extends Controller
      * @param  SendResetLinkRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function email(SendResetLinkRequest $request)
+    public function store(SendResetLinkRequest $request)
     {
         $status = Password::sendResetLink($request->only('email'));
 
@@ -43,7 +43,7 @@ class PasswordResetController extends Controller
      * @param  string  $token
      * @return \Illuminate\View\View
      */
-    public function reset(string $token)
+    public function edit(string $token)
     {
         return view('auth.reset-password', [
             'token' => $token,

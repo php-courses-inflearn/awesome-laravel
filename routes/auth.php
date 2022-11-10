@@ -4,21 +4,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(\App\Http\Controllers\Auth\RegisterController::class)->group(function () {
     Route::middleware('guest')->group(function () {
-        Route::get('/register', 'showRegistrationForm')
+        Route::get('/register', 'create')
             ->name('register');
-        Route::post('/register', 'register');
+        Route::post('/register', 'store');
     });
 });
 
 Route::controller(\App\Http\Controllers\Auth\EmailVerificationController::class)->group(function () {
     Route::name('verification.')->prefix('/email')->group(function () {
         Route::middleware('auth')->group(function () {
-            Route::get('/verify', 'notice')
+            Route::get('/verify', 'create')
                 ->name('notice');
-            Route::get('/verify/{id}/{hash}', 'verify')
+            Route::get('/verify/{id}/{hash}', 'update')
                 ->middleware('signed')
                 ->name('verify');
-            Route::post('/verification-notification', 'send')
+            Route::post('/verification-notification', 'store')
                 ->name('send');
         });
     });
@@ -26,30 +26,31 @@ Route::controller(\App\Http\Controllers\Auth\EmailVerificationController::class)
 
 Route::controller(\App\Http\Controllers\Auth\LoginController::class)->group(function () {
     Route::middleware('guest')->group(function () {
-        Route::get('/login', 'showLoginForm')
+        Route::get('/login', 'create')
             ->name('login');
-        Route::post('/login', 'login');
+        Route::post('/login', 'store');
     });
-    Route::post('/logout', 'logout')
+    Route::post('/logout', 'destroy')
         ->name('logout')
         ->middleware('auth');
 });
 
-Route::controller(\App\Http\Controllers\Auth\GithubLoginController::class)->group(function () {
+Route::controller(\App\Http\Controllers\Auth\SocialLoginController::class)->group(function () {
     Route::middleware('guest')->group(function () {
-        Route::get('/login/github', 'redirect')
-            ->name('login.github');
-        Route::get('/login/github/callback', 'callback');
+        Route::get('/login/{provider}', 'create')
+            ->name('login.social');
+        Route::get('/login/{provider}/callback', 'store')
+            ->name('login.social.callback');
     });
 });
 
 Route::controller(\App\Http\Controllers\Auth\PasswordResetController::class)->group(function () {
     Route::middleware('guest')->group(function () {
-        Route::get('/forgot-password', 'request')
+        Route::get('/forgot-password', 'create')
             ->name('password.request');
-        Route::post('/forgot-password', 'email')
+        Route::post('/forgot-password', 'store')
             ->name('password.email');
-        Route::get('/reset-password/{token}', 'reset')
+        Route::get('/reset-password/{token}', 'edit')
             ->name('password.reset');
         Route::post('/reset-password', 'update')
             ->name('password.update');
@@ -58,9 +59,9 @@ Route::controller(\App\Http\Controllers\Auth\PasswordResetController::class)->gr
 
 Route::controller(\App\Http\Controllers\Auth\PasswordConfirmController::class)->group(function () {
     Route::middleware('auth')->group(function () {
-        Route::get('/confirm-password', 'showPasswordConfirmationForm')
+        Route::get('/confirm-password', 'create')
             ->name('password.confirm');
-        Route::post('/confirm-password', 'confirm');
+        Route::post('/confirm-password', 'store');
     });
 });
 

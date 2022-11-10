@@ -9,24 +9,11 @@ use Illuminate\Http\Request;
 class EmailVerificationController extends Controller
 {
     /**
-     * 이메일 인증
-     *
-     * @param  \Illuminate\Foundation\Auth\EmailVerificationRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function verify(EmailVerificationRequest $request)
-    {
-        $request->fulfill();
-
-        return redirect()->to('/');
-    }
-
-    /**
      * 이메일이 인증되지 않은 경우
      *
      * @return \Illuminate\View\View
      */
-    public function notice()
+    public function create()
     {
         return view('auth.verify-email');
     }
@@ -37,12 +24,25 @@ class EmailVerificationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function send(Request $request)
+    public function store(Request $request)
     {
         $user = $request->user();
 
         $user->sendEmailVerificationNotification();
 
         return back();
+    }
+
+    /**
+     * 이메일 인증
+     *
+     * @param  \Illuminate\Foundation\Auth\EmailVerificationRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(EmailVerificationRequest $request)
+    {
+        $request->fulfill();
+
+        return redirect()->to('/');
     }
 }

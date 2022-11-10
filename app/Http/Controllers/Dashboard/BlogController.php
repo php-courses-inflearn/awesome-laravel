@@ -12,7 +12,7 @@ class BlogController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function dashboard(Request $request)
+    public function index(Request $request)
     {
         $user = $request->user();
 

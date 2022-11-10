@@ -13,7 +13,7 @@ class PasswordConfirmController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function showPasswordConfirmationForm()
+    public function create()
     {
         return view('auth.confirm-password');
     }
@@ -24,7 +24,7 @@ class PasswordConfirmController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function confirm(Request $request)
+    public function store(Request $request)
     {
         $user = $request->user();
 

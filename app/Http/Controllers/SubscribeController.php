@@ -15,7 +15,7 @@ class SubscribeController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function subscribe(Request $request, Blog $blog)
+    public function store(Request $request, Blog $blog)
     {
         $user = $request->user();
 
@@ -33,7 +33,7 @@ class SubscribeController extends Controller
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function unsubscribe(Request $request, Blog $blog)
+    public function destroy(Request $request, Blog $blog)
     {
         $user = $request->user();
 

@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class SubscribeControllerTest extends TestCase
+class SubscriberControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -25,22 +25,6 @@ class SubscribeControllerTest extends TestCase
             ->get(route('dashboard.subscribers'))
             ->assertOk()
             ->assertViewIs('dashboard.subscribers');
-    }
-
-    /**
-     * 내가 구독한 블로그
-     *
-     * @return void
-     */
-    public function testSubscriptions()
-    {
-        $user = $this->user();
-
-        $this->actingAs($user)
-            ->withoutMiddleware(RequirePassword::class)
-            ->get(route('dashboard.subscriptions'))
-            ->assertOk()
-            ->assertViewIs('dashboard.subscriptions');
     }
 
     /**

@@ -28,9 +28,9 @@ Route::controller(\App\Http\Controllers\UserController::class)->group(function (
 Route::resource('blogs', \App\Http\Controllers\BlogController::class);
 
 Route::controller(\App\Http\Controllers\SubscribeController::class)->group(function () {
-    Route::post('subscribe/{blog}', 'subscribe')
+    Route::post('subscribe/{blog}', 'store')
         ->name('subscribe');
-    Route::delete('subscribe/{blog}', 'unsubscribe')
+    Route::delete('subscribe/{blog}', 'destroy')
         ->name('unsubscribe');
 });
 
