@@ -1,8 +1,16 @@
 # 어썸 라라벨
 
-**[인프런] 어썸 라라벨** 과 서적 **<어썸 라라벨>** 의 예제코드를 담고 있습니다.
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+
+<p align="center">
+<img src="https://github.com/php-courses-inflearn/laravel/actions/workflows/laravel.yml/badge.svg" alt="Build Status">
+<img src="https://img.shields.io/badge/laravel%2Fframework-%5E9.19-red?&logo=laravel" alt="Laravel Version">
+<img src="https://img.shields.io/badge/php-%5E8.1-blue?logo=php" alt="PHP Version">
+</p>
 
 ## 목차
+
+**[인프런] 어썸 라라벨** 과 서적 **<어썸 라라벨>** 의 예제코드를 담고 있습니다.
 
 아래의 목차는 서적 <어썸 라라벨> 를 기반으로 하고 있으며, [인프런] 어썸 라라벨 강의의 커리큘럼도 이에 포함됩니다.
 
