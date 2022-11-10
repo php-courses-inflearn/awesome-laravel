@@ -5,9 +5,6 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 
-/**
- * @codeCoverageIgnore
- */
 class HttpClientServiceProvider extends ServiceProvider
 {
     /**
