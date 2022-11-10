@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Attachment;
 use App\Models\Blog;
@@ -11,7 +11,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class AttachmentTest extends TestCase
+class AttachmentControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -29,19 +29,28 @@ class AttachmentTest extends TestCase
         $post = $this->article();
 
         $this->actingAs($post->blog->user)
-            ->post("/posts/{$post->id}/attachments", [
-                'attachments' => [
-                    $attachment,
-                ],
-            ])
+            ->post(
+                route('posts.attachments.store', [
+                    'post' => $post->id,
+                ]),
+                [
+                    'attachments' => [
+                        $attachment,
+                    ],
+                ]
+            )
             ->assertSuccessful();
+
+        $this->assertCount(1, $post->attachments);
 
         $this->assertDatabaseHas('attachments', [
             'original_name' => $attachment->getClientOriginalName(),
             'name' => $attachment->hashName('attachments'),
         ]);
 
-        Storage::disk('public')->assertExists($attachment->hashName('attachments'));
+        Storage::disk('public')->assertExists(
+            $attachment->hashName('attachments')
+        );
     }
 
     /**
@@ -59,7 +68,9 @@ class AttachmentTest extends TestCase
 
         foreach ($post->attachments as $attachment) {
             $this->actingAs($post->blog->user)
-                ->delete("/attachments/{$attachment->id}")
+                ->delete(route('attachments.destroy', [
+                    'attachment' => $attachment->id,
+                ]))
                 ->assertRedirect();
 
             $this->assertDatabaseMissing('attachments', [
@@ -71,13 +82,15 @@ class AttachmentTest extends TestCase
     /**
      * Article
      *
-     * @param  UploadedFile  $hasAttachment
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
+     * @param  \Illuminate\Http\UploadedFile|null  $attachment
+     * @return Post
      */
     private function article(UploadedFile $attachment = null)
     {
         $factory = Post::factory()
-            ->for(Blog::factory()->forUser());
+            ->for(
+                Blog::factory()->forUser()
+            );
 
         if ($attachment) {
             $factory = $factory->has(

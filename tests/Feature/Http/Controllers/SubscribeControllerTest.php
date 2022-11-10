@@ -1,20 +1,16 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Events\Subscribed;
-use App\Mail\Subscribed as SubscribedMailable;
 use App\Models\Blog;
 use App\Models\User;
-use App\Notifications\Subscribed as SubscribedNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-class SubscribeTest extends TestCase
+class SubscribeControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -23,7 +19,7 @@ class SubscribeTest extends TestCase
      *
      * @return void
      */
-    public function testSubscribe()
+    public function testStore()
     {
         //Mail::fake();
         //Notification::fake();
@@ -33,8 +29,13 @@ class SubscribeTest extends TestCase
         $blog = $this->blog();
 
         $this->actingAs($user)
-            ->post("/subscribe/{$blog->name}")
+            ->post(route('subscribe', [
+                'blog' => $blog->name,
+            ]))
             ->assertRedirect();
+
+        $this->assertCount(1, $user->subscriptions);
+        $this->assertCount(1, $blog->subscribers);
 
         $this->assertDatabaseHas('blog_user', [
             'user_id' => $user->id,
@@ -51,13 +52,15 @@ class SubscribeTest extends TestCase
      *
      * @return void
      */
-    public function testUnsubscribe()
+    public function testDestroy()
     {
         $user = $this->user();
         $blog = $this->blog($user);
 
         $this->actingAs($user)
-            ->delete("/subscribe/{$blog->name}")
+            ->delete(route('unsubscribe', [
+                'blog' => $blog->name,
+            ]))
             ->assertRedirect();
 
         $this->assertDatabaseMissing('blog_user', [
@@ -69,7 +72,7 @@ class SubscribeTest extends TestCase
     /**
      * User
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\User
      */
     private function user()
     {
@@ -81,8 +84,8 @@ class SubscribeTest extends TestCase
     /**
      * Blog
      *
-     * @param  User|Collection|null  $subscribers
-     * @return mixed
+     * @param  \App\Models\User|\Illuminate\Support\Collection|null  $subscribers
+     * @return \App\Models\Blog
      */
     private function blog(User|Collection $subscribers = null)
     {
@@ -90,7 +93,8 @@ class SubscribeTest extends TestCase
 
         if ($subscribers) {
             $factory = $factory->hasAttached(
-                factory: $subscribers, relationship: 'subscribers'
+                factory: $subscribers,
+                relationship: 'subscribers'
             );
         }
 

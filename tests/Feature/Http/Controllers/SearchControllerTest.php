@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Post;
@@ -8,12 +8,12 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class SearchTest extends TestCase
+class SearchControllerTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
-     * A basic feature test example.
+     * 검색 테스트
      *
      * @return void
      */
@@ -25,21 +25,25 @@ class SearchTest extends TestCase
         $query = $post->title;
 
         $this->actingAs($user)
-            ->get("/search?query={$query}")
+            ->get(route('search', [
+                'query' => $query,
+            ]))
             ->assertOk()
             ->assertViewIs('search')
-            ->assertSeeText($post->title);
+            ->assertSeeText($query);
     }
 
     /**
      * Article
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\Post
      */
     private function article()
     {
         $factory = Post::factory()
-            ->for(Blog::factory()->forUser());
+            ->for(
+                Blog::factory()->forUser()
+            );
 
         return $factory->create();
     }
@@ -47,7 +51,7 @@ class SearchTest extends TestCase
     /**
      * User
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\User
      */
     private function user()
     {

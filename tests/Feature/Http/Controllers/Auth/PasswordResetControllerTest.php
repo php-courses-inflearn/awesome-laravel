@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
-class PasswordResetTest extends TestCase
+class PasswordResetControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -23,9 +23,9 @@ class PasswordResetTest extends TestCase
      *
      * @return void
      */
-    public function testRequest()
+    public function testCreate()
     {
-        $this->get('/forgot-password')
+        $this->get(route('password.request'))
             ->assertOk()
             ->assertViewIs('auth.forgot-password');
     }
@@ -35,13 +35,13 @@ class PasswordResetTest extends TestCase
      *
      * @return void
      */
-    public function testEmail()
+    public function testStore()
     {
         Notification::fake();
 
         $user = $this->user();
 
-        $response = $this->post('/forgot-password', [
+        $response = $this->post(route('password.email'), [
             'email' => $user->email,
         ]);
 
@@ -58,11 +58,11 @@ class PasswordResetTest extends TestCase
      *
      * @return void
      */
-    public function testEmailFailed()
+    public function testStoreFailed()
     {
         Mail::fake();
 
-        $response = $this->post('/forgot-password', [
+        $response = $this->post(route('password.request'), [
             'email' => $this->faker->safeEmail,
         ]);
 
@@ -75,19 +75,19 @@ class PasswordResetTest extends TestCase
     /**
      * 비밀번호 재설정 폼 테스트
      */
-    public function testReset()
+    public function testEdit()
     {
         $token = Str::random(32);
 
-        $this->get("/reset-password/{$token}")
-            ->assertOk()
-            ->assertViewIs('auth.reset-password');
+        $this->get(route('password.reset', [
+            'token' => $token,
+        ]))
+        ->assertOk()
+        ->assertViewIs('auth.reset-password');
     }
 
     /**
      * 비밀번호 재설정 테스트
-     *
-     * @depends testEmail
      */
     public function testUpdate()
     {
@@ -97,7 +97,7 @@ class PasswordResetTest extends TestCase
 
         $token = Password::createToken($user);
 
-        $response = $this->post('/reset-password', [
+        $response = $this->post(route('password.update'), [
             'email' => $user->email,
             'password' => 'password',
             'password_confirmation' => 'password',
@@ -118,7 +118,7 @@ class PasswordResetTest extends TestCase
     {
         Event::fake();
 
-        $response = $this->post('/reset-password', [
+        $response = $this->post(route('password.update'), [
             'email' => $this->faker->safeEmail,
             'password' => 'password',
             'password_confirmation' => 'password',
@@ -133,7 +133,7 @@ class PasswordResetTest extends TestCase
     /**
      * User
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\User
      */
     private function user()
     {

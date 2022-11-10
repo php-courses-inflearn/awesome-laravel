@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class LoginTest extends TestCase
+class LoginControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -16,9 +16,9 @@ class LoginTest extends TestCase
      *
      * @return void
      */
-    public function testShowLoginForm()
+    public function testCreate()
     {
-        $this->get('/login')
+        $this->get(route('login'))
             ->assertOk()
             ->assertViewIs('auth.login');
     }
@@ -28,11 +28,11 @@ class LoginTest extends TestCase
      *
      * @return void
      */
-    public function testLogin()
+    public function testStore()
     {
         $user = $this->user();
 
-        $response = $this->post('/login', [
+        $response = $this->post(route('login'), [
             'email' => $user->email,
             'password' => 'password',
         ]);
@@ -47,11 +47,11 @@ class LoginTest extends TestCase
      *
      * @return void
      */
-    public function testLoginFailed()
+    public function testStoreFailed()
     {
         $user = $this->user();
 
-        $response = $this->post('/login', [
+        $response = $this->post(route('login'), [
             'email' => $user->email,
             'password' => $this->faker->password(8),
         ]);
@@ -67,11 +67,11 @@ class LoginTest extends TestCase
      *
      * @return void
      */
-    public function testLoginWithAjax()
+    public function testStoreWithAjax()
     {
         $user = $this->user();
 
-        $response = $this->postJson('/login', [
+        $response = $this->postJson(route('login'), [
             'email' => $user->email,
             'password' => 'password',
         ], [
@@ -88,12 +88,12 @@ class LoginTest extends TestCase
      *
      * @return void
      */
-    public function testLogout()
+    public function testDestroy()
     {
         $user = $this->user();
 
         $this->actingAs($user)
-            ->post('/logout')
+            ->post(route('logout'))
             ->assertRedirect();
 
         $this->assertGuest();
@@ -102,7 +102,7 @@ class LoginTest extends TestCase
     /**
      * User
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\User
      */
     private function user()
     {

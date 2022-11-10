@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class PasswordConfirmTest extends TestCase
+class PasswordConfirmControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -16,12 +16,12 @@ class PasswordConfirmTest extends TestCase
      *
      * @return void
      */
-    public function testShowPasswordConfirmationForm()
+    public function testCreate()
     {
         $user = $this->user();
 
         $this->actingAs($user)
-            ->get('/confirm-password')
+            ->get(route('password.confirm'))
             ->assertOk()
             ->assertViewIs('auth.confirm-password');
     }
@@ -29,12 +29,12 @@ class PasswordConfirmTest extends TestCase
     /**
      * 비밀번호 확인 테스트
      */
-    public function testConfirm()
+    public function testStore()
     {
         $user = $this->user();
 
         $response = $this->actingAs($user)
-            ->post('/confirm-password', [
+            ->post(route('password.confirm'), [
                 'password' => 'password',
             ]);
 
@@ -51,7 +51,7 @@ class PasswordConfirmTest extends TestCase
         $user = $this->user();
 
         $response = $this->actingAs($user)
-            ->post('/confirm-password', [
+            ->post(route('password.confirm'), [
                 'password' => $this->faker->password(8),
             ]);
 
@@ -62,7 +62,7 @@ class PasswordConfirmTest extends TestCase
     /**
      * User
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\User
      */
     private function user()
     {

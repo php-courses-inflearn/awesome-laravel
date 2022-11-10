@@ -1,36 +1,35 @@
 <?php
 
-namespace Dashboard;
+namespace Tests\Feature\Http\Controllers\Dashboard;
 
 use App\Http\Middleware\RequirePassword;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+class TokenControllerTest extends TestCase
 {
     use RefreshDatabase;
 
     /**
-     * 사용자 정보 폼 테스트
+     * 토큰 대시보드 테스트
      *
      * @return void
      */
-    public function testDashboard()
+    public function testIndex()
     {
         $user = $this->user();
 
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard')
-            ->assertOk()
-            ->assertViewIs('dashboard.user');
+            ->get(route('dashboard.tokens'))
+            ->assertViewIs('dashboard.tokens');
     }
 
     /**
      * User
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\User
      */
     private function user()
     {

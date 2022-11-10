@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\User;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class BlogTest extends TestCase
+class BlogControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -22,7 +22,7 @@ class BlogTest extends TestCase
         $user = $this->user();
 
         $this->actingAs($user)
-            ->get('/blogs')
+            ->get(route('blogs.index'))
             ->assertOk()
             ->assertViewIs('blogs.index');
     }
@@ -37,7 +37,7 @@ class BlogTest extends TestCase
         $user = $this->user();
 
         $this->actingAs($user)
-            ->get('/blogs/create')
+            ->get(route('blogs.create'))
             ->assertOk()
             ->assertViewIs('blogs.create');
     }
@@ -57,9 +57,10 @@ class BlogTest extends TestCase
         ];
 
         $this->actingAs($user)
-            ->post('/blogs', $data)
+            ->post(route('blogs.store'), $data)
             ->assertRedirect();
 
+        $this->assertCount(1, $user->blogs);
         $this->assertDatabaseHas('blogs', $data);
     }
 
@@ -74,7 +75,9 @@ class BlogTest extends TestCase
         $blog = $this->blog();
 
         $this->actingAs($user)
-            ->get("/blogs/{$blog->name}")
+            ->get(route('blogs.show', [
+                'blog' => $blog->name,
+            ]))
             ->assertOk()
             ->assertViewIs('blogs.show');
     }
@@ -89,7 +92,9 @@ class BlogTest extends TestCase
         $blog = $this->blog();
 
         $this->actingAs($blog->user)
-            ->get("/blogs/{$blog->name}/edit")
+            ->get(route('blogs.edit', [
+                'blog' => $blog->name,
+            ]))
             ->assertOk()
             ->assertViewIs('blogs.edit');
     }
@@ -109,7 +114,9 @@ class BlogTest extends TestCase
         ];
 
         $this->actingAs($blog->user)
-            ->put("/blogs/{$blog->name}", $data)
+            ->put(route('blogs.update', [
+                'blog' => $blog->name,
+            ]), $data)
             ->assertRedirect();
 
         $this->assertDatabaseHas('blogs', $data);
@@ -125,7 +132,9 @@ class BlogTest extends TestCase
         $blog = $this->blog();
 
         $this->actingAs($blog->user)
-            ->delete("/blogs/{$blog->name}")
+            ->delete(route('blogs.destroy', [
+                'blog' => $blog->name,
+            ]))
             ->assertRedirect();
 
         $this->assertDatabaseMissing('blogs', [
@@ -136,7 +145,7 @@ class BlogTest extends TestCase
     /**
      * User
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\User
      */
     private function user()
     {
@@ -148,7 +157,7 @@ class BlogTest extends TestCase
     /**
      * Blog
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\Blog
      */
     private function blog()
     {

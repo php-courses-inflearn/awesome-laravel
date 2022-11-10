@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Enums\TokenAbility;
 use App\Models\User;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class TokenTest extends TestCase
+class TokenControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -22,7 +22,7 @@ class TokenTest extends TestCase
         $user = $this->user();
 
         $this->actingAs($user)
-            ->get('/tokens/create')
+            ->get(route('tokens.create'))
             ->assertOk()
             ->assertViewIs('tokens.create');
     }
@@ -43,7 +43,7 @@ class TokenTest extends TestCase
         $name = $this->faker->word;
 
         $this->actingAs($user)
-            ->post('/tokens', [
+            ->post(route('tokens.store'), [
                 'name' => $name,
                 'abilities' => $abilities,
             ])
@@ -70,7 +70,9 @@ class TokenTest extends TestCase
         $token = $user->tokens()->first();
 
         $this->actingAs($user)
-            ->delete("/tokens/{$token->id}")
+            ->delete(route('tokens.destroy', [
+                'token' => $token->id,
+            ]))
             ->assertRedirect();
 
         $this->assertDatabaseMissing('personal_access_tokens', [
@@ -81,7 +83,7 @@ class TokenTest extends TestCase
     /**
      * User
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\User
      */
     private function user()
     {

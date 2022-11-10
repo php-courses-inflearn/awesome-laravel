@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Http\Middleware\Authenticate;
 use App\Models\User;
@@ -11,39 +11,19 @@ use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-class EmailVerificationTest extends TestCase
+class EmailVerificationControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
-
-    /**
-     * 이메일 인증 테스트
-     *
-     * @return void
-     */
-    public function testVerify()
-    {
-        $user = $this->user();
-
-        $id = $user->getKey();
-        $hash = sha1($user->getEmailForVerification());
-
-        $this->actingAs($user)
-            ->withoutMiddleware(ValidateSignature::class)
-            ->get("/email/verify/{$id}/{$hash}")
-            ->assertRedirect();
-
-        $this->assertTrue($user->hasVerifiedEmail());
-    }
 
     /**
      * 이메일이 인증되지 않은 경우 테스트
      *
      * @return void
      */
-    public function testNotice()
+    public function testCreate()
     {
         $this->withoutMiddleware(Authenticate::class)
-            ->get('/email/verify')
+            ->get(route('verification.notice'))
             ->assertOk()
             ->assertViewIs('auth.verify-email');
     }
@@ -53,14 +33,14 @@ class EmailVerificationTest extends TestCase
      *
      * @return void
      */
-    public function testSend()
+    public function testStore()
     {
         Notification::fake();
 
         $user = $this->user();
 
         $this->actingAs($user)
-            ->post('/email/verification-notification')
+            ->post(route('verification.send'))
             ->assertRedirect();
 
         Notification::assertSentTo(
@@ -68,9 +48,29 @@ class EmailVerificationTest extends TestCase
     }
 
     /**
+     * 이메일 인증 테스트
+     *
+     * @return void
+     */
+    public function testUpdate()
+    {
+        $user = $this->user();
+
+        $this->actingAs($user)
+            ->withoutMiddleware(ValidateSignature::class)
+            ->get(route('verification.verify', [
+                'id' => $user->getKey(),
+                'hash' => sha1($user->getEmailForVerification()),
+            ]))
+            ->assertRedirect();
+
+        $this->assertTrue($user->hasVerifiedEmail());
+    }
+
+    /**
      * User
      *
-     * @return mixed
+     * @return \App\Models\User
      */
     private function user()
     {

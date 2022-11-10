@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature\Http\Controllers\Auth;
 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
-class RegisterTest extends TestCase
+class RegisterControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -17,9 +17,9 @@ class RegisterTest extends TestCase
      *
      * @return void
      */
-    public function testShowRegistrationForm()
+    public function testCreate()
     {
-        $this->get('/register')
+        $this->get(route('register'))
             ->assertOk()
             ->assertViewIs('auth.register');
     }
@@ -29,13 +29,13 @@ class RegisterTest extends TestCase
      *
      * @return void
      */
-    public function testRegister()
+    public function testStore()
     {
         Event::fake();
 
         $email = $this->faker->safeEmail;
 
-        $response = $this->post('/register', [
+        $response = $this->post(route('register'), [
             'name' => $this->faker->name,
             'email' => $email,
             'password' => 'password',

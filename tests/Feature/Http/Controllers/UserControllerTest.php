@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+class UserControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -37,13 +37,10 @@ class UserTest extends TestCase
     public function testUpdateWithPassword()
     {
         $user = $this->user();
+        $password = $this->faker->password(8);
 
         $data = [
             'name' => $this->faker->name,
-        ];
-
-        $password = $this->faker->password(8);
-        $data = $data + [
             'password' => $password,
             'password_confirmation' => $password,
         ];
@@ -61,7 +58,7 @@ class UserTest extends TestCase
         $user = $this->user();
 
         $this->actingAs($user)
-            ->delete('/user')
+            ->delete(route('user.destroy'))
             ->assertRedirect();
 
         $this->assertDatabaseMissing('users', [
@@ -70,9 +67,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * 비밀번호 변경
-     *
-     * @param  Authenticatable  $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  array  $data
      * @param  string  $password
      * @return void
@@ -80,7 +75,7 @@ class UserTest extends TestCase
     private function update(Authenticatable $user, array $data, string $password)
     {
         $this->actingAs($user)
-            ->put('/user', $data)
+            ->put(route('user.update'), $data)
             ->assertRedirect();
 
         $this->assertTrue(
@@ -95,7 +90,7 @@ class UserTest extends TestCase
     /**
      * User
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\User
      */
     private function user()
     {

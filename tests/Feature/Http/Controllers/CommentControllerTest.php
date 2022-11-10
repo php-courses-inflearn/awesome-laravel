@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Comment;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class CommentTest extends TestCase
+class CommentControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -29,11 +29,18 @@ class CommentTest extends TestCase
         ];
 
         $this->actingAs($user)
-            ->post("/posts/{$post->id}/comments", $data)
+            ->post(route('posts.comments.store', [
+                'post' => $post->id,
+            ]), $data)
             ->assertRedirect();
 
-        $this->assertDatabaseHas('comments', $data + [
-            'commentable_type' => Post::class, 'commentable_id' => $post->id,
+        $this->assertCount(1, $post->comments);
+        $this->assertCount(1, $user->comments);
+
+        $this->assertDatabaseHas('comments', [
+            ...$data,
+            'commentable_type' => Post::class,
+            'commentable_id' => $post->id,
         ]);
     }
 
@@ -48,16 +55,28 @@ class CommentTest extends TestCase
         $user = $this->user();
 
         $data = [
-            'parent_id' => $comment->id,
             'content' => $this->faker->text,
         ];
 
         $this->actingAs($user)
-            ->post("/posts/{$comment->commentable->id}/comments", $data)
+            ->post(
+                route('posts.comments.store', [
+                    'post' => $comment->commentable->id,
+                ]),
+                [
+                    ...$data,
+                    'parent_id' => $comment->id,
+                ]
+            )
             ->assertRedirect();
 
-        $this->assertDatabaseHas('comments', $data + [
-            'commentable_type' => Post::class, 'commentable_id' => $comment->commentable->id,
+        $this->assertCount(1, $comment->replies);
+
+        $this->assertDatabaseHas('comments', [
+            ...$data,
+            'parent_id' => $comment->id,
+            'commentable_type' => Post::class,
+            'commentable_id' => $comment->commentable->id,
         ]);
     }
 
@@ -75,10 +94,13 @@ class CommentTest extends TestCase
         ];
 
         $this->actingAs($comment->user)
-            ->put("/comments/{$comment->id}", $data)
+            ->put(route('comments.update', [
+                'comment' => $comment->id,
+            ]), $data)
             ->assertRedirect();
 
-        $this->assertDatabaseHas('comments', $data + [
+        $this->assertDatabaseHas('comments', [
+            ...$data,
             'id' => $comment->id,
             'commentable_type' => Post::class,
             'commentable_id' => $comment->commentable->id,
@@ -95,7 +117,9 @@ class CommentTest extends TestCase
         $comment = $this->comment();
 
         $this->actingAs($comment->user)
-            ->delete("/comments/{$comment->id}")
+            ->delete(route('comments.destroy', [
+                'comment' => $comment->id,
+            ]))
             ->assertRedirect();
 
         $this->assertSoftDeleted('comments', [
@@ -106,14 +130,16 @@ class CommentTest extends TestCase
     }
 
     /**
-     * User
+     * Article
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\Post
      */
     private function article()
     {
         $factory = Post::factory()
-            ->for(Blog::factory()->forUser());
+            ->for(
+                Blog::factory()->forUser()
+            );
 
         return $factory->create();
     }
@@ -121,7 +147,7 @@ class CommentTest extends TestCase
     /**
      * User
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\User
      */
     private function user()
     {
@@ -133,7 +159,7 @@ class CommentTest extends TestCase
     /**
      * Comment
      *
-     * @return mixed
+     * @return \App\Models\Comment
      */
     private function comment()
     {

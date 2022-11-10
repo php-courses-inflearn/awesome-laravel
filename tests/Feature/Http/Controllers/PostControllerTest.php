@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Events\Published;
 use App\Models\Blog;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class PostTest extends TestCase
+class PostControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -26,7 +26,9 @@ class PostTest extends TestCase
         $blog = $this->blog();
 
         $this->actingAs($blog->user)
-            ->get("/blogs/{$blog->name}/posts")
+            ->get(route('blogs.posts.index', [
+                'blog' => $blog->name,
+            ]))
             ->assertOk()
             ->assertViewIs('blogs.posts.index');
     }
@@ -41,7 +43,9 @@ class PostTest extends TestCase
         $blog = $this->blog();
 
         $this->actingAs($blog->user)
-            ->get("/blogs/{$blog->name}/posts/create")
+            ->get(route('blogs.posts.create', [
+                'blog' => $blog->name,
+            ]))
             ->assertOk()
             ->assertViewIs('blogs.posts.create');
     }
@@ -54,6 +58,7 @@ class PostTest extends TestCase
     public function testStore()
     {
         Event::fake();
+
         Storage::fake('public');
 
         $attachment = UploadedFile::fake()->image('file.jpg');
@@ -66,13 +71,20 @@ class PostTest extends TestCase
         ];
 
         $this->actingAs($blog->user)
-            ->post("/blogs/{$blog->name}/posts", $data + [
-                'attachments' => [
-                    $attachment,
-                ],
-            ])
+            ->post(
+                route('blogs.posts.store', [
+                    'blog' => $blog->name,
+                ]),
+                [
+                    ...$data,
+                    'attachments' => [
+                        $attachment,
+                    ],
+                ]
+            )
             ->assertRedirect();
 
+        $this->assertCount(1, $blog->posts);
         $this->assertDatabaseHas('posts', $data);
 
         $this->assertDatabaseHas('attachments', [
@@ -80,7 +92,9 @@ class PostTest extends TestCase
             'name' => $attachment->hashName('attachments'),
         ]);
 
-        Storage::disk('public')->assertExists($attachment->hashName('attachments'));
+        Storage::disk('public')->assertExists(
+            $attachment->hashName('attachments')
+        );
 
         Event::assertDispatched(Published::class);
     }
@@ -95,7 +109,9 @@ class PostTest extends TestCase
         $post = $this->article();
 
         $this->actingAs($post->blog->user)
-            ->get("/posts/{$post->id}")
+            ->get(route('posts.show', [
+                'post' => $post->id,
+            ]))
             ->assertOk()
             ->assertViewIs('blogs.posts.show');
     }
@@ -110,7 +126,9 @@ class PostTest extends TestCase
         $post = $this->article();
 
         $this->actingAs($post->blog->user)
-            ->get("/posts/{$post->id}/edit")
+            ->get(route('posts.edit', [
+                'post' => $post->id,
+            ]))
             ->assertViewIs('blogs.posts.edit');
     }
 
@@ -129,7 +147,9 @@ class PostTest extends TestCase
         ];
 
         $this->actingAs($post->blog->user)
-            ->put("/posts/{$post->id}", $data)
+            ->put(route('posts.update', [
+                'post' => $post->id,
+            ]), $data)
             ->assertRedirect();
 
         $this->assertDatabaseHas('posts', $data);
@@ -145,7 +165,9 @@ class PostTest extends TestCase
         $post = $this->article();
 
         $this->actingAs($post->blog->user)
-            ->delete("/posts/{$post->id}")
+            ->delete(route('posts.destroy', [
+                'post' => $post->id,
+            ]))
             ->assertRedirect();
 
         $this->assertDatabaseMissing('posts', [
@@ -156,11 +178,13 @@ class PostTest extends TestCase
     /**
      * Blog
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\Blog
      */
     private function blog()
     {
-        $factory = Blog::factory()->forUser();
+        $factory = Blog::factory()
+            ->forUser()
+            ->hasSubscribers();
 
         return $factory->create();
     }
@@ -168,12 +192,14 @@ class PostTest extends TestCase
     /**
      * Article
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\Post
      */
     private function article()
     {
         $factory = Post::factory()
-            ->for(Blog::factory()->forUser());
+            ->for(
+                Blog::factory()->forUser()
+            );
 
         return $factory->create();
     }

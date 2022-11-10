@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Feature\Dashboard;
+namespace Tests\Feature\Http\Controllers\Dashboard;
 
 use App\Http\Middleware\RequirePassword;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class SubscribeTest extends TestCase
+class SubscribeControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -16,13 +16,13 @@ class SubscribeTest extends TestCase
      *
      * @return void
      */
-    public function testSubscribers()
+    public function testIndex()
     {
         $user = $this->user();
 
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard/subscribers')
+            ->get(route('dashboard.subscribers'))
             ->assertOk()
             ->assertViewIs('dashboard.subscribers');
     }
@@ -38,7 +38,7 @@ class SubscribeTest extends TestCase
 
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
-            ->get('/dashboard/subscriptions')
+            ->get(route('dashboard.subscriptions'))
             ->assertOk()
             ->assertViewIs('dashboard.subscriptions');
     }
@@ -46,7 +46,7 @@ class SubscribeTest extends TestCase
     /**
      * User
      *
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Factories\HasFactory|\Illuminate\Database\Eloquent\Model|mixed
+     * @return \App\Models\User
      */
     private function user()
     {
