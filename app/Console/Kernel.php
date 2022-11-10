@@ -26,10 +26,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        // @codeCoverageIgnoreStart
         $schedule->command('mail:send --queue=emails')
             ->weeklyOn(Schedule::MONDAY, '8:00');
-        // @codeCoverageIgnoreEnd
     }
 
     /**
