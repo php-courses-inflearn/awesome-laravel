@@ -4,8 +4,6 @@ namespace Tests\Feature\Http\Controllers\Dashboard;
 
 use App\Http\Middleware\RequirePassword;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class SubscriptionControllerTest extends TestCase

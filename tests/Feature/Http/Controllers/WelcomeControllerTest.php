@@ -47,7 +47,7 @@ class WelcomeControllerTest extends TestCase
     /**
      * User
      *
-     * @param \App\Models\Blog|\Illuminate\Support\Collection|null $subscriptions
+     * @param  \App\Models\Blog|\Illuminate\Support\Collection|null  $subscriptions
      * @return \Illuminate\Database\Eloquent\Collection|\App\Models\User
      */
     private function user(Blog|Collection $subscriptions = null)
