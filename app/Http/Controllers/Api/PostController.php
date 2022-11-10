@@ -22,9 +22,7 @@ class PostController extends Controller
     public function __construct(private readonly PostService $postService)
     {
         $this->authorizeResource(Post::class, 'post');
-
-        $this->middleware('cache.headers:public;max_age=2628000;etag')
-            ->only('show');
+        $this->middleware('cache.headers:public;max_age=2628000;etag');
     }
 
     /**
@@ -67,11 +65,6 @@ class PostController extends Controller
      */
     public function show(Request $request, Post $post)
     {
-        //$etag = md5($post->updated_at);
-        //$ifNoneMatch = $request->getETags();
-
-        //return etag($post, $etag, $ifNoneMatch, fn () => new PostResource($post));
-
         return new PostResource($post);
     }
 
