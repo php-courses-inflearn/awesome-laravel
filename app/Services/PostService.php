@@ -15,9 +15,9 @@ class PostService
     /**
      * 글쓰기
      *
-     * @param  StorePostRequest  $request
-     * @param  Blog  $blog
-     * @return \Illuminate\Database\Eloquent\Model
+     * @param  \App\Http\Requests\StorePostRequest  $request
+     * @param  \App\Models\Blog  $blog
+     * @return \App\Models\Post
      */
     public function store(StorePostRequest $request, Blog $blog)
     {
@@ -27,7 +27,9 @@ class PostService
 
         $this->attachments($request, $post);
 
-        event(new Published($blog->subscribers, $post));
+        if ($blog->subscribers()->exists()) {
+            event(new Published($blog->subscribers, $post));
+        }
 
         return $post;
     }
@@ -35,8 +37,8 @@ class PostService
     /**
      * 글 수정
      *
-     * @param  UpdatePostRequest  $request
-     * @param  Post  $post
+     * @param  \App\Http\Requests\UpdatePostRequest  $request
+     * @param  \App\Models\Post  $post
      * @return void
      */
     public function update(UpdatePostRequest $request, Post $post)
@@ -51,7 +53,7 @@ class PostService
     /**
      * 글 삭제
      *
-     * @param  Post  $post
+     * @param  \App\Models\Post  $post
      * @return void
      */
     public function destroy(Post $post)
@@ -62,11 +64,11 @@ class PostService
     /**
      * 파일 업로드
      *
-     * @param  Request  $request
-     * @param $post
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Post  $post
      * @return void
      */
-    private function attachments(Request $request, $post)
+    private function attachments(Request $request, Post $post)
     {
         if ($request->hasFile('attachments')) {
             app(AttachmentController::class)->store($request, $post);

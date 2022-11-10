@@ -38,9 +38,9 @@ class Advertisement extends Mailable implements ShouldQueue
     /**
      * 글
      *
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    private function posts()
+    public function posts()
     {
         return Post::latest()->limit(5)->get();
     }

@@ -15,10 +15,10 @@ class AttachmentPolicy
     /**
      * @var Post|null
      */
-    private Post|null $post;
+    private readonly ?Post $post;
 
     /**
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      */
     public function __construct(Request $request)
     {

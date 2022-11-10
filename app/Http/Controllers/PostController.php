@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Models\Blog;
 use App\Models\Post;
 use App\Services\PostService;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -61,7 +62,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\View\View
      */
-    public function show(Post $post)
+    public function show(Request $request, Post $post)
     {
         return view('blogs.posts.show', [
             'post' => $post->loadCount('comments'),

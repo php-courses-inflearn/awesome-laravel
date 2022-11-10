@@ -2,9 +2,9 @@
 
 namespace App\Notifications;
 
+use App\Models\Post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -19,7 +19,7 @@ class Published extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(public readonly Model $post)
+    public function __construct(public readonly Post $post)
     {
         //
     }
@@ -46,7 +46,7 @@ class Published extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject("[라라벨] '{$this->post->blog->display_name}' 에 새로운 글 '{$this->post->title}'")
             ->greeting('새로운 글이 작성되었습니다.')
-            ->line(Str::substr($this->post->text, 0, 200))
+            ->line(Str::substr($this->post->content, 0, 200))
             ->action('글 읽기', route('posts.show', $this->post->id));
     }
 
@@ -61,19 +61,6 @@ class Published extends Notification implements ShouldQueue
         return new BroadcastMessage([
             'post' => $this->post,
         ]);
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
     }
 
     /**

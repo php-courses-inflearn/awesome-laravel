@@ -3,12 +3,21 @@
 namespace App\Models;
 
 use App\Castables\Link;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @property int $id
+ * @property string $original_name
+ * @property string $name
+ * @property \App\Castables\Link $link
+ * @property int $post_id
+ * @property \App\Models\Post $post
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ */
 class Attachment extends Model
 {
     use HasFactory, Prunable;
@@ -26,7 +35,7 @@ class Attachment extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'link' => Link::class,
@@ -49,11 +58,7 @@ class Attachment extends Model
      */
     public function pruning()
     {
-        if ($this->external) {
-            return;
-        }
-
-        Storage::disk('public')->delete($this->path);
+        Storage::disk('public')->delete($this->name);
     }
 
     /**
@@ -64,17 +69,5 @@ class Attachment extends Model
     public function post()
     {
         return $this->belongsTo(Post::class);
-    }
-
-    /**
-     * 파일이 링크인가?
-     *
-     * @return Attribute
-     */
-    public function external(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => preg_match('/^https?/', $this->name)
-        );
     }
 }

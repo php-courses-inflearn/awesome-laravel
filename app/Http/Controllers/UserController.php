@@ -11,16 +11,20 @@ class UserController extends Controller
     /**
      * 사용자 정보 갱신
      *
-     * @param  Request  $request
+     * @param  \App\Http\Requests\UpdateUserRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateUserRequest $request)
     {
         $user = $request->user();
+
         $data = $request->only('name');
 
         if ($request->filled('password')) {
-            $data = $data + ['password' => Hash::make($request->password)];
+            $data = [
+                ...$data,
+                'password' => Hash::make($request->password),
+            ];
         }
 
         $user->update($data);
@@ -31,7 +35,7 @@ class UserController extends Controller
     /**
      * 회원탈퇴
      *
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request)

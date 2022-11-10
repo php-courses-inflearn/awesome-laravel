@@ -15,10 +15,10 @@ class PostPolicy
     /**
      * @var Blog|null
      */
-    private Blog|null $Blog;
+    private readonly ?Blog $blog;
 
     /**
-     * @param  Request  $request
+     * @param  \Illuminate\Http\Request  $request
      */
     public function __construct(Request $request)
     {

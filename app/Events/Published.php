@@ -2,9 +2,8 @@
 
 namespace App\Events;
 
+use App\Models\Post;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
@@ -20,18 +19,8 @@ class Published
      */
     public function __construct(
         public readonly Collection $subscribers,
-        public readonly Model $post
+        public readonly Post $post
     ) {
         //
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
     }
 }
