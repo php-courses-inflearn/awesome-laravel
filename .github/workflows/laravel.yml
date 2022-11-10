@@ -41,7 +41,7 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit --coverage-text
-    - name: Execute laravel Pint
+    - name: Check code style via Laravel Pint
       run: vendor/bin/pint --test
-    - name: Execute Larastan
+    - name: Execute static code analysis (L5) via Larastan
       run: vendor/bin/phpstan analyse --xdebug
