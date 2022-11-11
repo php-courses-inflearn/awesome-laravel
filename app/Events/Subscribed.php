@@ -18,7 +18,8 @@ class Subscribed
      * @return void
      */
     public function __construct(
-        public readonly User $user, public readonly Blog $blog
+        public readonly User $user,
+        public readonly Blog $blog
     ) {
         //
     }
