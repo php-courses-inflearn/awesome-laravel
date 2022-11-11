@@ -142,6 +142,12 @@ class PostControllerTest extends TestCase
      */
     public function testUpdate()
     {
+        Event::fake();
+
+        Storage::fake('public');
+
+        $attachment = UploadedFile::fake()->image('file.jpg');
+
         $post = $this->article();
 
         $data = [
@@ -155,10 +161,24 @@ class PostControllerTest extends TestCase
 
         $this->putJson(route('api.posts.update', [
             'post' => $post->id,
-        ]), $data)
+        ]), [
+            ...$data,
+            'attachments' => [
+                $attachment,
+            ],
+        ])
         ->assertNoContent();
 
         $this->assertDatabaseHas('posts', $data);
+
+        $this->assertDatabaseHas('attachments', [
+            'original_name' => $attachment->getClientOriginalName(),
+            'name' => $attachment->hashName('attachments'),
+        ]);
+
+        Storage::disk('public')->assertExists(
+            $attachment->hashName('attachments')
+        );
     }
 
     /**

@@ -3,29 +3,35 @@
 namespace App\Services;
 
 use App\Events\Published;
-use App\Http\Controllers\AttachmentController;
-use App\Http\Requests\StorePostRequest;
-use App\Http\Requests\UpdatePostRequest;
 use App\Models\Blog;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class PostService
 {
+    public function __construct(
+       private readonly AttachmentService $attachmentService
+    ) {
+    }
+
     /**
      * 글쓰기
      *
-     * @param  \App\Http\Requests\StorePostRequest  $request
+     * @param  array  $data
      * @param  \App\Models\Blog  $blog
      * @return \App\Models\Post
      */
-    public function store(StorePostRequest $request, Blog $blog)
+    public function store(array $data, Blog $blog)
     {
-        $post = $blog->posts()->create(
-            $request->only('title', 'content')
-        );
+        /** @var \App\Models\Post $post */
+        $post = $blog->posts()->create([
+            'title' => $data['title'],
+            'content' => $data['content'],
+        ]);
 
-        $this->attachments($request, $post);
+        if (array_key_exists('attachments', $data)) {
+            $this->attachments($data['attachments'], $post);
+        }
 
         if ($blog->subscribers()->exists()) {
             event(new Published($blog->subscribers, $post));
@@ -37,17 +43,20 @@ class PostService
     /**
      * 글 수정
      *
-     * @param  \App\Http\Requests\UpdatePostRequest  $request
+     * @param  array  $data
      * @param  \App\Models\Post  $post
      * @return void
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(array $data, Post $post)
     {
-        $post->update(
-            $request->only(['title', 'content'])
-        );
+        $post->update([
+            'title' => $data['title'],
+            'content' => $data['content'],
+        ]);
 
-        $this->attachments($request, $post);
+        if (array_key_exists('attachments', $data)) {
+            $this->attachments($data['attachments'], $post);
+        }
     }
 
     /**
@@ -64,14 +73,16 @@ class PostService
     /**
      * 파일 업로드
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  array<UploadedFile>  $attachments
      * @param  \App\Models\Post  $post
      * @return void
      */
-    private function attachments(Request $request, Post $post)
+    private function attachments(array $attachments, Post $post)
     {
-        if ($request->hasFile('attachments')) {
-            app(AttachmentController::class)->store($request, $post);
-        }
+        $data = [
+            'attachments' => $attachments,
+        ];
+
+        $this->attachmentService->store($data, $post);
     }
 }

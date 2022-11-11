@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attachment;
 use App\Models\Post;
+use App\Services\AttachmentService;
 use Illuminate\Http\Request;
 
 class AttachmentController extends Controller
@@ -11,8 +12,9 @@ class AttachmentController extends Controller
     /**
      * AttachmentController
      */
-    public function __construct()
-    {
+    public function __construct(
+        private readonly AttachmentService $attachmentService
+    ) {
         $this->authorizeResource(Attachment::class, 'attachment');
     }
 
@@ -25,14 +27,11 @@ class AttachmentController extends Controller
      */
     public function store(Request $request, Post $post)
     {
-        foreach ($request->file('attachments') as $attachment) {
-            $attachment->storePublicly('attachments', 'public');
+        $data = [
+            'attachments' => $request->file('attachments'),
+        ];
 
-            $post->attachments()->create([
-                'original_name' => $attachment->getClientOriginalName(),
-                'name' => $attachment->hashName('attachments'),
-            ]);
-        }
+        $this->attachmentService->store($data, $post);
     }
 
     /**
@@ -43,7 +42,7 @@ class AttachmentController extends Controller
      */
     public function destroy(Attachment $attachment)
     {
-        $attachment->delete();
+        $this->attachmentService->destroy($attachment);
 
         return back();
     }

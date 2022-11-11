@@ -29,16 +29,13 @@ class AttachmentControllerTest extends TestCase
         $post = $this->article();
 
         $this->actingAs($post->blog->user)
-            ->post(
-                route('posts.attachments.store', [
-                    'post' => $post->id,
-                ]),
-                [
-                    'attachments' => [
-                        $attachment,
-                    ],
-                ]
-            )
+            ->post(route('posts.attachments.store', [
+                'post' => $post->id,
+            ]), [
+                'attachments' => [
+                    $attachment,
+                ],
+            ])
             ->assertSuccessful();
 
         $this->assertCount(1, $post->attachments);
