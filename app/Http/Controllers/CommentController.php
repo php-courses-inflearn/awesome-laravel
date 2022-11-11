@@ -25,6 +25,7 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request, Post $post)
     {
+        /** @var \App\Models\User $user */
         $user = $request->user();
 
         $comment = $user->comments()

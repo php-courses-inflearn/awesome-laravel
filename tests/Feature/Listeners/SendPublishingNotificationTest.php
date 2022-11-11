@@ -18,7 +18,7 @@ class SendPublishingNotificationTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * 공표 이벤트 리스너 테스트
+     * SendPublishingNotification 이벤트 리스너 테스트
      *
      * @return void
      */

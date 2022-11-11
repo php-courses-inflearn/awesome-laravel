@@ -15,6 +15,7 @@ class SubscriptionController extends Controller
      */
     public function index(Request $request)
     {
+        /** @var \App\Models\User $user */
         $user = $request->user();
 
         return view('dashboard.subscriptions', [

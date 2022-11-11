@@ -26,6 +26,7 @@ class PasswordConfirmController extends Controller
      */
     public function store(Request $request)
     {
+        /** @var \App\Models\User $user */
         $user = $request->user();
 
         if (! Hash::check($request->password, $user->password)) {

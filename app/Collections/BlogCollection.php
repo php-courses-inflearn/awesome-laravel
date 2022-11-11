@@ -9,7 +9,7 @@ class BlogCollection extends Collection
     /**
      * 피드
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Support\Collection
      */
     public function feed()
     {

@@ -10,7 +10,7 @@ use Tests\TestCase;
 class VerifiedScopeTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * VerifiedScope 테스트
      *
      * @return void
      */
@@ -18,8 +18,9 @@ class VerifiedScopeTest extends TestCase
     {
         $scope = new VerifiedScope();
         $queryBuilder = app(Builder::class);
+        $model = User::factory()->create();
 
-        $scope->apply($queryBuilder, User::factory()->create());
+        $scope->apply($queryBuilder, $model);
 
         $this->assertStringContainsString(
             'where "email_verified_at" is not null',

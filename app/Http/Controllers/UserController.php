@@ -16,6 +16,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request)
     {
+        /** @var \App\Models\User $user */
         $user = $request->user();
 
         $data = $request->only('name');
@@ -40,6 +41,7 @@ class UserController extends Controller
      */
     public function destroy(Request $request)
     {
+        /** @var \App\Models\User $user */
         $user = $request->user();
 
         $user->delete();

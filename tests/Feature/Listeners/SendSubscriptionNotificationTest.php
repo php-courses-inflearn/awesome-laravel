@@ -16,7 +16,7 @@ class SendSubscriptionNotificationTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * 구독 이벤트 리스너 테스트
+     * SendSubscriptionNotification 이벤트 리스너 테스트
      *
      * @return void
      */

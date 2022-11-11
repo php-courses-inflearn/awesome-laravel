@@ -26,6 +26,7 @@ class EmailVerificationController extends Controller
      */
     public function store(Request $request)
     {
+        /** @var \App\Models\User $user */
         $user = $request->user();
 
         $user->sendEmailVerificationNotification();

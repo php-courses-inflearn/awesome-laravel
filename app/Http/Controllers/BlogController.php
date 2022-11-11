@@ -47,6 +47,7 @@ class BlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
+        /** @var \App\Models\User $user */
         $user = $request->user();
 
         $user->blogs()->create(
@@ -65,6 +66,7 @@ class BlogController extends Controller
      */
     public function show(Request $request, Blog $blog)
     {
+        /** @var \App\Models\User $user */
         $user = $request->user();
 
         return view('blogs.show', [

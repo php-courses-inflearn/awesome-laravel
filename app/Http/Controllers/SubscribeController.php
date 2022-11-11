@@ -17,6 +17,7 @@ class SubscribeController extends Controller
      */
     public function store(Request $request, Blog $blog)
     {
+        /** @var \App\Models\User $user */
         $user = $request->user();
 
         $blog->subscribers()->attach($user->id);
@@ -35,6 +36,7 @@ class SubscribeController extends Controller
      */
     public function destroy(Request $request, Blog $blog)
     {
+        /** @var \App\Models\User $user */
         $user = $request->user();
 
         $blog->subscribers()->detach($user->id);

@@ -6,3 +6,6 @@ parameters:
     level: 5
     paths:
         - app/
+    ignoreErrors:
+        - '#Access to an undefined property Illuminate\\Support\\HigherOrder#'
+#       - '#Call to an undefined method Illuminate\\Support\\HigherOrder#'
