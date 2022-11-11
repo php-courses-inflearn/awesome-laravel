@@ -18,12 +18,7 @@ class WelcomeController extends Controller
         $user = $request->user();
 
         $posts = $user->subscriptions()->exists()
-            ? $user->subscriptions()
-                ->with('posts', fn ($query) => $query->limit(20))
-                ->get()
-                ->flatMap
-                ->posts
-                ->sortByDesc('created_at')
+            ? $user->subscriptions()->with('posts', fn ($query) => $query->limit(20))->get()->feed()
             : Post::latest()->limit(20)->get();
 
         return view('welcome', [
