@@ -13,7 +13,7 @@ class SubscribedTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * 구독 이메일 테스트
+     * Subscribed 이메일 테스트
      *
      * @return void
      */

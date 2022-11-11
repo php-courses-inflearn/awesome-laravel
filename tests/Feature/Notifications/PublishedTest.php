@@ -18,7 +18,7 @@ class PublishedTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * 공표 알림 테스트
+     * Published 알림 테스트
      *
      * @return void
      */

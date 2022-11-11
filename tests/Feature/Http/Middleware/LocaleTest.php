@@ -13,7 +13,7 @@ class LocaleTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * 로케일 미들웨어 테스트
+     * Locale 미들웨어 테스트
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class LocaleTest extends TestCase
     }
 
     /**
-     * 로케일 미들웨어 테스트 (Query)
+     * Locale 미들웨어 테스트 (Query)
      *
      * @return void
      */

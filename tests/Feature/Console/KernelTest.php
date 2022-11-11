@@ -10,7 +10,7 @@ use Tests\TestCase;
 class KernelTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * mail:send 명령어 스케줄러 테스트
      *
      * @return void
      */

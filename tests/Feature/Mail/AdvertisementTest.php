@@ -8,7 +8,7 @@ use Tests\TestCase;
 class AdvertisementTest extends TestCase
 {
     /**
-     * 광고 이메일 테스트
+     * Advertisement 이메일 테스트
      *
      * @return void
      */

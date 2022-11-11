@@ -13,7 +13,7 @@ class SendEmailsTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * mail:send 테스트
+     * mail:send 명령어 테스트
      *
      * @return void
      */

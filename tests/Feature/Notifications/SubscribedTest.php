@@ -17,7 +17,7 @@ class SubscribedTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * 구독 알림 테스트
+     * Subscribed 알림 테스트
      *
      * @return void
      */

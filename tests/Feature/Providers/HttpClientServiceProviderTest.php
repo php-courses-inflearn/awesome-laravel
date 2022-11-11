@@ -9,11 +9,11 @@ use Tests\TestCase;
 class HttpClientServiceProviderTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * API Http Client 테스트
      *
      * @return void
      */
-    public function testHttpClient()
+    public function testApiHttpClient()
     {
         Http::fake();
 

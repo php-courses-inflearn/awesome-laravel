@@ -14,7 +14,7 @@ class PruningAttachmentTest extends TestCase
     use RefreshDatabase, WithFaker;
 
     /**
-     * A basic feature test example.
+     * Attachment Pruning 테스트
      *
      * @return void
      */
@@ -29,8 +29,9 @@ class PruningAttachmentTest extends TestCase
 
         $storage->assertExists($attachment->name);
 
-        $this->artisan('model:prune')
-            ->assertSuccessful();
+        $this->artisan('model:prune', [
+            '--model' => [Attachment::class]
+        ])->assertSuccessful();
 
         $storage->assertMissing($attachment->name);
     }

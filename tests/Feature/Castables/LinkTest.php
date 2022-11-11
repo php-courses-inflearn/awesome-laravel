@@ -9,7 +9,7 @@ use Tests\TestCase;
 class LinkTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     * Link Castable 테스트
      *
      * @return void
      */
