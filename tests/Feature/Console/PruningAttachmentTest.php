@@ -42,11 +42,10 @@ class PruningAttachmentTest extends TestCase
      */
     public function attachment(UploadedFile $attachment)
     {
-        $factory = Attachment::factory()
-            ->state([
-                'original_name' => $attachment->getClientOriginalName(),
-                'name' => $attachment->hashName(),
-            ]);
+        $factory = Attachment::factory()->state([
+            'original_name' => $attachment->getClientOriginalName(),
+            'name' => $attachment->hashName(),
+        ]);
 
         return $factory->create();
     }

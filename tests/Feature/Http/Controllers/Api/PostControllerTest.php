@@ -68,17 +68,14 @@ class PostControllerTest extends TestCase
             TokenAbility::POST_CREATE->value,
         ]);
 
-        $this->postJson(
-            route('api.blogs.posts.store', [
-                'blog' => $blog->name,
-            ]),
-            [
-                ...$data,
-                'attachments' => [
-                    $attachment,
-                ],
-            ]
-        )
+        $this->postJson(route('api.blogs.posts.store', [
+            'blog' => $blog->name,
+        ]), [
+            ...$data,
+            'attachments' => [
+                $attachment,
+            ],
+        ])
         ->assertCreated()
         ->assertJson(function (AssertableJson $json) use ($data) {
             $json->has('data', function (AssertableJson $json) use ($data) {

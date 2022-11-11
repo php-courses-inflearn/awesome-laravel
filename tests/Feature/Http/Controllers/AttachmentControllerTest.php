@@ -93,11 +93,10 @@ class AttachmentControllerTest extends TestCase
 
         if ($attachment) {
             $factory = $factory->has(
-                Attachment::factory()
-                    ->state([
-                        'original_name' => $attachment->getClientOriginalName(),
-                        'name' => $attachment->hashName('attachments'),
-                    ])
+                Attachment::factory()->state([
+                    'original_name' => $attachment->getClientOriginalName(),
+                    'name' => $attachment->hashName('attachments'),
+                ])
             );
         }
 
