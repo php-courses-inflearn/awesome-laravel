@@ -30,7 +30,7 @@ class PruningAttachmentTest extends TestCase
         $storage->assertExists($attachment->name);
 
         $this->artisan('model:prune', [
-            '--model' => [Attachment::class]
+            '--model' => [Attachment::class],
         ])->assertSuccessful();
 
         $storage->assertMissing($attachment->name);
