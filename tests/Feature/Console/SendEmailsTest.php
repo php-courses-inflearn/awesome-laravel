@@ -21,23 +21,9 @@ class SendEmailsTest extends TestCase
     {
         Mail::fake();
 
-        //$this->users();
-
         $this->artisan('mail:send --queue=emails')
             ->assertSuccessful();
 
         Mail::assertQueued(Advertisement::class);
     }
-
-    /**
-     * Users
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    //public function users()
-    //{
-    //    $factory = User::factory(10);
-
-    //    return $factory->create();
-    //}
 }
