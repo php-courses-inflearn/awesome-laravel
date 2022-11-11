@@ -6,6 +6,8 @@ use App\Models\Post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class Advertisement extends Mailable implements ShouldQueue
@@ -23,16 +25,40 @@ class Advertisement extends Mailable implements ShouldQueue
     }
 
     /**
-     * Build the message.
+     * Get the message envelope.
      *
-     * @return $this
+     * @return \Illuminate\Mail\Mailables\Envelope
      */
-    public function build()
+    public function envelope()
     {
-        return $this->subject('(광고) 라라벨 커뮤니티의 최신글 살펴보기!')
-            ->view('emails.advertisement', [
+        return new Envelope(
+            subject: '(광고) 라라벨 커뮤니티의 최신글 살펴보기!',
+        );
+    }
+
+    /**
+     * Get the message content definition.
+     *
+     * @return \Illuminate\Mail\Mailables\Content
+     */
+    public function content()
+    {
+        return new Content(
+            view: 'emails.advertisement',
+            with: [
                 'posts' => $this->posts(),
-            ]);
+            ]
+        );
+    }
+
+    /**
+     * Get the attachments for the message.
+     *
+     * @return array
+     */
+    public function attachments()
+    {
+        return [];
     }
 
     /**

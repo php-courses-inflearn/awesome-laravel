@@ -10,8 +10,8 @@
         "doctrine/dbal": "^3.3",
         "guzzlehttp/guzzle": "^7.2",
         "http-interop/http-factory-guzzle": "^1.2",
-        "laravel/framework": "^9.19",
-        "laravel/sanctum": "^2.14.1",
+        "laravel/framework": "^9.39",
+        "laravel/sanctum": "^3.0",
         "laravel/scout": "^9.4",
         "laravel/socialite": "^5.5",
         "laravel/telescope": "^4.9",
@@ -70,7 +70,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "pestphp/pest-plugin": true
         }
     },
     "minimum-stability": "dev",

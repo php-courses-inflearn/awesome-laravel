@@ -3,11 +3,11 @@
 namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\ValidateSignature;
 use App\Models\User;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
