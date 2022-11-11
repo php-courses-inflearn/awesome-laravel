@@ -21,7 +21,8 @@ class Subscribed extends Notification implements ShouldQueue
      * @return void
      */
     public function __construct(
-        public readonly User $user, public readonly Blog $blog
+        public readonly User $user,
+        public readonly Blog $blog
     ) {
         //
     }

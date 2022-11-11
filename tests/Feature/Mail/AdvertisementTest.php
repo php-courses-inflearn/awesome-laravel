@@ -17,7 +17,7 @@ class AdvertisementTest extends TestCase
         $mailable = new Advertisement();
 
         $mailable->assertSeeInOrderInHtml(
-            $mailable->posts()->pluck('title')->toArray()
+            $mailable->posts()->map->title->all()
         );
     }
 }
