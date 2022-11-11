@@ -3,7 +3,6 @@
 namespace Tests\Feature\Console;
 
 use App\Mail\Advertisement;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
