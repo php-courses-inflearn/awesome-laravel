@@ -71,17 +71,14 @@ class PostControllerTest extends TestCase
         ];
 
         $this->actingAs($blog->user)
-            ->post(
-                route('blogs.posts.store', [
-                    'blog' => $blog->name,
-                ]),
-                [
-                    ...$data,
-                    'attachments' => [
-                        $attachment,
-                    ],
-                ]
-            )
+            ->post(route('blogs.posts.store', [
+                'blog' => $blog->name,
+            ]), [
+                ...$data,
+                'attachments' => [
+                    $attachment,
+                ],
+            ])
             ->assertRedirect();
 
         $this->assertCount(1, $blog->posts);
@@ -196,10 +193,9 @@ class PostControllerTest extends TestCase
      */
     private function article()
     {
-        $factory = Post::factory()
-            ->for(
-                Blog::factory()->forUser()
-            );
+        $factory = Post::factory()->for(
+            Blog::factory()->forUser()
+        );
 
         return $factory->create();
     }

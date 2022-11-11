@@ -87,10 +87,9 @@ class AttachmentControllerTest extends TestCase
      */
     private function article(UploadedFile $attachment = null)
     {
-        $factory = Post::factory()
-            ->for(
-                Blog::factory()->forUser()
-            );
+        $factory = Post::factory()->for(
+            Blog::factory()->forUser()
+        );
 
         if ($attachment) {
             $factory = $factory->has(

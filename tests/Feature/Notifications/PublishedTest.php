@@ -99,10 +99,9 @@ class PublishedTest extends TestCase
      */
     private function article()
     {
-        $factory = Post::factory()
-            ->for(
-                Blog::factory()->forUser()
-            );
+        $factory = Post::factory()->for(
+            Blog::factory()->forUser()
+        );
 
         return $factory->create();
     }

@@ -59,15 +59,12 @@ class CommentControllerTest extends TestCase
         ];
 
         $this->actingAs($user)
-            ->post(
-                route('posts.comments.store', [
-                    'post' => $comment->commentable->id,
-                ]),
-                [
-                    ...$data,
-                    'parent_id' => $comment->id,
-                ]
-            )
+            ->post(route('posts.comments.store', [
+                'post' => $comment->commentable->id,
+            ]), [
+                ...$data,
+                'parent_id' => $comment->id,
+            ])
             ->assertRedirect();
 
         $this->assertCount(1, $comment->replies);
@@ -136,10 +133,9 @@ class CommentControllerTest extends TestCase
      */
     private function article()
     {
-        $factory = Post::factory()
-            ->for(
-                Blog::factory()->forUser()
-            );
+        $factory = Post::factory()->for(
+            Blog::factory()->forUser()
+        );
 
         return $factory->create();
     }
