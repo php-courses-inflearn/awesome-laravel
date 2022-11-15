@@ -12,7 +12,7 @@ class BlogController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function __invoke(Request $request)
     {
         /** @var \App\Models\User $user */
         $user = $request->user();

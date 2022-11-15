@@ -13,7 +13,7 @@ class TokenController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function __invoke(Request $request)
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
