@@ -76,6 +76,7 @@ class PublishedTest extends TestCase
     private function viaQueues(array $queues)
     {
         $this->assertEquals($queues, [
+            'mail' => 'emails',
             'broadcast' => 'broadcasts',
         ]);
     }

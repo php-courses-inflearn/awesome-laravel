@@ -13,14 +13,14 @@ class HttpClientServiceProviderTest extends TestCase
      *
      * @return void
      */
-    public function testApiHttpClient()
+    public function testApiMacro()
     {
         Http::fake();
 
         Http::api('')->get('/');
 
         Http::assertSent(function (Request $request) {
-            return $request->url() == config('app.url').'/api'.'/'
+            return $request->url() === config('app.url').'/api'.'/'
                 && $request->hasHeader('Authorization')
                 && $request->isJson();
         });

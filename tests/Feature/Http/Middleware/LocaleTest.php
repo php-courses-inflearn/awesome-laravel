@@ -21,6 +21,7 @@ class LocaleTest extends TestCase
     {
         $this->assertTrue(app()->isLocale('ko'));
 
+        /** @var \App\Http\Middleware\Locale $localeMiddleware */
         $localeMiddleware = app(Locale::class);
 
         $request = app(Request::class);
@@ -42,7 +43,7 @@ class LocaleTest extends TestCase
     {
         $this->assertTrue(app()->isLocale('ko'));
 
-        $localeMiddleware = app(Locale::class);
+        $localeMiddleware = new Locale();
 
         $request = app(Request::class);
         $request->setLaravelSession(app(Session::class));

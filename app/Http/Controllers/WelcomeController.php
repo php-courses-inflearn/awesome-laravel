@@ -31,7 +31,6 @@ class WelcomeController extends Controller
 
         return view('welcome', [
             'posts' => $posts->paginate(5, $request->page ?? 1),
-            //'posts' => $this->paginate($posts, $posts->count(), 5, $request->page ?? 1)
         ]);
     }
 }

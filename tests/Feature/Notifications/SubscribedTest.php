@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Notifications;
 
+use App\Mail\Subscribed as SubscribedMailable;
 use App\Models\Blog;
 use App\Models\User;
 use App\Notifications\Subscribed;
@@ -41,10 +42,7 @@ class SubscribedTest extends TestCase
      */
     private function toMail(Subscribed $notification, MailMessage|Mailable $mailable)
     {
-        $mailable->assertSeeInOrderInHtml([
-            $notification->user->name,
-            $notification->blog->display_name,
-        ]);
+        $this->assertInstanceOf(SubscribedMailable::class, $mailable);
     }
 
     /**

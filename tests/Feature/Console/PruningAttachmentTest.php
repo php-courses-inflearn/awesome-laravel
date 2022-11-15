@@ -33,6 +33,10 @@ class PruningAttachmentTest extends TestCase
             '--model' => [Attachment::class],
         ])->assertSuccessful();
 
+        $this->assertDatabaseMissing('attachments', [
+            'id' => $attachment->id,
+        ]);
+
         $storage->assertMissing($attachment->name);
     }
 

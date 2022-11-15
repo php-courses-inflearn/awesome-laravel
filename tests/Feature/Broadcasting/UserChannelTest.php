@@ -25,8 +25,8 @@ class UserChannelTest extends TestCase
         $this->assertTrue(
             $userChannel->join($user, $user->id)
         );
-        $this->assertFalse(
-            $userChannel->join($user, 1000)
+        $this->assertNotTrue(
+            $userChannel->join($user, 2)
         );
     }
 

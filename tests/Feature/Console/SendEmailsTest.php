@@ -3,6 +3,7 @@
 namespace Tests\Feature\Console;
 
 use App\Mail\Advertisement;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
@@ -20,9 +21,23 @@ class SendEmailsTest extends TestCase
     {
         Mail::fake();
 
+        $this->users();
+
         $this->artisan('mail:send --queue=emails')
             ->assertSuccessful();
 
         Mail::assertQueued(Advertisement::class);
+    }
+
+    /**
+     * Users
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    private function users()
+    {
+        $factory = User::factory(10);
+
+        return $factory->create();
     }
 }

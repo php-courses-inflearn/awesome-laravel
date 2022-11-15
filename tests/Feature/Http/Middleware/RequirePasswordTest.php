@@ -20,6 +20,7 @@ class RequirePasswordTest extends TestCase
      */
     public function testRequirePassword()
     {
+        /** @var \App\Http\Middleware\RequirePassword $requirePasswordMiddleware */
         $requirePasswordMiddleware = app(RequirePassword::class);
 
         $request = app(Request::class);
@@ -38,6 +39,7 @@ class RequirePasswordTest extends TestCase
      */
     public function testRequirePasswordNotRedirect()
     {
+        /** @var \App\Http\Middleware\RequirePassword $requirePasswordMiddleware */
         $requirePasswordMiddleware = app(RequirePassword::class);
 
         $request = app(Request::class);

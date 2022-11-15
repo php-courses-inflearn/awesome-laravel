@@ -92,7 +92,9 @@ class PostControllerTest extends TestCase
             'name' => $attachment->hashName('attachments'),
         ]);
 
-        Storage::disk('public')->assertExists($attachment->hashName('attachments'));
+        Storage::disk('public')->assertExists(
+            $attachment->hashName('attachments')
+        );
 
         Event::assertDispatched(Published::class);
     }
@@ -142,8 +144,6 @@ class PostControllerTest extends TestCase
      */
     public function testUpdate()
     {
-        Event::fake();
-
         Storage::fake('public');
 
         $attachment = UploadedFile::fake()->image('file.jpg');
