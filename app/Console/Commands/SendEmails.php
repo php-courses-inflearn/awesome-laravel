@@ -56,11 +56,10 @@ class SendEmails extends Command
      */
     private function sendEmails(string $queue)
     {
-        Mail::to([])
-            ->bcc($this->users())
-            ->send(
-                (new Advertisement())
-                    ->onQueue($queue)
+        $this->users()->each(function (User $user) use ($queue) {
+            Mail::to($user)->send(
+                (new Advertisement())->onQueue($queue)
             );
+        });
     }
 }
