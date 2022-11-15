@@ -21,6 +21,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
+        "beyondcode/laravel-query-detector": "^1.6",
         "brianium/paratest": "^6.5",
         "fakerphp/faker": "^1.9.1",
         "laravel-lang/lang": "^11.0",
@@ -70,7 +71,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "minimum-stability": "dev",
