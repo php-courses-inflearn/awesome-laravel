@@ -41,6 +41,8 @@ class PruningAttachmentTest extends TestCase
     }
 
     /**
+     * Attachment
+     *
      * @param  \Illuminate\Http\UploadedFile  $attachment
      * @return \App\Models\Attachment
      */
