@@ -3,8 +3,8 @@
 namespace Tests\Feature\Models\Scopes;
 
 use App\Models\Scopes\VerifiedScope;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -21,9 +21,10 @@ class VerifiedScopeTest extends TestCase
     {
         $scope = new VerifiedScope();
         $queryBuilder = app(Builder::class);
-        $model = User::factory()->create();
 
-        $scope->apply($queryBuilder, $model);
+        $scope->apply($queryBuilder, new class extends Model
+        {
+        });
 
         $this->assertStringContainsString(
             'where "email_verified_at" is not null',

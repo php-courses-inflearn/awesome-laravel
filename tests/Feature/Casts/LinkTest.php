@@ -5,6 +5,7 @@ namespace Tests\Feature\Casts;
 use App\Castables\Link as LinkCastable;
 use App\Casts\Link;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +28,9 @@ class LinkTest extends TestCase
             'name' => $this->faker->imageUrl,
         ];
 
-        $linkCastable = $link->get(null, '', null, $attributes);
+        $linkCastable = $link->get(new class extends Model
+        {
+        }, '', null, $attributes);
 
         $this->assertInstanceOf(LinkCastable::class, $linkCastable);
         $this->assertEquals($attributes['name'], $linkCastable->path);
@@ -46,7 +49,9 @@ class LinkTest extends TestCase
             'name' => $this->faker->filePath(),
         ];
 
-        $linkCastable = $link->get(null, '', null, $attributes);
+        $linkCastable = $link->get(new class extends Model
+        {
+        }, '', null, $attributes);
 
         $this->assertEquals(
             Storage::disk('public')->url($attributes['name']),
@@ -68,7 +73,9 @@ class LinkTest extends TestCase
             $this->faker->imageUrl
         );
 
-        $attributes = $link->set(null, '', $linkCastable, []);
+        $attributes = $link->set(new class extends Model
+        {
+        }, '', $linkCastable, []);
 
         $this->assertEquals($attributes['name'], $linkCastable->path);
     }
@@ -84,6 +91,8 @@ class LinkTest extends TestCase
 
         $this->expectException(Exception::class);
 
-        $link->set(null, '', null, []);
+        $link->set(new class extends Model
+        {
+        }, '', null, []);
     }
 }
