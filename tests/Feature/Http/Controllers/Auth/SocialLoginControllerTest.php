@@ -67,7 +67,7 @@ class SocialLoginControllerTest extends TestCase
             'provider' => $provider->name,
         ]))
         ->assertRedirect()
-        ->assertSessionHas('Socialite');
+        ->assertSessionHas('auth.socialite');
 
         $this->assertAuthenticated();
 

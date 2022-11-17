@@ -35,7 +35,7 @@ class SocialLoginController extends Controller
 
         auth()->login($user);
 
-        session()->put('Socialite', $provider->name);
+        session()->put('auth.socialite', true);
 
         return redirect()->intended();
     }
