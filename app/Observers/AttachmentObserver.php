@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Storage;
 class AttachmentObserver
 {
     /**
-     * Handle the Post "deleting" event.
+     * Handle the Post "deleted" event.
      *
      * @param  \App\Models\Attachment  $attachment
      * @return void
      */
-    public function deleting(Attachment $attachment)
+    public function deleted(Attachment $attachment)
     {
         Storage::disk('public')->delete($attachment->name);
     }

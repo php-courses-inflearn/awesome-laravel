@@ -7,13 +7,13 @@ use App\Models\Post;
 class PostObserver
 {
     /**
-     * Handle the Post "deleting" event.
+     * Handle the Post "deleted" event.
      *
      * @param  \App\Models\Post  $post
      * @return void
      */
-    public function deleting(Post $post)
+    public function deleted(Post $post)
     {
-        $post->comments->each->forceDelete();
+        $post->comments()->forceDelete();
     }
 }
