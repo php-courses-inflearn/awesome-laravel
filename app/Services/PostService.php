@@ -6,6 +6,7 @@ use App\Events\Published;
 use App\Models\Blog;
 use App\Models\Post;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
 
 class PostService
 {
@@ -29,7 +30,7 @@ class PostService
             'content' => $data['content'],
         ]);
 
-        if (array_key_exists('attachments', $data)) {
+        if (Arr::exists($data,'attachments')) {
             $this->attachments($data['attachments'], $post);
         }
 
@@ -54,7 +55,7 @@ class PostService
             'content' => $data['content'],
         ]);
 
-        if (array_key_exists('attachments', $data)) {
+        if (Arr::exists($data,'attachments')) {
             $this->attachments($data['attachments'], $post);
         }
     }
