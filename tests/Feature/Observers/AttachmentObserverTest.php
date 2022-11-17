@@ -14,7 +14,7 @@ class AttachmentObserverTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * AttachmentObserver::deleting
+     * AttachmentObserver::deleted 테스트
      *
      * @return void
      */

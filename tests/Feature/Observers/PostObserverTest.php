@@ -14,7 +14,7 @@ class PostObserverTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * PostObserver::deleting
+     * PostObserver::deleted 테스트
      *
      * @return void
      */
