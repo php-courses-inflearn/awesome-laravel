@@ -58,11 +58,9 @@ class PostControllerTest extends TestCase
     public function testStore()
     {
         Event::fake();
-
         Storage::fake('public');
 
         $attachment = UploadedFile::fake()->image('file.jpg');
-
         $blog = $this->blog();
 
         $data = [
@@ -139,7 +137,6 @@ class PostControllerTest extends TestCase
         Storage::fake('public');
 
         $attachment = UploadedFile::fake()->image('file.jpg');
-
         $post = $this->article();
 
         $data = [

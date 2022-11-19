@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Middleware;
 
-use App\Enums\SocialiteProvider;
 use App\Http\Middleware\RequirePassword;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Foundation\Testing\RefreshDatabase;

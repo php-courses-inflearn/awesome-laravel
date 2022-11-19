@@ -30,7 +30,7 @@ class PostService
             'content' => $data['content'],
         ]);
 
-        if (Arr::exists($data,'attachments')) {
+        if (Arr::exists($data, 'attachments')) {
             $this->attachments($data['attachments'], $post);
         }
 
@@ -55,7 +55,7 @@ class PostService
             'content' => $data['content'],
         ]);
 
-        if (Arr::exists($data,'attachments')) {
+        if (Arr::exists($data, 'attachments')) {
             $this->attachments($data['attachments'], $post);
         }
     }
