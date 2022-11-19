@@ -5,6 +5,7 @@ namespace Tests\Feature\Console;
 use Illuminate\Console\Events\ScheduledTaskFinished;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class KernelTest extends TestCase
@@ -29,9 +30,7 @@ class KernelTest extends TestCase
         Event::assertDispatched(
             ScheduledTaskFinished::class,
             function (ScheduledTaskFinished $event) {
-                $this->assertStringContainsString('mail:send --queue=emails', $event->task->command);
-
-                return true;
+                return Str::contains($event->task->command, 'mail:send --queue=emails');
             });
     }
 }
