@@ -71,7 +71,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
      */
     protected static function booted()
     {
-        // static::addGlobalScope(new VerifiedScope());
+        //static::addGlobalScope(new VerifiedScope());
     }
 
     /**
@@ -80,7 +80,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
      * @param  Builder  $query
      * @return Builder
      */
-    public function scopeVerified(Builder $query, ...$params)
+    public function scopeVerified(Builder $query)
     {
         return $query->whereNotNull('email_verified_at');
     }

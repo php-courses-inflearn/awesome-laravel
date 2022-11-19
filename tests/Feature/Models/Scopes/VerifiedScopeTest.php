@@ -5,13 +5,10 @@ namespace Tests\Feature\Models\Scopes;
 use App\Models\Scopes\VerifiedScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class VerifiedScopeTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
      * VerifiedScope 테스트
      *
