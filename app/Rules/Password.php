@@ -4,9 +4,6 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-/**
- * @codeCoverageIgnore
- */
 class Password implements Rule
 {
     /**
@@ -24,7 +21,7 @@ class Password implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $value
-     * @return bool
+     * @return false|int
      */
     public function passes($attribute, $value)
     {
