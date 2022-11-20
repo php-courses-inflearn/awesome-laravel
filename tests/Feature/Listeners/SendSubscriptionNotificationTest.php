@@ -31,6 +31,7 @@ class SendSubscriptionNotificationTest extends TestCase
 
         $listener = new SendSubscriptionNotification();
         $listener->handle($event);
+        //event($event);
 
         Notification::assertSentTo(
             $event->blog->user,

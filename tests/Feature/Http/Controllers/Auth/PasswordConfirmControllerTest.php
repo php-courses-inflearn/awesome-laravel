@@ -46,7 +46,7 @@ class PasswordConfirmControllerTest extends TestCase
      *
      * @return void
      */
-    public function testConfirmFailed()
+    public function testStoreFailed()
     {
         $user = $this->user();
 

@@ -13,13 +13,13 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    //public function testGlobalVerifiedScope()
-    //{
-    //    $this->assertStringContainsString(
-    //        "select * from `users` where `email_verified_at` is not null",
-    //        User::toSql()
-    //    );
-    //}
+//    public function testGlobalVerifiedScope()
+//    {
+//        $this->assertStringContainsString(
+//            "select * from `users` where `email_verified_at` is not null",
+//            User::toSql()
+//        );
+//    }
 
     /**
      * 로컬 VerifiedScope 테스트

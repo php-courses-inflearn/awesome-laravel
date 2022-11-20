@@ -33,6 +33,7 @@ class SendPublishingNotificationTest extends TestCase
 
         $listener = new SendPublishingNotification();
         $listener->handle($event);
+        //event($event);
 
         Notification::assertSentTo(
             $event->subscribers,
