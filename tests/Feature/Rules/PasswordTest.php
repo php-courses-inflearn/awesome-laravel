@@ -11,9 +11,10 @@ class PasswordTest extends TestCase
     /**
      * Password 규칙 통과 테스트
      *
-     * @param string $password
-     * @param int $expected
+     * @param  string  $password
+     * @param  int  $expected
      * @dataProvider passwordProvider
+     *
      * @return void
      */
 //    public function testPasses(string $password, int $expected)
@@ -38,14 +39,15 @@ class PasswordTest extends TestCase
     /**
      * 비밀번호 규칙 테스트
      *
-     * @param string $password
+     * @param  string  $password
      * @dataProvider passwordProvider
+     *
      * @return void
      */
     public function testPasswordRule(string $password)
     {
         $validator = Validator::make(['password' => $password], [
-            'password' => new Password()
+            'password' => new Password(),
         ]);
 
         $errors = $validator->errors();
@@ -53,7 +55,7 @@ class PasswordTest extends TestCase
         if ($validator->fails()) {
             $this->assertStringContainsString(
                 __('validation.regex', [
-                    'Attribute' => __('validation.attributes.password')
+                    'Attribute' => __('validation.attributes.password'),
                 ]),
                 $errors->first('password')
             );
