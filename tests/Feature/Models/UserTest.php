@@ -39,7 +39,7 @@ class UserTest extends TestCase
         );
 
         //, or
-        $this->assertStringContainsString(
+        $this->assertEquals(
             'select * from `users` where `email_verified_at` is not null',
             $user->verified()->toSql()
         );
