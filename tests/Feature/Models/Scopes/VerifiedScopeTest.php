@@ -5,6 +5,7 @@ namespace Tests\Feature\Models\Scopes;
 use App\Models\Scopes\VerifiedScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class VerifiedScopeTest extends TestCase
@@ -23,9 +24,9 @@ class VerifiedScopeTest extends TestCase
         {
         });
 
-        $this->assertStringContainsString(
-            'where "email_verified_at" is not null',
-            $queryBuilder->toSql()
-        );
+        $this->assertTrue(Str::containsAll(
+            $queryBuilder->toSql(),
+            ['where', 'email_verified_at', 'is not null']
+        ));
     }
 }

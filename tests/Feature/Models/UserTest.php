@@ -4,6 +4,7 @@ namespace Tests\Feature\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -15,10 +16,10 @@ class UserTest extends TestCase
      */
 //    public function testGlobalVerifiedScope()
 //    {
-//        $this->assertStringContainsString(
-//            "select * from `users` where `email_verified_at` is not null",
-//            User::toSql()
-//        );
+//        $this->assertTrue(Str::containsAll(
+//            User::toSql(),
+//            ['where', 'email_verified_at', 'is not null']
+//        ));
 //    }
 
     /**
@@ -33,15 +34,14 @@ class UserTest extends TestCase
 
         $user->scopeVerified($queryBuilder);
 
-        $this->assertStringContainsString(
-            'where "email_verified_at" is not null',
-            $queryBuilder->toSql()
-        );
+        $this->assertTrue(Str::containsAll(
+            $queryBuilder->toSql(),
+            ['where', 'email_verified_at', 'is not null']
+        ));
 
-        //, or
-        $this->assertEquals(
-            'select * from `users` where `email_verified_at` is not null',
-            $user->verified()->toSql()
-        );
+        $this->assertTrue(Str::containsAll(
+            $user->verified()->toSql(),
+            ['where', 'email_verified_at', 'is not null']
+        ));
     }
 }
