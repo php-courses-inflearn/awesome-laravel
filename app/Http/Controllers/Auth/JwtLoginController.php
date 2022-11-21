@@ -51,6 +51,19 @@ class JwtLoginController extends Controller
     }
 
     /**
+     * Guard
+     *
+     * @return \PHPOpenSourceSaver\JWTAuth\JWTGuard
+     */
+    private function guard()
+    {
+        /** @var JWTGuard $guard */
+        $guard = auth('api');
+
+        return $guard;
+    }
+
+    /**
      * 토큰 응답
      *
      * @param $token
@@ -63,18 +76,5 @@ class JwtLoginController extends Controller
             'token_type' => 'bearer',
             'expires_in' => $this->guard()->factory()->getTTL() * 60,
         ]);
-    }
-
-    /**
-     * Guard
-     *
-     * @return \PHPOpenSourceSaver\JWTAuth\JWTGuard
-     */
-    private function guard()
-    {
-        /** @var JWTGuard $guard */
-        $guard = auth('api');
-
-        return $guard;
     }
 }
