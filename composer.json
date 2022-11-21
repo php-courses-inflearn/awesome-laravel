@@ -17,6 +17,7 @@
         "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.7",
         "meilisearch/meilisearch-php": "^0.24.0",
+        "php-open-source-saver/jwt-auth": "^2.0",
         "pusher/pusher-php-server": "^7.0"
     },
     "require-dev": {
