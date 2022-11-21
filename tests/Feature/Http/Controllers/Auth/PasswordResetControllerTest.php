@@ -41,16 +41,15 @@ class PasswordResetControllerTest extends TestCase
 
         $user = $this->user();
 
-        $response = $this->post(route('password.email'), [
+        $this->post(route('password.email'), [
             'email' => $user->email,
-        ]);
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('status');
 
         Notification::assertSentTo(
             $user, ResetPassword::class
         );
-
-        $response->assertRedirect();
-        $response->assertSessionHas('status');
     }
 
     /**
@@ -62,14 +61,13 @@ class PasswordResetControllerTest extends TestCase
     {
         Mail::fake();
 
-        $response = $this->post(route('password.email'), [
+        $this->post(route('password.email'), [
             'email' => $this->faker->safeEmail,
-        ]);
+        ])
+        ->assertRedirect()
+        ->assertSessionHasErrors('email');
 
         Mail::assertNothingSent();
-
-        $response->assertRedirect();
-        $response->assertSessionHasErrors('email');
     }
 
     /**
@@ -97,17 +95,16 @@ class PasswordResetControllerTest extends TestCase
 
         $token = Password::createToken($user);
 
-        $response = $this->post(route('password.update'), [
+        $this->post(route('password.update'), [
             'email' => $user->email,
             'password' => 'password',
             'password_confirmation' => 'password',
             'token' => $token,
-        ]);
+        ])
+        ->assertRedirect()
+        ->assertSessionHas('status');
 
         Event::assertDispatched(PasswordReset::class);
-
-        $response->assertRedirect();
-        $response->assertSessionHas('status');
     }
 
     /**
@@ -119,17 +116,16 @@ class PasswordResetControllerTest extends TestCase
     {
         Event::fake();
 
-        $response = $this->post(route('password.update'), [
+        $this->post(route('password.update'), [
             'email' => $this->faker->safeEmail,
             'password' => 'password',
             'password_confirmation' => 'password',
             'token' => Str::random(),
-        ]);
+        ])
+        ->assertRedirect()
+        ->assertSessionHasErrors('email');
 
         Event::assertNotDispatched(PasswordReset::class);
-
-        $response->assertRedirect();
-        $response->assertSessionHasErrors('email');
     }
 
     /**

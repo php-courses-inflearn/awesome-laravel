@@ -35,13 +35,12 @@ class RegisterControllerTest extends TestCase
 
         $email = $this->faker->safeEmail;
 
-        $response = $this->post(route('register'), [
+        $this->post(route('register'), [
             'name' => $this->faker->name,
             'email' => $email,
             'password' => 'password',
-        ]);
-
-        $response->assertRedirect(
+        ])
+        ->assertRedirect(
             route('verification.notice')
         );
 

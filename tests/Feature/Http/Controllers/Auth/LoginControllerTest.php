@@ -32,14 +32,13 @@ class LoginControllerTest extends TestCase
     {
         $user = $this->user();
 
-        $response = $this->post(route('login'), [
+        $this->post(route('login'), [
             'email' => $user->email,
             'password' => 'password',
-        ]);
+        ])
+        ->assertRedirect();
 
         $this->assertAuthenticated();
-
-        $response->assertRedirect();
     }
 
     /**
@@ -51,15 +50,14 @@ class LoginControllerTest extends TestCase
     {
         $user = $this->user();
 
-        $response = $this->post(route('login'), [
+        $this->post(route('login'), [
             'email' => $user->email,
             'password' => $this->faker->password(8),
-        ]);
+        ])
+        ->assertRedirect()
+        ->assertSessionHasErrors('failed');
 
         $this->assertGuest();
-
-        $response->assertRedirect();
-        $response->assertSessionHasErrors('failed');
     }
 
     /**
@@ -71,16 +69,15 @@ class LoginControllerTest extends TestCase
     {
         $user = $this->user();
 
-        $response = $this->postJson(route('login'), [
+        $this->postJson(route('login'), [
             'email' => $user->email,
             'password' => 'password',
         ], [
             'X-Requested-With' => 'XMLHttpRequest',
-        ]);
+        ])
+        ->assertOk();
 
         $this->assertAuthenticated();
-
-        $response->assertOk();
     }
 
     /**

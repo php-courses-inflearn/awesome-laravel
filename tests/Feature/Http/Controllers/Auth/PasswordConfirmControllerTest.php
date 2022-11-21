@@ -33,12 +33,11 @@ class PasswordConfirmControllerTest extends TestCase
     {
         $user = $this->user();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->post(route('password.confirm'), [
                 'password' => 'password',
-            ]);
-
-        $response->assertRedirect();
+            ])
+            ->assertRedirect();
     }
 
     /**
@@ -50,13 +49,12 @@ class PasswordConfirmControllerTest extends TestCase
     {
         $user = $this->user();
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->post(route('password.confirm'), [
                 'password' => $this->faker->password(8),
-            ]);
-
-        $response->assertRedirect();
-        $response->assertSessionHasErrors('password');
+            ])
+            ->assertRedirect()
+            ->assertSessionHasErrors('password');
     }
 
     /**
