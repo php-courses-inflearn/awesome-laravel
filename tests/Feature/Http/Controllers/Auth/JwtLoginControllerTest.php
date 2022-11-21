@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
+use PHPOpenSourceSaver\JWTAuth\JWT;
 use PHPOpenSourceSaver\JWTAuth\JWTGuard;
 use Tests\TestCase;
 
@@ -22,7 +23,7 @@ class JwtLoginControllerTest extends TestCase
     {
         $user = $this->user();
 
-        $this->post(route('jwt.login'), [
+        $response = $this->post(route('jwt.login'), [
             'email' => $user->email,
             'password' => 'password',
         ])
@@ -30,6 +31,10 @@ class JwtLoginControllerTest extends TestCase
             $json->hasAll(['access_token', 'token_type', 'expires_in']);
         })
         ->assertSuccessful();
+
+        $this->assertAuthenticated('api');
+
+        $this->assertTrue($this->check($response->json()['access_token']));
     }
 
     /**
@@ -49,6 +54,8 @@ class JwtLoginControllerTest extends TestCase
             $json->has('error');
         })
         ->assertUnauthorized();
+
+        $this->assertGuest('api');
     }
 
     /**
@@ -62,12 +69,15 @@ class JwtLoginControllerTest extends TestCase
 
         $token = $this->guard()->login($user);
 
-        $this->withToken($token)
+        $response = $this->withToken($token)
             ->put(route('jwt.refresh'))
             ->assertJson(function (AssertableJson $json) {
                 $json->hasAll(['access_token', 'token_type', 'expires_in']);
             })
             ->assertSuccessful();
+
+        $this->assertNotTrue($this->check($token));
+        $this->assertTrue($this->check($response->json()['access_token']));
     }
 
     /**
@@ -87,6 +97,25 @@ class JwtLoginControllerTest extends TestCase
                 $json->has('message');
             })
             ->assertSuccessful();
+
+        $this->assertGuest('api');
+
+        $this->assertNotTrue($this->check($token));
+    }
+
+    /**
+     * Check that the token is valid.
+     *
+     * @return bool
+     */
+    public function check(string $token)
+    {
+        /** @var JWT $jwt */
+        $jwt = app(JWT::class);
+
+        $jwt->setToken($token);
+
+        return $jwt->check();
     }
 
     /**
