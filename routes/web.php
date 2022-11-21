@@ -19,10 +19,12 @@ Route::get('/search', \App\Http\Controllers\SearchController::class)
     ->name('search');
 
 Route::controller(\App\Http\Controllers\UserController::class)->group(function () {
-    Route::put('/user', 'update')
-        ->name('user.update');
-    Route::delete('/user', 'destroy')
-        ->name('user.destroy');
+    Route::name('user.')->group(function () {
+        Route::put('/user', 'update')
+            ->name('update');
+        Route::delete('/user', 'destroy')
+            ->name('destroy');
+    });
 });
 
 Route::resource('blogs', \App\Http\Controllers\BlogController::class);
