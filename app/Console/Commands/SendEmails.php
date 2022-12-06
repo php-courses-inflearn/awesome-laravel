@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\Advertisement;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
@@ -39,6 +40,21 @@ class SendEmails extends Command
     }
 
     /**
+     * 이메일 전송
+     *
+     * @param  string  $queue
+     * @return void
+     */
+    private function sendEmails(string $queue)
+    {
+        $posts = $this->posts();
+
+        $this->users()->each(fn (User $user) => Mail::to($user)->send(
+            (new Advertisement($posts))->onQueue($queue)
+        ));
+    }
+
+    /**
      * 메일을 받을 사용자 목록
      *
      * @return \Illuminate\Database\Eloquent\Collection
@@ -49,17 +65,12 @@ class SendEmails extends Command
     }
 
     /**
-     * 이메일 전송
+     * 글 목록
      *
-     * @param  string  $queue
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Collection
      */
-    private function sendEmails(string $queue)
+    private function posts()
     {
-        $this->users()->each(function (User $user) use ($queue) {
-            Mail::to($user)->send(
-                (new Advertisement())->onQueue($queue)
-            );
-        });
+        return Post::latest()->limit(5)->get();
     }
 }
