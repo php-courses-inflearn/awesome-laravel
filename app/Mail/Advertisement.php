@@ -2,9 +2,9 @@
 
 namespace App\Mail;
 
-use App\Models\Post;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -19,8 +19,9 @@ class Advertisement extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(
+        public readonly Collection $posts
+    ) {
         //
     }
 
@@ -45,9 +46,6 @@ class Advertisement extends Mailable implements ShouldQueue
     {
         return new Content(
             view: 'emails.advertisement',
-            with: [
-                'posts' => $this->posts(),
-            ]
         );
     }
 
@@ -59,15 +57,5 @@ class Advertisement extends Mailable implements ShouldQueue
     public function attachments()
     {
         return [];
-    }
-
-    /**
-     * 글
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function posts()
-    {
-        return Post::latest()->limit(5)->get();
     }
 }
