@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class SubscriberController extends Controller
 {
     /**
-     * 내 구독자
+     * 내 구독자 대시보드
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View

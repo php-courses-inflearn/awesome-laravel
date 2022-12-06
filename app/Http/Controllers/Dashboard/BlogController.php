@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class BlogController extends Controller
 {
     /**
-     * 블로그 수정 폼
+     * 블로그 대시보드
      *
      * @return \Illuminate\View\View
      */

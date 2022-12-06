@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
     /**
-     * 댓글
+     * 댓글 대시보드
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View

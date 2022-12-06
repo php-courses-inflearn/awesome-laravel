@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class TokenController extends Controller
 {
     /**
-     * 토큰
+     * 토큰 대시보드
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
