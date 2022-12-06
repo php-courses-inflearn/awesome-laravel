@@ -108,7 +108,7 @@ class JwtLoginControllerTest extends TestCase
      *
      * @return bool
      */
-    public function check(string $token)
+    private function check(string $token)
     {
         /** @var JWT $jwt */
         $jwt = app(JWT::class);
