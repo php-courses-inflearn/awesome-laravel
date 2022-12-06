@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -46,7 +45,7 @@ class ProfileController extends Controller
         $user = $request->user();
 
         return view('auth.profile.show', [
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
@@ -61,7 +60,7 @@ class ProfileController extends Controller
         $user = $request->user();
 
         return view('auth.profile.edit', [
-            'user' => $user
+            'user' => $user,
         ]);
     }
 

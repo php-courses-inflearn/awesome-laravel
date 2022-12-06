@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Enums\TokenAbility;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTokenRequest;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\PersonalAccessToken;
 
