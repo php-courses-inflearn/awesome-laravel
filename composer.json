@@ -10,7 +10,7 @@
         "doctrine/dbal": "^3.3",
         "guzzlehttp/guzzle": "^7.2",
         "http-interop/http-factory-guzzle": "^1.2",
-        "laravel/framework": "^9.39",
+        "laravel/framework": "9.42",
         "laravel/sanctum": "^3.0",
         "laravel/scout": "^9.4",
         "laravel/socialite": "^5.5",
