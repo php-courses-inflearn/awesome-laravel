@@ -22,18 +22,27 @@ class LinkTest extends TestCase
      */
     public function testLink()
     {
-        $link = new Link();
+//        $link = new Link();
+//
+//        $attributes = [
+//            'name' => $this->faker->imageUrl,
+//        ];
+//
+//        $linkCastable = $link->get(new class extends Model
+//        {
+//        }, '', null, $attributes);
+//
+//        $this->assertInstanceOf(LinkCastable::class, $linkCastable);
+//        $this->assertEquals($attributes['name'], $linkCastable->path);
 
         $attributes = [
             'name' => $this->faker->imageUrl,
         ];
 
-        $linkCastable = $link->get(new class extends Model
-        {
-        }, '', null, $attributes);
+        $model = $this->model($attributes);
 
-        $this->assertInstanceOf(LinkCastable::class, $linkCastable);
-        $this->assertEquals($attributes['name'], $linkCastable->path);
+        $this->assertInstanceOf(LinkCastable::class, $model->link);
+        $this->assertEquals($attributes['name'], $model->link->path);
     }
 
     /**
@@ -43,22 +52,35 @@ class LinkTest extends TestCase
      */
     public function testLinkWithFilePath()
     {
-        $link = new Link();
+//        $link = new Link();
+//
+//        $attributes = [
+//            'name' => $this->faker->filePath(),
+//        ];
+//
+//        $linkCastable = $link->get(new class extends Model
+//        {
+//        }, '', null, $attributes);
+//
+//        $this->assertEquals(
+//            Storage::disk('public')->url($attributes['name']),
+//            $linkCastable->path
+//        );
+//
+//        $this->assertInstanceOf(LinkCastable::class, $linkCastable);
 
         $attributes = [
             'name' => $this->faker->filePath(),
         ];
 
-        $linkCastable = $link->get(new class extends Model
-        {
-        }, '', null, $attributes);
+        $model = $this->model($attributes);
 
         $this->assertEquals(
             Storage::disk('public')->url($attributes['name']),
-            $linkCastable->path
+            $model->link->path
         );
 
-        $this->assertInstanceOf(LinkCastable::class, $linkCastable);
+        $this->assertInstanceOf(LinkCastable::class, $model->link);
     }
 
     /**
@@ -68,16 +90,26 @@ class LinkTest extends TestCase
      */
     public function testLinkSetCastable()
     {
-        $link = new Link();
+//        $link = new Link();
+//        $linkCastable = new LinkCastable(
+//            $this->faker->imageUrl
+//        );
+//
+//        $attributes = $link->set(new class extends Model
+//        {
+//        }, '', $linkCastable, []);
+//
+//        $this->assertEquals($attributes['name'], $linkCastable->path);
+
+        $model = $this->model();
         $linkCastable = new LinkCastable(
             $this->faker->imageUrl
         );
 
-        $attributes = $link->set(new class extends Model
-        {
-        }, '', $linkCastable, []);
+        $model->link = $linkCastable;
 
-        $this->assertEquals($attributes['name'], $linkCastable->path);
+        $this->assertInstanceOf(LinkCastable::class, $model->link);
+        $this->assertEquals($linkCastable->path, $model->link->path);
     }
 
     /**
@@ -87,12 +119,48 @@ class LinkTest extends TestCase
      */
     public function testLinkSetNull()
     {
-        $link = new Link();
+//        $link = new Link();
+//
+//        $this->expectException(Exception::class);
+//
+//        $link->set(new class extends Model
+//        {
+//        }, '', null, []);
+
+        $model = $this->model();
 
         $this->expectException(Exception::class);
 
-        $link->set(new class extends Model
+        $model->link = null;
+    }
+
+    /**
+     * Model
+     *
+     * @param $attributes
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    private function model($attributes = [])
+    {
+        return new class($attributes) extends Model
         {
-        }, '', null, []);
+            /**
+             * The attributes that are mass assignable.
+             *
+             * @var array<string>
+             */
+            protected $fillable = [
+                'name',
+            ];
+
+            /**
+             * The attributes that should be cast.
+             *
+             * @var array<string, string>
+             */
+            protected $casts = [
+                'link' => LinkCastable::class,
+            ];
+        };
     }
 }
