@@ -53,12 +53,7 @@ class PasswordTest extends TestCase
         $errors = $validator->errors();
 
         if ($validator->fails()) {
-            $this->assertStringContainsString(
-                __('validation.regex', [
-                    'Attribute' => __('validation.attributes.password'),
-                ]),
-                $errors->first('password')
-            );
+            $this->assertContains('password', $errors->keys());
         } else {
             $this->assertEmpty($errors);
         }
