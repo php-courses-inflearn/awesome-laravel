@@ -29,9 +29,9 @@ class SubscribeControllerTest extends TestCase
         $blog = $this->blog();
 
         $this->actingAs($user)
-            ->post(route('subscribe', [
-                'blog' => $blog->name,
-            ]))
+            ->post(route('subscribe'), [
+                'blog_id' => $blog->id,
+            ])
             ->assertRedirect();
 
         $this->assertCount(1, $user->subscriptions);
@@ -58,9 +58,9 @@ class SubscribeControllerTest extends TestCase
         $blog = $this->blog($user);
 
         $this->actingAs($user)
-            ->delete(route('unsubscribe', [
-                'blog' => $blog->name,
-            ]))
+            ->post(route('unsubscribe'), [
+                'blog_id' => $blog->id,
+            ])
             ->assertRedirect();
 
         $this->assertDatabaseMissing('blog_user', [

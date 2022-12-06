@@ -12,15 +12,15 @@ class SubscribeController extends Controller
      * 구독
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, Blog $blog)
+    public function store(Request $request)
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
+        $blog = Blog::findOrFail($request->blog_id);
 
-        $blog->subscribers()->attach($user->id);
+        $user->subscriptions()->attach($blog->id);
 
         event(new Subscribed($user, $blog));
 
@@ -31,15 +31,15 @@ class SubscribeController extends Controller
      * 구독 취소
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request, Blog $blog)
+    public function destroy(Request $request)
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
+        $blog = Blog::findOrFail($request->blog_id);
 
-        $blog->subscribers()->detach($user->id);
+        $user->subscriptions()->detach($blog->id);
 
         return back();
     }
