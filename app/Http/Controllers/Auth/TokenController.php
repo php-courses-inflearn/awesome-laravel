@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Enums\TokenAbility;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTokenRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\PersonalAccessToken;
 
@@ -46,7 +47,10 @@ class TokenController extends Controller
      */
     public function destroy(Request $request, PersonalAccessToken $token)
     {
-        $token->delete();
+        /** @var \App\Models\User $user */
+        $user = $request->user();
+
+        $user->tokens()->where('id', $token->id)->delete();
 
         return back();
     }
