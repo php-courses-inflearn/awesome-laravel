@@ -17,16 +17,45 @@ class VerifiedScopeTest extends TestCase
      */
     public function testApply()
     {
-        $scope = new VerifiedScope();
-        $queryBuilder = app(Builder::class);
+//        $scope = new VerifiedScope();
+//        $queryBuilder = app(Builder::class);
+//
+//        $scope->apply($queryBuilder, new class extends Model
+//        {
+//        });
+//
+//        $this->assertTrue(Str::containsAll(
+//            $queryBuilder->toSql(),
+//            ['where', 'email_verified_at', 'is not null']
+//        ));
 
-        $scope->apply($queryBuilder, new class extends Model
-        {
-        });
+        $model = $this->model();
 
         $this->assertTrue(Str::containsAll(
-            $queryBuilder->toSql(),
+            $model->toSql(),
             ['where', 'email_verified_at', 'is not null']
         ));
+    }
+
+    /**
+     * Model
+     *
+     * @param $attributes
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    private function model($attributes = [])
+    {
+        return new class($attributes) extends Model
+        {
+            /**
+             * Perform any actions required after the model boots.
+             *
+             * @return void
+             */
+            protected static function booted()
+            {
+                static::addGlobalScope(new VerifiedScope());
+            }
+        };
     }
 }
