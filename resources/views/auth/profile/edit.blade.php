@@ -1,11 +1,9 @@
 @extends('layouts.app')
 
-@section('title', '대시보드')
+@section('title', '마이페이지 - 개인정보수정')
 
 @section('content')
-    @include('dashboard.menu')
-
-    <form action="{{ route('user.update') }}" method="POST">
+    <form action="{{ route('profile.update') }}" method="POST">
         @method('PUT')
         @csrf
         <input type="text" name="name" value="{{ old('name', $user->name) }}">
@@ -19,7 +17,7 @@
         <button type="submit">개인정보 변경하기</button>
     </form>
 
-    <form action="{{ route('user.destroy') }}" method="POST">
+    <form action="{{ route('profile.destroy') }}" method="POST">
         @method('DELETE')
         @csrf
 

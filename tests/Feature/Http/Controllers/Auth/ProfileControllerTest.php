@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers;
+namespace Tests\Feature\Http\Controllers\Auth;
 
+use App\Http\Middleware\RequirePassword;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -9,9 +10,41 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class UserControllerTest extends TestCase
+class ProfileControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
+
+    /**
+     * 마이페이지 테스트
+     *
+     * @return void
+     */
+    public function testShow()
+    {
+        $user = $this->user();
+
+        $this->actingAs($user)
+            ->withoutMiddleware(RequirePassword::class)
+            ->get(route('profile.show'))
+            ->assertOk()
+            ->assertViewIs('auth.profile.show');
+    }
+
+    /**
+     * 마이페이지 - 개인정보수정 테스트
+     *
+     * @return void
+     */
+    public function testEdit()
+    {
+        $user = $this->user();
+
+        $this->actingAs($user)
+            ->withoutMiddleware(RequirePassword::class)
+            ->get(route('profile.edit'))
+            ->assertOk()
+            ->assertViewIs('auth.profile.edit');
+    }
 
     /**
      * 사용자 정보 갱신 테스트
@@ -58,7 +91,8 @@ class UserControllerTest extends TestCase
         $user = $this->user();
 
         $this->actingAs($user)
-            ->delete(route('user.destroy'))
+            ->withoutMiddleware(RequirePassword::class)
+            ->delete(route('profile.destroy'))
             ->assertRedirect();
 
         $this->assertDatabaseMissing('users', [
@@ -75,14 +109,15 @@ class UserControllerTest extends TestCase
     private function update(Authenticatable $user, array $data, string $password)
     {
         $this->actingAs($user)
-            ->put(route('user.update'), $data)
+            ->withoutMiddleware(RequirePassword::class)
+            ->put(route('profile.update'), $data)
             ->assertRedirect();
 
         $this->assertTrue(
             Hash::check($password, $user->getAuthPassword())
         );
 
-        $this->assertDatabaseHas($user, [
+        $this->assertDatabaseHas('users', [
             'name' => $data['name'],
         ]);
     }

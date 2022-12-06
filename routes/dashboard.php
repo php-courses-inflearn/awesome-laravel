@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', \App\Http\Controllers\Dashboard\UserController::class)->name('dashboard');
 Route::get('/blogs', \App\Http\Controllers\Dashboard\BlogController::class)->name('dashboard.blogs');
 Route::get('/subscribers', \App\Http\Controllers\Dashboard\SubscriberController::class)->name('dashboard.subscribers');
 Route::get('/subscriptions', \App\Http\Controllers\Dashboard\SubscriptionController::class)->name('dashboard.subscriptions');
