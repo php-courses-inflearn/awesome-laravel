@@ -16,11 +16,4 @@
 
         <button type="submit">개인정보 변경하기</button>
     </form>
-
-    <form action="{{ route('profile.destroy') }}" method="POST">
-        @method('DELETE')
-        @csrf
-
-        <button type="submit">회원탈퇴</button>
-    </form>
 @endsection

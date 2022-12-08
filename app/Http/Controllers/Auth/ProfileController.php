@@ -90,17 +90,14 @@ class ProfileController extends Controller
     }
 
     /**
-     * 회원탈퇴
+     * Remove the resource from storage.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @codeCoverageIgnore
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy()
     {
-        /** @var \App\Models\User $user */
-        $user = $request->user();
-
-        $user->delete();
-
-        return redirect()->to('/');
+        abort(404);
     }
 }

@@ -82,25 +82,6 @@ class ProfileControllerTest extends TestCase
     }
 
     /**
-     * 회원탈퇴 테스트
-     *
-     * @return void
-     */
-    public function testDestroy()
-    {
-        $user = $this->user();
-
-        $this->actingAs($user)
-            ->withoutMiddleware(RequirePassword::class)
-            ->delete(route('profile.destroy'))
-            ->assertRedirect();
-
-        $this->assertDatabaseMissing('users', [
-            'email' => $user->email,
-        ]);
-    }
-
-    /**
      * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  array  $data
      * @param  string  $password
