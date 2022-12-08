@@ -49,21 +49,27 @@
         <ul>
             @foreach($comments as $comment)
                 <li>
-                    @include('blogs.posts.show.comments.item')
-
-                    @unless($comment->trashed())
-                        <form action="{{ route('posts.comments.store', $comment->commentable->id) }}" method="POST">
-                            @csrf
-
-                            <input type="hidden" name="parent_id" value="{{ $comment->id }}">
-                            <textarea name="content">{{ old('content') }}</textarea>
-
-                            <button type="submit">답글</button>
-                        </form>
-                    @endunless
-
                     <ul>
-                        @each('blogs.posts.show.comments.item', $comment->replies, 'comment')
+                        @include('blogs.posts.show.comments.item')
+
+                        <li>
+                            @unless($comment->trashed())
+                                <form action="{{ route('posts.comments.store', $comment->commentable->id) }}" method="POST">
+                                    @csrf
+
+                                    <input type="hidden" name="parent_id" value="{{ $comment->id }}">
+                                    <textarea name="content">{{ old('content') }}</textarea>
+
+                                    <button type="submit">답글</button>
+                                </form>
+                            @endunless
+                        </li>
+
+                        <li>
+                            <ul>
+                                @each('blogs.posts.show.comments.item', $comment->replies, 'comment')
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             @endforeach
