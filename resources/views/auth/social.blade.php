@@ -1,3 +1,1 @@
-@foreach ($providers as $provider)
-    <a href="{{ route('login.social', $provider->value) }}">{{ $provider->name }}</a>
-@endforeach
+<a href="{{ route('login.social', $provider->value) }}">{{ $provider->name }}</a>

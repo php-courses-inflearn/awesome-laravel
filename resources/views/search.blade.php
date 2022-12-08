@@ -12,6 +12,4 @@
             {{ "\"{$q}\" 에 해당하는 검색결과가 없습니다" }}
         @endforelse
     </ul>
-
-    {{ $posts->links() }}
 @endsection

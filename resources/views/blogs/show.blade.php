@@ -3,9 +3,47 @@
 @section('title', $blog->display_name)
 
 @section('content')
-    <h3>{{ $blog->display_name }}</h3>
-    @include('blogs.show.admin')
-    @include('blogs.show.subscription')
+    <header>
+        <h3>{{ $blog->display_name }}</h3>
 
-    @include('blogs.show.posts')
+        @auth
+            <ul>
+                @can(['update', 'delete'], $blog)
+                    <li><a href="{{ route('blogs.edit', $blog->name) }}">블로그 관리</a></li>
+                @endcan
+
+                @can('create', \App\Models\Post::class)
+                    <li><a href="{{ route('blogs.posts.create', $blog->name) }}">글쓰기</a></li>
+                @endcan
+            </ul>
+        @endauth
+
+        @unless ($owned)
+            @unless ($subscribed)
+                <form action="{{ route('subscribe') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="blog_id" value="{{ $blog->id }}">
+
+                    <button type="submit">구독</button>
+                </form>
+            @else
+                <form action="{{ route('unsubscribe') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="blog_id" value="{{ $blog->id }}">
+
+                    <button type="submit">구독취소</button>
+                </form>
+            @endunless
+        @endunless
+    </header>
+
+    <ul>
+        @foreach($posts as $post)
+            <li>
+                <a href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a>
+            </li>
+        @endforeach
+    </ul>
+
+    {{ $posts->links() }}
 @endsection

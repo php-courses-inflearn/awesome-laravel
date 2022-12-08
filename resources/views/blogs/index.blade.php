@@ -5,14 +5,10 @@
 @section('content')
     <ul>
         @foreach ($blogs as $blog)
-            <li>
-                <h3><a href="{{ route('blogs.show', $blog->name) }}">{{ $blog->display_name }}</a></h3>
-                <div>{{ $blog->user->name }}</div>
-            </li>
+            <h3><a href="{{ route('blogs.show', $blog->name) }}">{{ $blog->display_name }}</a></h3>
+            <div>{{ $blog->user->name }}</div>
         @endforeach
     </ul>
 
     {{ $blogs->links() }}
 @endsection
-
-

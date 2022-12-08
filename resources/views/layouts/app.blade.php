@@ -26,6 +26,8 @@
                     <li><a href="{{ route('register') }}">회원가입</a></li>
                 @else
                     <li><a href="{{ route('profile.show') }}">마이페이지</a></li>
+                    <li><a href="{{ route('dashboard.blogs') }}">대시보드</a></li>
+                    <li><a href="{{ route('blogs.index') }}">블로그</a></li>
                     <li>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
@@ -37,11 +39,11 @@
         </nav>
 
         @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                <ul>
+            <ul>
+                @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
-                </ul>
-            @endforeach
+                @endforeach
+            </ul>
         @endif
 
         @if (session()->has('status'))
