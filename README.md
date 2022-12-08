@@ -4,7 +4,7 @@
 
 <p align="center">
 <img src="https://github.com/php-courses-inflearn/laravel/actions/workflows/laravel.yml/badge.svg" alt="Build Status">
-<img src="https://img.shields.io/badge/laravel%2Fframework-9.39-red?&logo=laravel" alt="Laravel Version">
+<img src="https://img.shields.io/badge/laravel%2Fframework-9.43-red?&logo=laravel" alt="Laravel Version">
 <img src="https://img.shields.io/badge/php-8.1-blue?logo=php" alt="PHP Version">
 <img src="https://codecov.io/gh/php-courses-inflearn/laravel/branch/main/graph/badge.svg?token=5NWU0Y3OT6"/>
 </p>
@@ -140,7 +140,7 @@
     - 4.8.4 미들웨어
     - 4.8.5 테스트
     - 4.8.6 미들웨어 테스트
-- 4.9 대시보드
+- 4.9 마이페이지
     - 4.9.1 라우팅 & 컨트롤러
     - 4.9.2 구현
     - 4.9.3 테스트
