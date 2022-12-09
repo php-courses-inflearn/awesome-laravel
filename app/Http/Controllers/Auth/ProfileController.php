@@ -75,7 +75,7 @@ class ProfileController extends Controller
         /** @var \App\Models\User $user */
         $user = $request->user();
 
-        $data = $request->only('name');
+        $data = $request->validated();
 
         if ($request->filled('password')) {
             $data = [

@@ -50,9 +50,7 @@ class BlogController extends Controller
         /** @var \App\Models\User $user */
         $user = $request->user();
 
-        $user->blogs()->create(
-            $request->only(['name', 'display_name'])
-        );
+        $user->blogs()->create($request->validated());
 
         return to_route('dashboard.blogs');
     }
@@ -101,9 +99,7 @@ class BlogController extends Controller
      */
     public function update(UpdateBlogRequest $request, Blog $blog)
     {
-        $blog->update(
-            $request->only(['name', 'display_name'])
-        );
+        $blog->update($request->validated());
 
         return to_route('dashboard.blogs');
     }

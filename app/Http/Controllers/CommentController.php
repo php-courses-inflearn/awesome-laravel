@@ -28,9 +28,7 @@ class CommentController extends Controller
         /** @var \App\Models\User $user */
         $user = $request->user();
 
-        $comment = $user->comments()->make(
-            $request->only(['parent_id', 'content'])
-        );
+        $comment = $user->comments()->make($request->validated());
 
         $post->comments()->save($comment);
 
@@ -46,9 +44,7 @@ class CommentController extends Controller
      */
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
-        $comment->update(
-            $request->only('content')
-        );
+        $comment->update($request->validated());
 
         return back();
     }

@@ -49,13 +49,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request, Blog $blog)
     {
-        $data = $request->only(
-            'title',
-            'content',
-            'attachments'
-        );
-
-        $post = $this->postService->store($data, $blog);
+        $post = $this->postService->store($request->validated(), $blog);
 
         return (new PostResource($post))
                 ->response()
@@ -83,13 +77,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        $data = $request->only(
-            'title',
-            'content',
-            'attachments'
-        );
-
-        $this->postService->update($data, $post);
+        $this->postService->update($request->validated(), $post);
 
         return response()->noContent();
     }

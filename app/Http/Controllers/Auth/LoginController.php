@@ -28,9 +28,7 @@ class LoginController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $credentials = $request->only(['email', 'password']);
-
-        if (! auth()->attempt($credentials, $request->boolean('remember'))) {
+        if (! auth()->attempt($request->validated(), $request->boolean('remember'))) {
             return back()->withErrors([
                 'failed' => __('auth.failed'),
             ]);

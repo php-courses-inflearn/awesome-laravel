@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAttachmentRequest;
 use App\Models\Attachment;
 use App\Models\Post;
 use App\Services\AttachmentService;
-use Illuminate\Http\Request;
 
 class AttachmentController extends Controller
 {
@@ -21,17 +21,13 @@ class AttachmentController extends Controller
     /**
      * 파일첨부
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreAttachmentRequest  $request
      * @param  \App\Models\Post  $post
      * @return void
      */
-    public function store(Request $request, Post $post)
+    public function store(StoreAttachmentRequest $request, Post $post)
     {
-        $data = [
-            'attachments' => $request->file('attachments'),
-        ];
-
-        $this->attachmentService->store($data, $post);
+        $this->attachmentService->store($request->validated(), $post);
     }
 
     /**
