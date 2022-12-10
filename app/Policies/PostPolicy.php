@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Blog;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -39,9 +40,10 @@ class PostPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user, Blog $blog)
     {
-        return $user->tokenCan('post:create');
+        return $user->id === $blog->user_id &&
+            $user->tokenCan('post:create');
     }
 
     /**
