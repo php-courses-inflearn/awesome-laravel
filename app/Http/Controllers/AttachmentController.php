@@ -16,6 +16,7 @@ class AttachmentController extends Controller
         private readonly AttachmentService $attachmentService
     ) {
         $this->authorizeResource(Attachment::class, 'attachment');
+        $this->middleware('can:update,post')->only('store');
     }
 
     /**

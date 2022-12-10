@@ -2,28 +2,13 @@
 
 namespace App\Policies;
 
-use App\Models\Blog;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Http\Request;
 
 class PostPolicy
 {
     use HandlesAuthorization;
-
-    /**
-     * @var Blog|null
-     */
-    private readonly ?Blog $blog;
-
-    /**
-     * @param  \Illuminate\Http\Request  $request
-     */
-    public function __construct(Request $request)
-    {
-        $this->blog = $request->blog;
-    }
 
     /**
      * Determine whether the user can view any models.
@@ -56,8 +41,7 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        return $user->id === $this->blog->user_id &&
-            $user->tokenCan('post:create');
+        return $user->tokenCan('post:create');
     }
 
     /**

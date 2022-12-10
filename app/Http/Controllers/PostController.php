@@ -17,6 +17,7 @@ class PostController extends Controller
     public function __construct(private readonly PostService $postService)
     {
         $this->authorizeResource(Post::class, 'post');
+        $this->middleware('can:update,blog')->only(['create', 'store']);
     }
 
     /**
