@@ -47,6 +47,9 @@
     npm ci
     npm run build
 
+    # Database Migration
+    php artisan migrate --no-interaction --force
+
     # Optimize
     # @see https://laravel.com/docs/9.x/deployment#optimization
     php artisan config:cache
