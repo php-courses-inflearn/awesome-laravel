@@ -7,8 +7,7 @@
     $app = '~/app';
 
     $shared = [
-        '~/storage' => 'storage',
-        '~/cache' => 'bootstrap/cache'
+        '~/storage' => 'storage'
     ];
 @endsetup
 
@@ -26,7 +25,6 @@
             cp -r {{ $local }} {{ $global }};
         fi;
 
-        [ -f {{ $local }} ] && rm {{ $local }};
         [ -d {{ $local }} ] && rm -rf {{ $local }};
         ln -nfs {{ $global }} {{ $local }};
     @endforeach
