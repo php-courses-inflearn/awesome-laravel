@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\PasswordConfirmRequest;
 use Illuminate\Support\Facades\Hash;
 
 class PasswordConfirmController extends Controller
@@ -21,10 +21,10 @@ class PasswordConfirmController extends Controller
     /**
      * 비밀번호 확인
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\PasswordConfirmRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(PasswordConfirmRequest $request)
     {
         /** @var \App\Models\User $user */
         $user = $request->user();

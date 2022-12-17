@@ -3,22 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Events\Subscribed;
+use App\Http\Requests\SubscribeRequest;
+use App\Http\Requests\UnsubscribeRequest;
 use App\Models\Blog;
-use Illuminate\Http\Request;
 
 class SubscribeController extends Controller
 {
     /**
      * 구독
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\SubscribeRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(SubscribeRequest $request)
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
-        $blog = Blog::findOrFail($request->blog_id);
+        $blog = Blog::find($request->blog_id);
 
         $user->subscriptions()->attach($blog->id);
 
@@ -30,14 +31,14 @@ class SubscribeController extends Controller
     /**
      * 구독 취소
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UnsubscribeRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request)
+    public function destroy(UnsubscribeRequest $request)
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
-        $blog = Blog::findOrFail($request->blog_id);
+        $blog = Blog::find($request->blog_id);
 
         $user->subscriptions()->detach($blog->id);
 

@@ -3,22 +3,19 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use PHPOpenSourceSaver\JWTAuth\JWTGuard;
+use App\Http\Requests\JwtLoginRequest;
 
 class JwtLoginController extends Controller
 {
     /**
      * JWT 생성
      *
-     * @param  Request  $request
+     * @param  \App\Http\Requests\JwtLoginRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(JwtLoginRequest $request)
     {
-        $credentials = $request->only(['email', 'password']);
-
-        if (! $token = $this->guard()->attempt($credentials)) {
+        if (! $token = $this->guard()->attempt($request->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -57,7 +54,7 @@ class JwtLoginController extends Controller
      */
     private function guard()
     {
-        /** @var JWTGuard $guard */
+        /** @var \PHPOpenSourceSaver\JWTAuth\JWTGuard $guard */
         $guard = auth('api');
 
         return $guard;

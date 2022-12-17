@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
     /**
      * 검색
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\SearchRequest  $request
      * @return \Illuminate\View\View
      */
-    public function __invoke(Request $request)
+    public function __invoke(SearchRequest $request)
     {
         $query = $request->input('query');
 
