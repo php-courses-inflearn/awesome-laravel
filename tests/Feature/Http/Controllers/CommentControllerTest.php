@@ -29,9 +29,7 @@ class CommentControllerTest extends TestCase
         ];
 
         $this->actingAs($user)
-            ->post(route('posts.comments.store', [
-                'post' => $post->id,
-            ]), $data)
+            ->post(route('posts.comments.store', $post), $data)
             ->assertRedirect();
 
         $this->assertCount(1, $post->comments);
@@ -59,9 +57,7 @@ class CommentControllerTest extends TestCase
         ];
 
         $this->actingAs($user)
-            ->post(route('posts.comments.store', [
-                'post' => $comment->commentable->id,
-            ]), [
+            ->post(route('posts.comments.store', $comment->commentable), [
                 ...$data,
                 'parent_id' => $comment->id,
             ])
@@ -91,9 +87,7 @@ class CommentControllerTest extends TestCase
         ];
 
         $this->actingAs($comment->user)
-            ->put(route('comments.update', [
-                'comment' => $comment->id,
-            ]), $data)
+            ->put(route('comments.update', $comment), $data)
             ->assertRedirect();
 
         $this->assertDatabaseHas('comments', [
@@ -114,9 +108,7 @@ class CommentControllerTest extends TestCase
         $comment = $this->comment();
 
         $this->actingAs($comment->user)
-            ->delete(route('comments.destroy', [
-                'comment' => $comment->id,
-            ]))
+            ->delete(route('comments.destroy', $comment))
             ->assertRedirect();
 
         $this->assertSoftDeleted('comments', [

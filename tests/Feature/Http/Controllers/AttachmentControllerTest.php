@@ -29,9 +29,7 @@ class AttachmentControllerTest extends TestCase
         $post = $this->article();
 
         $this->actingAs($post->blog->user)
-            ->post(route('posts.attachments.store', [
-                'post' => $post->id,
-            ]), [
+            ->post(route('posts.attachments.store', $post), [
                 'attachments' => [
                     $attachment,
                 ],
@@ -65,9 +63,7 @@ class AttachmentControllerTest extends TestCase
 
         foreach ($post->attachments as $attachment) {
             $this->actingAs($post->blog->user)
-                ->delete(route('attachments.destroy', [
-                    'attachment' => $attachment->id,
-                ]))
+                ->delete(route('attachments.destroy', $attachment))
                 ->assertRedirect();
 
             $this->assertDatabaseMissing('attachments', [

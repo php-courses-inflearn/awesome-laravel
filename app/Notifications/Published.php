@@ -47,7 +47,7 @@ class Published extends Notification implements ShouldQueue
             ->subject("[라라벨] '{$this->post->blog->display_name}' 에 새로운 글 '{$this->post->title}'")
             ->greeting('새로운 글이 작성되었습니다.')
             ->line(Str::substr($this->post->content, 0, 200))
-            ->action('글 읽기', route('posts.show', $this->post->id));
+            ->action('글 읽기', route('posts.show', $this->post));
     }
 
     /**

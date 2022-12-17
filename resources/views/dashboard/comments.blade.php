@@ -8,9 +8,9 @@
     <ul>
         @foreach($comments as $comment)
             <li>
-                <a href="{{ route('posts.show', $comment->commentable->id) }}">{{ $comment->commentable->title }}</a>
+                <a href="{{ route('posts.show', $comment->commentable) }}">{{ $comment->commentable->title }}</a>
                 <p>{{ $comment->content }}</p>
-                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST">
+                <form action="{{ route('comments.destroy', $comment) }}" method="POST">
                     @csrf
                     @method('DELETE')
 

@@ -16,7 +16,7 @@
                     <span>{{ $ability }}</span>
                 @endforeach
 
-                <form action="{{ route('tokens.destroy', $token->id) }}" method="POST">
+                <form action="{{ route('tokens.destroy', $token) }}" method="POST">
                     @csrf
                     @method('DELETE')
 

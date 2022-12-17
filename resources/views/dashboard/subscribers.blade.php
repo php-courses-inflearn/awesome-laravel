@@ -5,17 +5,13 @@
 @section('content')
     @include('dashboard.menu')
 
-    <ul>
-        @foreach ($blogs as $blog)
-            <li>
-                <h4>{{ $blog->name }}</h4>
+    @foreach ($blogs as $blog)
+        <h4>{{ $blog->name }}</h4>
 
-                <ul>
-                    @foreach ($blog->subscribers as $user)
-                        <li>{{ $user->name }}</li>
-                    @endforeach
-                </ul>
-            </li>
-        @endforeach
-    </ul>
+        <ul>
+            @foreach ($blog->subscribers as $user)
+                <li>{{ $user->name }}</li>
+            @endforeach
+        </ul>
+    @endforeach
 @endsection

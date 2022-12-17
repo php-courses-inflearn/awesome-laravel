@@ -9,10 +9,10 @@
         @can(['update', 'delete'], $post)
             <ul>
                 <li>
-                    <a href="{{ route('posts.edit', $post->id) }}">수정</a>
+                    <a href="{{ route('posts.edit', $post) }}">수정</a>
                 </li>
                 <li>
-                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                    <form action="{{ route('posts.destroy', $post) }}" method="POST">
                         @csrf
                         @method('DELETE')
 
@@ -36,7 +36,7 @@
     </ul>
 
     <div>
-        <form action="{{ route('posts.comments.store', $post->id) }}" method="POST">
+        <form action="{{ route('posts.comments.store', $post) }}" method="POST">
             @csrf
 
             <textarea name="content">{{ old('content') }}</textarea>
@@ -54,7 +54,7 @@
 
                         <li>
                             @unless($comment->trashed())
-                                <form action="{{ route('posts.comments.store', $comment->commentable->id) }}" method="POST">
+                                <form action="{{ route('posts.comments.store', $comment->commentable) }}" method="POST">
                                     @csrf
 
                                     <input type="hidden" name="parent_id" value="{{ $comment->id }}">

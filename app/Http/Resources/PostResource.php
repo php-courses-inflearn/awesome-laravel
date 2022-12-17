@@ -27,7 +27,7 @@ class PostResource extends JsonResource
             'links' => [
                 [
                     'rel' => 'self',
-                    'href' => route('posts.show', $this->id),
+                    'href' => route('posts.show', $this),
                     'method' => 'GET',
                 ],
             ],

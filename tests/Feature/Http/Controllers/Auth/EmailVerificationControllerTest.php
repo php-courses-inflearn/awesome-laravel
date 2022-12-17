@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers\Auth;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\ValidateSignature;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -62,7 +63,7 @@ class EmailVerificationControllerTest extends TestCase
                 'id' => $user->getKey(),
                 'hash' => sha1($user->getEmailForVerification()),
             ]))
-            ->assertRedirect();
+            ->assertRedirect(RouteServiceProvider::HOME);
 
         $this->assertTrue($user->hasVerifiedEmail());
     }

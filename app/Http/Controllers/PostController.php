@@ -58,7 +58,7 @@ class PostController extends Controller
     {
         $post = $this->postService->store($request->validated(), $blog);
 
-        return to_route('posts.show', $post->id);
+        return to_route('posts.show', $post);
     }
 
     /**
@@ -102,7 +102,7 @@ class PostController extends Controller
     {
         $this->postService->update($request->validated(), $post);
 
-        return to_route('posts.show', $post->id);
+        return to_route('posts.show', $post);
     }
 
     /**
@@ -115,6 +115,6 @@ class PostController extends Controller
     {
         $this->postService->destroy($post);
 
-        return to_route('blogs.posts.index', $post->blog->name);
+        return to_route('blogs.posts.index', $post->blog);
     }
 }

@@ -75,9 +75,7 @@ class BlogControllerTest extends TestCase
         $blog = $this->blog();
 
         $this->actingAs($user)
-            ->get(route('blogs.show', [
-                'blog' => $blog->name,
-            ]))
+            ->get(route('blogs.show', $blog))
             ->assertOk()
             ->assertViewIs('blogs.show');
     }
@@ -92,9 +90,7 @@ class BlogControllerTest extends TestCase
         $blog = $this->blog();
 
         $this->actingAs($blog->user)
-            ->get(route('blogs.edit', [
-                'blog' => $blog->name,
-            ]))
+            ->get(route('blogs.edit', $blog))
             ->assertOk()
             ->assertViewIs('blogs.edit');
     }
@@ -114,9 +110,7 @@ class BlogControllerTest extends TestCase
         ];
 
         $this->actingAs($blog->user)
-            ->put(route('blogs.update', [
-                'blog' => $blog->name,
-            ]), $data)
+            ->put(route('blogs.update', $blog), $data)
             ->assertRedirect();
 
         $this->assertDatabaseHas('blogs', $data);
@@ -132,9 +126,7 @@ class BlogControllerTest extends TestCase
         $blog = $this->blog();
 
         $this->actingAs($blog->user)
-            ->delete(route('blogs.destroy', [
-                'blog' => $blog->name,
-            ]))
+            ->delete(route('blogs.destroy', $blog))
             ->assertRedirect();
 
         $this->assertDatabaseMissing('blogs', [

@@ -26,10 +26,9 @@ class SocialLoginControllerTest extends TestCase
     {
         $provider = $this->provider(SocialiteProvider::Github);
 
-        $this->get(route('login.social', [
-            'provider' => $provider->name,
-        ]))
-        ->assertRedirect();
+        /** @see \Laravel\Socialite\Two\GithubProvider::getAuthUrl() */
+        $this->get(route('login.social', $provider))
+            ->assertRedirectContains('https://github.com/login/oauth/authorize');
     }
 
     /**
@@ -63,11 +62,9 @@ class SocialLoginControllerTest extends TestCase
             ->once()
             ->andReturn($socialUser);
 
-        $this->get(route('login.social.callback', [
-            'provider' => $provider->name,
-        ]))
-        ->assertRedirect()
-        ->assertSessionHas('auth.socialite');
+        $this->get(route('login.social.callback', $provider))
+            ->assertRedirect()
+            ->assertSessionHas('auth.socialite');
 
         $this->assertAuthenticated();
 

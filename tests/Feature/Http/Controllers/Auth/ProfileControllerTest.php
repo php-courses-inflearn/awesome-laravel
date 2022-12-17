@@ -92,7 +92,7 @@ class ProfileControllerTest extends TestCase
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
             ->put(route('profile.update'), $data)
-            ->assertRedirect();
+            ->assertRedirect(route('profile.show'));
 
         $this->assertTrue(
             Hash::check($password, $user->getAuthPassword())

@@ -31,11 +31,10 @@ class RegisterController extends Controller
      */
     public function store(RegisterUserRequest $request)
     {
-        $user = User::create(
-            $request->validated() + [
-                'password' => Hash::make($request->password),
-            ]
-        );
+        $user = User::create([
+            ...$request->validated(),
+            'password' => Hash::make($request->password),
+        ]);
 
         auth()->login($user);
 

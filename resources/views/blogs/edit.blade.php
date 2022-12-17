@@ -4,7 +4,7 @@
 
 @section('content')
     <div>
-        <form action="{{ route('blogs.update', $blog->name) }}" method="POST">
+        <form action="{{ route('blogs.update', $blog) }}" method="POST">
             @method('PUT')
             @csrf
 
@@ -14,7 +14,7 @@
             <button type="submit">이름 바꾸기</button>
         </form>
 
-        <form action="{{ route('blogs.destroy', $blog->name) }}" method="POST">
+        <form action="{{ route('blogs.destroy', $blog) }}" method="POST">
             @method('DELETE')
             @csrf
 
@@ -28,9 +28,9 @@
         <ul>
             @foreach($blog->posts as $post)
                 <li>
-                    <a href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a>
-                    <a href="{{ route('posts.edit', $post->id) }}">수정</a>
-                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                    <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a>
+                    <a href="{{ route('posts.edit', $post) }}">수정</a>
+                    <form action="{{ route('posts.destroy', $post) }}" method="POST">
                         @csrf
                         @method('DELETE')
 
@@ -47,10 +47,10 @@
         <ul>
             @foreach ($blog->comments as $comment)
                 <li>
-                    <a href="{{ route('posts.show', $comment->commentable->id) }}">{{ $comment->commentable->title }}</a>
+                    <a href="{{ route('posts.show', $comment->commentable) }}">{{ $comment->commentable->title }}</a>
                     <h4>{{ $comment->user->name }}</h4>
                     <p>{{ $comment->content }}</p>
-                    <form action="{{ route('comments.destroy', $comment->id) }}" method="POST">
+                    <form action="{{ route('comments.destroy', $comment) }}" method="POST">
                         @csrf
                         @method('DELETE')
 

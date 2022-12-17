@@ -26,9 +26,7 @@ class PostControllerTest extends TestCase
         $blog = $this->blog();
 
         $this->actingAs($blog->user)
-            ->get(route('blogs.posts.index', [
-                'blog' => $blog->name,
-            ]))
+            ->get(route('blogs.posts.index', $blog))
             ->assertOk()
             ->assertViewIs('blogs.posts.index');
     }
@@ -43,9 +41,7 @@ class PostControllerTest extends TestCase
         $blog = $this->blog();
 
         $this->actingAs($blog->user)
-            ->get(route('blogs.posts.create', [
-                'blog' => $blog->name,
-            ]))
+            ->get(route('blogs.posts.create', $blog))
             ->assertOk()
             ->assertViewIs('blogs.posts.create');
     }
@@ -69,9 +65,7 @@ class PostControllerTest extends TestCase
         ];
 
         $this->actingAs($blog->user)
-            ->post(route('blogs.posts.store', [
-                'blog' => $blog->name,
-            ]), [
+            ->post(route('blogs.posts.store', $blog), [
                 ...$data,
                 'attachments' => [
                     $attachment,
@@ -104,9 +98,7 @@ class PostControllerTest extends TestCase
         $post = $this->article();
 
         $this->actingAs($post->blog->user)
-            ->get(route('posts.show', [
-                'post' => $post->id,
-            ]))
+            ->get(route('posts.show', $post))
             ->assertOk()
             ->assertViewIs('blogs.posts.show');
     }
@@ -121,9 +113,7 @@ class PostControllerTest extends TestCase
         $post = $this->article();
 
         $this->actingAs($post->blog->user)
-            ->get(route('posts.edit', [
-                'post' => $post->id,
-            ]))
+            ->get(route('posts.edit', $post))
             ->assertViewIs('blogs.posts.edit');
     }
 
@@ -145,9 +135,7 @@ class PostControllerTest extends TestCase
         ];
 
         $this->actingAs($post->blog->user)
-            ->put(route('posts.update', [
-                'post' => $post->id,
-            ]), [
+            ->put(route('posts.update', $post), [
                 ...$data,
                 'attachments' => [
                     $attachment,
@@ -177,9 +165,7 @@ class PostControllerTest extends TestCase
         $post = $this->article();
 
         $this->actingAs($post->blog->user)
-            ->delete(route('posts.destroy', [
-                'post' => $post->id,
-            ]))
+            ->delete(route('posts.destroy', $post))
             ->assertRedirect();
 
         $this->assertDatabaseMissing('posts', [

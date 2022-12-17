@@ -70,9 +70,7 @@ class TokenControllerTest extends TestCase
         $token = $user->tokens()->first();
 
         $this->actingAs($user)
-            ->delete(route('tokens.destroy', [
-                'token' => $token->id,
-            ]))
+            ->delete(route('tokens.destroy', $token))
             ->assertRedirect();
 
         $this->assertDatabaseMissing('personal_access_tokens', [

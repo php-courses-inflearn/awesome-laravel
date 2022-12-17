@@ -54,7 +54,7 @@ class PublishedTest extends TestCase
             $mailMessage->introLines
         );
         $this->assertStringContainsString(
-            route('posts.show', $notification->post->id),
+            route('posts.show', $notification->post),
             $mailMessage->actionUrl
         );
     }

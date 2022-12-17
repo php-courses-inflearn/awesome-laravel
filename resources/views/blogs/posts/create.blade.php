@@ -3,7 +3,7 @@
 @section('title', '글쓰기')
 
 @section('content')
-    <form action="{{ route('blogs.posts.store', $blog->name) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('blogs.posts.store', $blog) }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <input type="text" name="title" value="{{ old('title') }}" required autofocus>

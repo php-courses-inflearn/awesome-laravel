@@ -6,14 +6,14 @@
 
     @unless ($comment->trashed())
         @can(['update', 'delete'], $comment)
-            <form action="{{ route('comments.destroy', $comment->id) }}" method="POST">
+            <form action="{{ route('comments.destroy', $comment) }}" method="POST">
                 @csrf
                 @method('DELETE')
 
                 <button type="submit">삭제</button>
             </form>
 
-            <form action="{{ route('comments.update', $comment->id) }}" method="POST">
+            <form action="{{ route('comments.update', $comment) }}" method="POST">
                 @csrf
                 @method('PUT')
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Enums\SocialiteProvider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Providers\RouteServiceProvider;
 
 class LoginController extends Controller
 {
@@ -35,7 +36,7 @@ class LoginController extends Controller
         }
 
         if ($request->ajax()) {
-            return response()->json('');
+            return response()->json(['message' => 'Successfully logged in']);
         }
 
         return redirect()->intended();
@@ -53,6 +54,6 @@ class LoginController extends Controller
         session()->invalidate();
         session()->regenerateToken();
 
-        return redirect()->to('/');
+        return redirect()->to(RouteServiceProvider::HOME);
     }
 }

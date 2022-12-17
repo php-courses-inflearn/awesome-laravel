@@ -3,7 +3,7 @@
 @section('title', '글수정')
 
 @section('content')
-    <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('posts.update', $post) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -22,7 +22,7 @@
                 </a>
 
                 @can('delete', $attachment)
-                    <form action="{{ route('attachments.destroy', $attachment->id) }}" method="POST">
+                    <form action="{{ route('attachments.destroy', $attachment) }}" method="POST">
                         @csrf
                         @method('DELETE')
 

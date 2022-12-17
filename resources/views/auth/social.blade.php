@@ -1,1 +1,1 @@
-<a href="{{ route('login.social', $provider->value) }}">{{ $provider->name }}</a>
+<a href="{{ route('login.social', $provider) }}">{{ $provider->name }}</a>

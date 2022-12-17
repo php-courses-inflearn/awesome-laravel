@@ -32,16 +32,14 @@ class PostControllerTest extends TestCase
             TokenAbility::POST_READ->value,
         ]);
 
-        $this->getJson(route('api.blogs.posts.index', [
-            'blog' => $blog->name,
-        ]))
-        ->assertOk()
-        ->assertJson(function (AssertableJson $json) {
-            $json->whereType('data', 'array')
-                ->has('data', 3, function (AssertableJson $json) {
-                    $json->hasAll(['id', 'title', 'content'])->etc();
-                });
-        });
+        $this->getJson(route('api.blogs.posts.index', $blog))
+            ->assertOk()
+            ->assertJson(function (AssertableJson $json) {
+                $json->whereType('data', 'array')
+                    ->has('data', 3, function (AssertableJson $json) {
+                        $json->hasAll(['id', 'title', 'content'])->etc();
+                    });
+            });
     }
 
     /**
@@ -66,9 +64,7 @@ class PostControllerTest extends TestCase
             TokenAbility::POST_CREATE->value,
         ]);
 
-        $this->postJson(route('api.blogs.posts.store', [
-            'blog' => $blog->name,
-        ]), [
+        $this->postJson(route('api.blogs.posts.store', $blog), [
             ...$data,
             'attachments' => [
                 $attachment,
@@ -110,26 +106,22 @@ class PostControllerTest extends TestCase
             TokenAbility::POST_READ->value,
         ]);
 
-        $response = $this->getJson(route('api.posts.show', [
-            'post' => $post->id,
-        ]))
-        ->assertOk()
-        ->assertJson(function (AssertableJson $json) {
-            $json->has('data', function (AssertableJson $json) {
-                $json->hasAll(['id', 'title', 'content'])
-                    ->etc();
-            });
-        })
-        ->assertHeader('Etag');
+        $response = $this->getJson(route('api.posts.show', $post))
+            ->assertOk()
+            ->assertJson(function (AssertableJson $json) {
+                $json->has('data', function (AssertableJson $json) {
+                    $json->hasAll(['id', 'title', 'content'])
+                        ->etc();
+                });
+            })
+            ->assertHeader('Etag');
 
         $etag = $response->getEtag();
 
         /**
          * Etag
          */
-        $this->getJson(route('api.posts.show', [
-            'post' => $post->id,
-        ]), [
+        $this->getJson(route('api.posts.show', $post), [
             'If-None-Match' => $etag,
         ])
         ->assertStatus(304);
@@ -156,9 +148,7 @@ class PostControllerTest extends TestCase
             TokenAbility::POST_UPDATE->value,
         ]);
 
-        $this->putJson(route('api.posts.update', [
-            'post' => $post->id,
-        ]), [
+        $this->putJson(route('api.posts.update', $post), [
             ...$data,
             'attachments' => [
                 $attachment,
@@ -191,10 +181,8 @@ class PostControllerTest extends TestCase
             TokenAbility::POST_DELETE->value,
         ]);
 
-        $this->deleteJson(route('api.posts.destroy', [
-            'post' => $post->id,
-        ]))
-        ->assertNoContent();
+        $this->deleteJson(route('api.posts.destroy', $post))
+            ->assertNoContent();
 
         $this->assertDatabaseMissing('posts', [
             'id' => $post->id,
