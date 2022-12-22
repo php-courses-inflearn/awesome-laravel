@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Enums\Provider;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,12 +28,12 @@ class SessionServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Session::macro('socialite', function ($provider, $email = null) {
+        Session::macro('socialite', function (Provider $provider, string $email = null) {
             if (is_null($email)) {
-                return $this->get('socialite.'.$provider);
+                return $this->get('socialite.'.$provider->value);
             }
 
-            $this->put('socialite.'.$provider, $email);
+            $this->put('socialite.'.$provider->value, $email);
         });
 
         Session::macro('socialiteMissingAll', function () {

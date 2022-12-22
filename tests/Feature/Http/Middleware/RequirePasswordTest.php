@@ -45,7 +45,7 @@ class RequirePasswordTest extends TestCase
 
         $request = app(Request::class);
         $request->setLaravelSession(app(Session::class));
-        $request->session()->socialite(Provider::Github->value, $this->faker->safeEmail);
+        $request->session()->socialite(Provider::Github, $this->faker->safeEmail);
 
         $response = $requirePasswordMiddleware->handle($request, function () {
         });

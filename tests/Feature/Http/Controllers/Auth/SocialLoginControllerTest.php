@@ -56,7 +56,7 @@ class SocialLoginControllerTest extends TestCase
         $this->get(route('login.social.callback', $provider))
             ->assertRedirect();
 
-        $this->assertEquals(session()->socialite($provider->value), $socialUser->getEmail());
+        $this->assertEquals(session()->socialite($provider), $socialUser->getEmail());
 
         $this->assertAuthenticated();
 
