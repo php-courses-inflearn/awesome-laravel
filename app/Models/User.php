@@ -19,10 +19,7 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
  * @property string $email
  * @property string $password
  * @property string $remember_token
- * @property string $provider_uid
  * @property \Illuminate\Support\Carbon $email_verified_at
- * @property int $provider_id
- * @property Provider $provider
  * @property \Illuminate\Database\Eloquent\Collection $blogs
  * @property \Illuminate\Database\Eloquent\Collection $subscriptions
  * @property \Illuminate\Database\Eloquent\Collection $comments
@@ -42,8 +39,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
         'name',
         'email',
         'password',
-        'provider_id',
-        'provider_uid',
     ];
 
     /**
@@ -104,16 +99,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
     public function scopeVerified(Builder $query)
     {
         return $query->whereNotNull('email_verified_at');
-    }
-
-    /**
-     * 서비스 제공자
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function provider()
-    {
-        return $this->belongsTo(Provider::class);
     }
 
     /**

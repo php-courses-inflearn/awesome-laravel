@@ -27,12 +27,12 @@ class SessionServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Session::macro('socialite', function ($provider, $uid = null) {
-            if (is_null($uid)) {
+        Session::macro('socialite', function ($provider, $email = null) {
+            if (is_null($email)) {
                 return $this->get('socialite.'.$provider);
             }
 
-            $this->put('socialite.'.$provider, $uid);
+            $this->put('socialite.'.$provider, $email);
         });
 
         Session::macro('socialiteMissingAll', function () {

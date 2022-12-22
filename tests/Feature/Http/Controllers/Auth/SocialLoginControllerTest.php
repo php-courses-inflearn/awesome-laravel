@@ -2,12 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers\Auth;
 
-use App\Enums\SocialiteProvider;
-use App\Models\Provider;
-use App\Models\User;
+use App\Enums\Provider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Str;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
 use Laravel\Socialite\Facades\Socialite;
 use Mockery\MockInterface;
@@ -24,7 +21,7 @@ class SocialLoginControllerTest extends TestCase
      */
     public function testCreate()
     {
-        $provider = $this->provider(SocialiteProvider::Github);
+        $provider = Provider::Github;
 
         /** @see \Laravel\Socialite\Two\GithubProvider::getAuthUrl() */
         $this->get(route('login.social', $provider))
@@ -38,23 +35,18 @@ class SocialLoginControllerTest extends TestCase
      */
     public function testStore()
     {
-        $provider = $this->provider(SocialiteProvider::Github);
+        $provider = Provider::Github;
 
         $data = [
             'email' => $this->faker->safeEmail,
             'name' => $this->faker->name,
-            'provider_uid' => Str::random(),
         ];
 
         $socialUser = $this->mock(SocialiteUser::class, function (MockInterface $mock) use ($data) {
             $mock->shouldReceive('getEmail')
-                ->once()
                 ->andReturn($data['email']);
             $mock->shouldReceive('getName')
-                ->once()
                 ->andReturn($data['name']);
-            $mock->shouldReceive('getId')
-                ->andReturn($data['provider_uid']);
         });
 
         Socialite::shouldReceive('driver->user')
@@ -64,27 +56,10 @@ class SocialLoginControllerTest extends TestCase
         $this->get(route('login.social.callback', $provider))
             ->assertRedirect();
 
-        $this->assertEquals(session()->socialite($provider->name), $socialUser->getId());
+        $this->assertEquals(session()->socialite($provider->value), $socialUser->getEmail());
 
         $this->assertAuthenticated();
 
-        $this->assertCount(1, $provider->users);
-
-        $this->assertDatabaseHas('users', [
-            ...$data,
-            //'provider_id' => $provider->id,
-            'provider_id' => User::firstWhere('email', $data['email'])->provider->id,
-        ]);
-    }
-
-    /**
-     * @param  \App\Enums\SocialiteProvider  $provider
-     * @return \App\Models\Provider
-     */
-    private function provider(SocialiteProvider $provider)
-    {
-        return Provider::create([
-            'name' => $provider->value,
-        ]);
+        $this->assertDatabaseHas('users', $data);
     }
 }

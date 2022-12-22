@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Enums\SocialiteProvider;
+use App\Enums\Provider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Providers\RouteServiceProvider;
@@ -17,7 +17,7 @@ class LoginController extends Controller
     public function create()
     {
         return view('auth.login', [
-            'providers' => SocialiteProvider::cases(),
+            'providers' => Provider::cases(),
         ]);
     }
 

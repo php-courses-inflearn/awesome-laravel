@@ -37,9 +37,9 @@ Route::controller(\App\Http\Controllers\Auth\LoginController::class)->group(func
 
 Route::controller(\App\Http\Controllers\Auth\SocialLoginController::class)->group(function () {
     Route::middleware('guest')->name('login.')->group(function () {
-        Route::get('/login/{provider:name}', 'create')
+        Route::get('/login/{provider}', 'create')
             ->name('social');
-        Route::get('/login/{provider:name}/callback', 'store')
+        Route::get('/login/{provider}/callback', 'store')
             ->name('social.callback');
     });
 });
