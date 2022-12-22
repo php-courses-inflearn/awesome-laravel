@@ -22,19 +22,6 @@ class LinkTest extends TestCase
      */
     public function testLink()
     {
-//        $link = new Link();
-//
-//        $attributes = [
-//            'name' => $this->faker->imageUrl,
-//        ];
-//
-//        $linkCastable = $link->get(new class extends Model
-//        {
-//        }, '', null, $attributes);
-//
-//        $this->assertInstanceOf(LinkCastable::class, $linkCastable);
-//        $this->assertEquals($attributes['name'], $linkCastable->path);
-
         $attributes = [
             'name' => $this->faker->imageUrl,
         ];
@@ -52,35 +39,18 @@ class LinkTest extends TestCase
      */
     public function testLinkWithFilePath()
     {
-//        $link = new Link();
-//
-//        $attributes = [
-//            'name' => $this->faker->filePath(),
-//        ];
-//
-//        $linkCastable = $link->get(new class extends Model
-//        {
-//        }, '', null, $attributes);
-//
-//        $this->assertEquals(
-//            Storage::disk('public')->url($attributes['name']),
-//            $linkCastable->path
-//        );
-//
-//        $this->assertInstanceOf(LinkCastable::class, $linkCastable);
-
         $attributes = [
             'name' => $this->faker->filePath(),
         ];
 
         $model = $this->model($attributes);
 
+        $this->assertInstanceOf(LinkCastable::class, $model->link);
+
         $this->assertEquals(
             Storage::disk('public')->url($attributes['name']),
             $model->link->path
         );
-
-        $this->assertInstanceOf(LinkCastable::class, $model->link);
     }
 
     /**
@@ -90,17 +60,6 @@ class LinkTest extends TestCase
      */
     public function testLinkSetCastable()
     {
-//        $link = new Link();
-//        $linkCastable = new LinkCastable(
-//            $this->faker->imageUrl
-//        );
-//
-//        $attributes = $link->set(new class extends Model
-//        {
-//        }, '', $linkCastable, []);
-//
-//        $this->assertEquals($attributes['name'], $linkCastable->path);
-
         $model = $this->model();
         $linkCastable = new LinkCastable(
             $this->faker->imageUrl
@@ -119,14 +78,6 @@ class LinkTest extends TestCase
      */
     public function testLinkSetNull()
     {
-//        $link = new Link();
-//
-//        $this->expectException(Exception::class);
-//
-//        $link->set(new class extends Model
-//        {
-//        }, '', null, []);
-
         $model = $this->model();
 
         $this->expectException(Exception::class);

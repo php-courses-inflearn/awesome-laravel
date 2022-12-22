@@ -12,6 +12,7 @@ class PasswordTest extends TestCase
      * 비밀번호 규칙 테스트
      *
      * @param  string  $password
+     *
      * @dataProvider passwordProvider
      *
      * @return void
