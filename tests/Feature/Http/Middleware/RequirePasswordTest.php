@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Http\Middleware;
 
+use App\Enums\SocialiteProvider;
 use App\Http\Middleware\RequirePassword;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class RequirePasswordTest extends TestCase
@@ -43,7 +45,7 @@ class RequirePasswordTest extends TestCase
 
         $request = app(Request::class);
         $request->setLaravelSession(app(Session::class));
-        $request->session()->put('auth.socialite', true);
+        $request->session()->socialite(SocialiteProvider::Github->value, Str::random());
 
         $response = $requirePasswordMiddleware->handle($request, function () {
         });

@@ -54,7 +54,6 @@ class SocialLoginControllerTest extends TestCase
                 ->once()
                 ->andReturn($data['name']);
             $mock->shouldReceive('getId')
-                ->once()
                 ->andReturn($data['provider_uid']);
         });
 
@@ -63,8 +62,9 @@ class SocialLoginControllerTest extends TestCase
             ->andReturn($socialUser);
 
         $this->get(route('login.social.callback', $provider))
-            ->assertRedirect()
-            ->assertSessionHas('auth.socialite');
+            ->assertRedirect();
+
+        $this->assertEquals(session()->socialite($provider->name), $socialUser->getId());
 
         $this->assertAuthenticated();
 

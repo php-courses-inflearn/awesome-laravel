@@ -200,6 +200,7 @@ return [
         App\Providers\PasswordServiceProvider::class,
         App\Providers\PaginateServiceProvider::class,
         App\Providers\HttpClientServiceProvider::class,
+        App\Providers\SessionServiceProvider::class,
 
     ],
 

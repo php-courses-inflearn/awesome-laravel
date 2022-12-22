@@ -9,7 +9,7 @@
         <input type="text" name="name" value="{{ old('name', $user->name) }}">
         <input type="email" name="email" value="{{ $user->email }}" readonly disabled>
 
-        @if(session()->missing('auth.socialite'))
+        @if(session()->socialiteMissingAll())
             <input type="password" name="password">
             <input type="password" name="password_confirmation">
         @endif
