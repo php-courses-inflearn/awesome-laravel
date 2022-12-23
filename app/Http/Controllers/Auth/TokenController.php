@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Enums\TokenAbility;
+use App\Enums\Ability;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTokenRequest;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class TokenController extends Controller
     public function create()
     {
         return view('tokens.create', [
-            'abilities' => TokenAbility::cases(),
+            'abilities' => Ability::cases(),
         ]);
     }
 

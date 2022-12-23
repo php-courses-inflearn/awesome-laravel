@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum TokenAbility: string
+enum Ability: string
 {
     case POST_CREATE = 'post:create';
     case POST_READ = 'post:read';

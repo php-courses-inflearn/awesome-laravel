@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\TokenAbility;
+use App\Enums\Ability;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
@@ -17,7 +17,7 @@ class StoreTokenRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'abilities.*' => [new Enum(TokenAbility::class)],
+            'abilities.*' => [new Enum(Ability::class)],
         ];
     }
 }

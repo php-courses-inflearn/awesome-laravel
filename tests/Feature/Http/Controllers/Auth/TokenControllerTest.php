@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Auth;
 
-use App\Enums\TokenAbility;
+use App\Enums\Ability;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -37,7 +37,7 @@ class TokenControllerTest extends TestCase
         $user = $this->user();
 
         $abilities = $this->faker->randomElements(
-            collect(TokenAbility::cases())->pluck('value')->toArray()
+            collect(Ability::cases())->pluck('value')->toArray()
         );
 
         $name = $this->faker->word;

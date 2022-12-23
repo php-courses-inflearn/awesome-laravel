@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
-use App\Enums\TokenAbility;
+use App\Enums\Ability;
 use App\Events\Published;
 use App\Models\Blog;
 use App\Models\Post;
@@ -29,7 +29,7 @@ class PostControllerTest extends TestCase
         $blog = $this->blog();
 
         Sanctum::actingAs($blog->user, [
-            TokenAbility::POST_READ->value,
+            Ability::POST_READ->value,
         ]);
 
         $this->getJson(route('api.blogs.posts.index', $blog))
@@ -61,7 +61,7 @@ class PostControllerTest extends TestCase
         ];
 
         Sanctum::actingAs($blog->user, [
-            TokenAbility::POST_CREATE->value,
+            Ability::POST_CREATE->value,
         ]);
 
         $this->postJson(route('api.blogs.posts.store', $blog), [
@@ -103,7 +103,7 @@ class PostControllerTest extends TestCase
         $post = $this->article();
 
         Sanctum::actingAs($post->blog->user, [
-            TokenAbility::POST_READ->value,
+            Ability::POST_READ->value,
         ]);
 
         $response = $this->getJson(route('api.posts.show', $post))
@@ -145,7 +145,7 @@ class PostControllerTest extends TestCase
         ];
 
         Sanctum::actingAs($post->blog->user, [
-            TokenAbility::POST_UPDATE->value,
+            Ability::POST_UPDATE->value,
         ]);
 
         $this->putJson(route('api.posts.update', $post), [
@@ -178,7 +178,7 @@ class PostControllerTest extends TestCase
         $post = $this->article();
 
         Sanctum::actingAs($post->blog->user, [
-            TokenAbility::POST_DELETE->value,
+            Ability::POST_DELETE->value,
         ]);
 
         $this->deleteJson(route('api.posts.destroy', $post))
