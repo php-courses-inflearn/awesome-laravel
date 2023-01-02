@@ -16,8 +16,8 @@ Route::controller(\App\Http\Controllers\Auth\EmailVerificationController::class)
             Route::get('/verify', 'create')
                 ->name('notice');
             Route::get('/verify/{id}/{hash}', 'update')
-                ->middleware('signed')
-                ->name('verify');
+                ->name('verify')
+                ->middleware('signed');
             Route::post('/verification-notification', 'store')
                 ->name('send');
         });

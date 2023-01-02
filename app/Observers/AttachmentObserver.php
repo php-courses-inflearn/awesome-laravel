@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class AttachmentObserver
 {
     /**
-     * Handle the Post "deleted" event.
+     * Handle the Attachment "deleted" event.
      *
      * @param  \App\Models\Attachment  $attachment
      * @return void
