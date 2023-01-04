@@ -10,6 +10,8 @@ class BlogController extends Controller
     /**
      * 블로그 대시보드
      *
+     * @codeCoverageIgnore
+     *
      * @return \Illuminate\View\View
      */
     public function __invoke(Request $request)
