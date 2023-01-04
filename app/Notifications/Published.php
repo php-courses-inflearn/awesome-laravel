@@ -66,6 +66,8 @@ class Published extends Notification implements ShouldQueue
     /**
      * Determine which queues should be used for each notification channel.
      *
+     * @codeCoverageIgnore
+     *
      * @return array
      */
     public function viaQueues()
