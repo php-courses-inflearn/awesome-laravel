@@ -12,15 +12,10 @@ class SearchControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * 검색 테스트
-     *
-     * @return void
-     */
-    public function testSearch()
+    public function testReturnsSearchViewWithSearchQueryInQueryString()
     {
-        $post = $this->article();
-        $user = $this->user();
+        $user = User::factory()->create();
+        $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
         $query = $post->title;
 
@@ -31,31 +26,5 @@ class SearchControllerTest extends TestCase
             ->assertOk()
             ->assertViewIs('search')
             ->assertSeeText($query);
-    }
-
-    /**
-     * Article
-     *
-     * @return \App\Models\Post
-     */
-    private function article()
-    {
-        $factory = Post::factory()->for(
-            Blog::factory()->forUser()
-        );
-
-        return $factory->create();
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory();
-
-        return $factory->create();
     }
 }

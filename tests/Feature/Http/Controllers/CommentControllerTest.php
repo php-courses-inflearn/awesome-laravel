@@ -14,15 +14,10 @@ class CommentControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 댓글 생성 테스트
-     *
-     * @return void
-     */
-    public function testStore()
+    public function testCreateCommentForPost()
     {
-        $post = $this->article();
-        $user = $this->user();
+        $user = User::factory()->create();
+        $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
         $data = [
             'content' => $this->faker->text,
@@ -42,15 +37,13 @@ class CommentControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * 자식 댓글 생성 테스트
-     *
-     * @return void
-     */
-    public function testStoreChildComment()
+    public function testCreateChildCommentForComment()
     {
-        $comment = $this->comment();
-        $user = $this->user();
+        $user = User::factory()->create();
+
+        $comment = Comment::factory()->forUser()
+            ->for(Post::factory()->for(Blog::factory()->forUser()), 'commentable')
+            ->create();
 
         $data = [
             'content' => $this->faker->text,
@@ -73,14 +66,11 @@ class CommentControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * 댓글 수정 테스트
-     *
-     * @return void
-     */
-    public function testUpdate()
+    public function testUpdateComment()
     {
-        $comment = $this->comment();
+        $comment = Comment::factory()->forUser()
+            ->for(Post::factory()->for(Blog::factory()->forUser()), 'commentable')
+            ->create();
 
         $data = [
             'content' => $this->faker->text,
@@ -98,14 +88,11 @@ class CommentControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * 댓글 삭제 테스트
-     *
-     * @return void
-     */
-    public function testDestroy()
+    public function testDeleteComment()
     {
-        $comment = $this->comment();
+        $comment = Comment::factory()->forUser()
+            ->for(Post::factory()->for(Blog::factory()->forUser()), 'commentable')
+            ->create();
 
         $this->actingAs($comment->user)
             ->delete(route('comments.destroy', $comment))
@@ -116,50 +103,5 @@ class CommentControllerTest extends TestCase
             'commentable_type' => Post::class,
             'commentable_id' => $comment->commentable->id,
         ]);
-    }
-
-    /**
-     * Article
-     *
-     * @return \App\Models\Post
-     */
-    private function article()
-    {
-        $factory = Post::factory()->for(
-            Blog::factory()->forUser()
-        );
-
-        return $factory->create();
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory();
-
-        return $factory->create();
-    }
-
-    /**
-     * Comment
-     *
-     * @return \App\Models\Comment
-     */
-    private function comment()
-    {
-        $factory = Comment::factory()
-            ->forUser()
-            ->for(
-                Post::factory()->for(
-                    Blog::factory()->forUser()
-                ),
-                'commentable'
-            );
-
-        return $factory->create();
     }
 }

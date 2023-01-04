@@ -8,13 +8,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
-class MailSendCommandScheduleTest extends TestCase
+class KernelTest extends TestCase
 {
-    /**
-     * mail:send 명령어 스케줄러 테스트
-     *
-     * @return void
-     */
     public function testMailSendCommandSchedule()
     {
         Event::fake();

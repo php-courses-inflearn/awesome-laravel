@@ -19,14 +19,9 @@ class PostControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 글 목록 테스트
-     *
-     * @return void
-     */
-    public function testIndex()
+    public function testRequestListOfPost()
     {
-        $blog = $this->blog();
+        $blog = Blog::factory()->forUser()->hasPosts(3)->create();
 
         Sanctum::actingAs($blog->user, [
             Ability::POST_READ->value,
@@ -42,18 +37,14 @@ class PostControllerTest extends TestCase
             });
     }
 
-    /**
-     * 글 생성 테스트
-     *
-     * @return void
-     */
-    public function testStore()
+    public function testCreatePostAndReturnsItself()
     {
         Event::fake();
         Storage::fake('public');
 
         $attachment = UploadedFile::fake()->image('file.jpg');
-        $blog = $this->blog();
+
+        $blog = Blog::factory()->forUser()->hasPosts(3)->hasSubscribers()->create();
 
         $data = [
             'title' => $this->faker->text(50),
@@ -93,14 +84,9 @@ class PostControllerTest extends TestCase
         Event::assertDispatched(Published::class);
     }
 
-    /**
-     * 글 상세페이지 테스트
-     *
-     * @return void
-     */
-    public function testShow()
+    public function testRequestPost()
     {
-        $post = $this->article();
+        $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
         Sanctum::actingAs($post->blog->user, [
             Ability::POST_READ->value,
@@ -118,26 +104,19 @@ class PostControllerTest extends TestCase
 
         $etag = $response->getEtag();
 
-        /**
-         * Etag
-         */
         $this->getJson(route('api.posts.show', $post), [
             'If-None-Match' => $etag,
         ])
         ->assertStatus(304);
     }
 
-    /**
-     * 글 수정 테스트
-     *
-     * @return void
-     */
-    public function testUpdate()
+    public function testUpdatePost()
     {
         Storage::fake('public');
 
-        $attachment = UploadedFile::fake()->image('file.jpg');
-        $post = $this->article();
+        $attachment = UploadedFile::fake()->image('avatar.jpg');
+
+        $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
         $data = [
             'title' => $this->faker->text(50),
@@ -168,14 +147,9 @@ class PostControllerTest extends TestCase
         );
     }
 
-    /**
-     * 글 삭제 테스트
-     *
-     * @return void
-     */
-    public function testDestroy()
+    public function testDeletePost()
     {
-        $post = $this->article();
+        $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
         Sanctum::actingAs($post->blog->user, [
             Ability::POST_DELETE->value,
@@ -187,34 +161,5 @@ class PostControllerTest extends TestCase
         $this->assertDatabaseMissing('posts', [
             'id' => $post->id,
         ]);
-    }
-
-    /**
-     * Blog
-     *
-     * @return \App\Models\Blog
-     */
-    private function blog()
-    {
-        $factory = Blog::factory()
-            ->forUser()
-            ->hasPosts(3)
-            ->hasSubscribers();
-
-        return $factory->create();
-    }
-
-    /**
-     * Article
-     *
-     * @return \App\Models\Post
-     */
-    private function article()
-    {
-        $factory = Post::factory()->for(
-            Blog::factory()->forUser()
-        );
-
-        return $factory->create();
     }
 }

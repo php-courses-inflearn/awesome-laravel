@@ -6,7 +6,6 @@ use App\Events\Subscribed;
 use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
@@ -14,19 +13,14 @@ class SubscribeControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * 구독 테스트
-     *
-     * @return void
-     */
-    public function testStore()
+    public function testUserSubscribeBlog()
     {
         //Mail::fake();
         //Notification::fake();
         Event::fake();
 
-        $user = $this->user();
-        $blog = $this->blog();
+        $user = User::factory()->create();
+        $blog = Blog::factory()->forUser()->create();
 
         $this->actingAs($user)
             ->post(route('subscribe'), [
@@ -47,15 +41,14 @@ class SubscribeControllerTest extends TestCase
         //Mail::assertQueued(SubscribedMailable::class);
     }
 
-    /**
-     * 구독취소 테스트
-     *
-     * @return void
-     */
-    public function testDestroy()
+    public function testUserUnsubscribeBlog()
     {
-        $user = $this->user();
-        $blog = $this->blog($user);
+        $user = User::factory()->create();
+
+        $blog = Blog::factory()->forUser()->hasAttached(
+            factory: $user,
+            relationship: 'subscribers'
+        )->create();
 
         $this->actingAs($user)
             ->post(route('unsubscribe'), [
@@ -67,37 +60,5 @@ class SubscribeControllerTest extends TestCase
             'user_id' => $user->id,
             'blog_id' => $blog->id,
         ]);
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory();
-
-        return $factory->create();
-    }
-
-    /**
-     * Blog
-     *
-     * @param  \App\Models\User|\Illuminate\Support\Collection|null  $subscribers
-     * @return \App\Models\Blog
-     */
-    private function blog(User|Collection $subscribers = null)
-    {
-        $factory = Blog::factory()->forUser();
-
-        if ($subscribers) {
-            $factory = $factory->hasAttached(
-                factory: $subscribers,
-                relationship: 'subscribers'
-            );
-        }
-
-        return $factory->create();
     }
 }

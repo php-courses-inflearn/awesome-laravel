@@ -14,12 +14,7 @@ class RequirePasswordTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * RequirePassword 미들웨어 테스트
-     *
-     * @return void
-     */
-    public function testRequirePassword()
+    public function testRequirePasswordRedirect()
     {
         /** @var \App\Http\Middleware\RequirePassword $requirePasswordMiddleware */
         $requirePasswordMiddleware = app(RequirePassword::class);
@@ -33,12 +28,7 @@ class RequirePasswordTest extends TestCase
         $this->assertEquals($response->getStatusCode(), 302);
     }
 
-    /**
-     * RequirePassword 미들웨어 테스트 (Socialite)
-     *
-     * @return void
-     */
-    public function testRequirePasswordNotRedirect()
+    public function testRequirePasswordDoesNotRedirect()
     {
         /** @var \App\Http\Middleware\RequirePassword $requirePasswordMiddleware */
         $requirePasswordMiddleware = app(RequirePassword::class);

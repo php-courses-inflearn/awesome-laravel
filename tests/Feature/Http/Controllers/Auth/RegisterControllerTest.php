@@ -12,24 +12,14 @@ class RegisterControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 회원가입 폼 테스트
-     *
-     * @return void
-     */
-    public function testCreate()
+    public function testReturnsRegisterView()
     {
         $this->get(route('register'))
             ->assertOk()
             ->assertViewIs('auth.register');
     }
 
-    /**
-     * 회원가입 테스트
-     *
-     * @return void
-     */
-    public function testStore()
+    public function testUserRegistration()
     {
         Event::fake();
 

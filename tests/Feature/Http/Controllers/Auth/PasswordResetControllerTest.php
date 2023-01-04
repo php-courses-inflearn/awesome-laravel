@@ -18,28 +18,18 @@ class PasswordResetControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 비밀번호를 찾을 이메일을 입력하는 폼 테스트
-     *
-     * @return void
-     */
-    public function testCreate()
+    public function testReturnsForgotPasswordView()
     {
         $this->get(route('password.request'))
             ->assertOk()
             ->assertViewIs('auth.forgot-password');
     }
 
-    /**
-     * 비밀번호 재설정 이메일 전송 테스트
-     *
-     * @return void
-     */
-    public function testStore()
+    public function testSendEmailForPasswordResets()
     {
         Notification::fake();
 
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->post(route('password.email'), [
             'email' => $user->email,
@@ -47,17 +37,10 @@ class PasswordResetControllerTest extends TestCase
         ->assertRedirect()
         ->assertSessionHas('status');
 
-        Notification::assertSentTo(
-            $user, ResetPassword::class
-        );
+        Notification::assertSentTo($user, ResetPassword::class);
     }
 
-    /**
-     * 비밀번호 재설정 이메일 전송 실패 테스트
-     *
-     * @return void
-     */
-    public function testStoreFailed()
+    public function testFailToSendEmailForPasswordResets()
     {
         Mail::fake();
 
@@ -70,10 +53,7 @@ class PasswordResetControllerTest extends TestCase
         Mail::assertNothingSent();
     }
 
-    /**
-     * 비밀번호 재설정 폼 테스트
-     */
-    public function testEdit()
+    public function testReturnsResetPasswordView()
     {
         $token = Str::random(32);
 
@@ -84,14 +64,11 @@ class PasswordResetControllerTest extends TestCase
         ->assertViewIs('auth.reset-password');
     }
 
-    /**
-     * 비밀번호 재설정 테스트
-     */
-    public function testUpdate()
+    public function testPasswordResetsForValidToken()
     {
         Event::fake();
 
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $token = Password::createToken($user);
 
@@ -107,12 +84,7 @@ class PasswordResetControllerTest extends TestCase
         Event::assertDispatched(PasswordReset::class);
     }
 
-    /**
-     * 비밀번호 재설정 실패 테스트
-     *
-     * @return void
-     */
-    public function testUpdateFailed()
+    public function testFailToPasswordResetsForInvalidToken()
     {
         Event::fake();
 
@@ -126,17 +98,5 @@ class PasswordResetControllerTest extends TestCase
         ->assertSessionHasErrors('email');
 
         Event::assertNotDispatched(PasswordReset::class);
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory();
-
-        return $factory->create();
     }
 }

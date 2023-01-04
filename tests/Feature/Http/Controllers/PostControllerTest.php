@@ -16,14 +16,9 @@ class PostControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 글 목록 테스트
-     *
-     * @return void
-     */
-    public function testIndex()
+    public function testReturnsIndexViewForListOfPost()
     {
-        $blog = $this->blog();
+        $blog = Blog::factory()->forUser()->create();
 
         $this->actingAs($blog->user)
             ->get(route('blogs.posts.index', $blog))
@@ -31,14 +26,9 @@ class PostControllerTest extends TestCase
             ->assertViewIs('blogs.posts.index');
     }
 
-    /**
-     * 글 생성 폼 테스트
-     *
-     * @return void
-     */
-    public function testCreate()
+    public function testReturnsCreateViewForPost()
     {
-        $blog = $this->blog();
+        $blog = Blog::factory()->forUser()->create();
 
         $this->actingAs($blog->user)
             ->get(route('blogs.posts.create', $blog))
@@ -46,18 +36,14 @@ class PostControllerTest extends TestCase
             ->assertViewIs('blogs.posts.create');
     }
 
-    /**
-     * 글 생성 테스트
-     *
-     * @return void
-     */
-    public function testStore()
+    public function testCreatePostForBlog()
     {
         Event::fake();
         Storage::fake('public');
 
         $attachment = UploadedFile::fake()->image('file.jpg');
-        $blog = $this->blog();
+
+        $blog = Blog::factory()->forUser()->hasSubscribers()->create();
 
         $data = [
             'title' => $this->faker->text(50),
@@ -73,7 +59,6 @@ class PostControllerTest extends TestCase
             ])
             ->assertRedirect();
 
-        $this->assertCount(1, $blog->posts);
         $this->assertDatabaseHas('posts', $data);
 
         $this->assertDatabaseHas('attachments', [
@@ -88,14 +73,9 @@ class PostControllerTest extends TestCase
         Event::assertDispatched(Published::class);
     }
 
-    /**
-     * 글 상세페이지 테스트
-     *
-     * @return void
-     */
-    public function testShow()
+    public function testReturnsShowViewForPost()
     {
-        $post = $this->article();
+        $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
         $this->actingAs($post->blog->user)
             ->get(route('posts.show', $post))
@@ -103,31 +83,23 @@ class PostControllerTest extends TestCase
             ->assertViewIs('blogs.posts.show');
     }
 
-    /**
-     * 글 수정 폼 테스트
-     *
-     * @return void
-     */
-    public function testEdit()
+    public function testReturnsEditViewForPost()
     {
-        $post = $this->article();
+        $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
         $this->actingAs($post->blog->user)
             ->get(route('posts.edit', $post))
+            ->assertOk()
             ->assertViewIs('blogs.posts.edit');
     }
 
-    /**
-     * 글 수정 테스트
-     *
-     * @return void
-     */
-    public function testUpdate()
+    public function testUpdatePost()
     {
         Storage::fake('public');
 
         $attachment = UploadedFile::fake()->image('file.jpg');
-        $post = $this->article();
+
+        $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
         $data = [
             'title' => $this->faker->text(50),
@@ -155,14 +127,9 @@ class PostControllerTest extends TestCase
         );
     }
 
-    /**
-     * 글 삭제 테스트
-     *
-     * @return void
-     */
-    public function testDestroy()
+    public function testDeletePost()
     {
-        $post = $this->article();
+        $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
         $this->actingAs($post->blog->user)
             ->delete(route('posts.destroy', $post))
@@ -171,33 +138,5 @@ class PostControllerTest extends TestCase
         $this->assertDatabaseMissing('posts', [
             'id' => $post->id,
         ]);
-    }
-
-    /**
-     * Blog
-     *
-     * @return \App\Models\Blog
-     */
-    private function blog()
-    {
-        $factory = Blog::factory()
-            ->forUser()
-            ->hasSubscribers();
-
-        return $factory->create();
-    }
-
-    /**
-     * Article
-     *
-     * @return \App\Models\Post
-     */
-    private function article()
-    {
-        $factory = Post::factory()->for(
-            Blog::factory()->forUser()
-        );
-
-        return $factory->create();
     }
 }

@@ -3,23 +3,28 @@
 namespace Tests\Feature\Models;
 
 use App\Models\User;
-use Illuminate\Support\Str;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    /**
-     * 로컬 VerifiedScope 테스트
-     *
-     * @return void
-     */
+    use RefreshDatabase;
+
     public function testVerifiedScope()
     {
-        $user = new User();
+        $user = User::factory()->create();
+        $unverifiedUser = User::factory()->unverified()->create();
 
-        $this->assertTrue(Str::containsAll(
-            $user->verified()->toSql(),
-            ['where', 'email_verified_at', 'is not null']
-        ));
+        $users = User::verified()->get();
+
+        $this->assertCount(1, $users);
+
+        $this->assertTrue(
+            $users->contains($user)
+        );
+
+        $this->assertFalse(
+            $users->contains($unverifiedUser)
+        );
     }
 }

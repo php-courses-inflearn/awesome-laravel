@@ -12,14 +12,9 @@ class BlogControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 블로그 목록 테스트
-     *
-     * @return void
-     */
-    public function testIndex()
+    public function testReturnsIndexViewForListOfBlog()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->actingAs($user)
             ->get(route('blogs.index'))
@@ -27,14 +22,9 @@ class BlogControllerTest extends TestCase
             ->assertViewIs('blogs.index');
     }
 
-    /**
-     * 블로그 생성 폼 테스트
-     *
-     * @return void
-     */
-    public function testCreate()
+    public function testReturnsCreateViewForBlog()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->actingAs($user)
             ->get(route('blogs.create'))
@@ -42,14 +32,9 @@ class BlogControllerTest extends TestCase
             ->assertViewIs('blogs.create');
     }
 
-    /**
-     * 블로그 생성 테스트
-     *
-     * @return void
-     */
-    public function testStore()
+    public function testCreateBlog()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $data = [
             'name' => $this->faker->userName,
@@ -64,15 +49,10 @@ class BlogControllerTest extends TestCase
         $this->assertDatabaseHas('blogs', $data);
     }
 
-    /**
-     * 블로그 상세페이지 테스트
-     *
-     * @return void
-     */
-    public function testShow()
+    public function testReturnsShowViewForBlog()
     {
-        $user = $this->user();
-        $blog = $this->blog();
+        $user = User::factory()->create();
+        $blog = Blog::factory()->forUser()->create();
 
         $this->actingAs($user)
             ->get(route('blogs.show', $blog))
@@ -80,14 +60,9 @@ class BlogControllerTest extends TestCase
             ->assertViewIs('blogs.show');
     }
 
-    /**
-     * 블로그 수정 폼 테스트
-     *
-     * @return void
-     */
-    public function testEdit()
+    public function testReturnsEditViewForBlog()
     {
-        $blog = $this->blog();
+        $blog = Blog::factory()->forUser()->create();
 
         $this->actingAs($blog->user)
             ->get(route('blogs.edit', $blog))
@@ -95,14 +70,9 @@ class BlogControllerTest extends TestCase
             ->assertViewIs('blogs.edit');
     }
 
-    /**
-     * 블로그 수정 테스트
-     *
-     * @return void
-     */
-    public function testUpdate()
+    public function testUpdateBlog()
     {
-        $blog = $this->blog();
+        $blog = Blog::factory()->forUser()->create();
 
         $data = [
             'name' => $this->faker->userName,
@@ -116,14 +86,9 @@ class BlogControllerTest extends TestCase
         $this->assertDatabaseHas('blogs', $data);
     }
 
-    /**
-     * 블로그 삭제 테스트
-     *
-     * @return void
-     */
-    public function testDestroy()
+    public function testDeleteBlog()
     {
-        $blog = $this->blog();
+        $blog = Blog::factory()->forUser()->create();
 
         $this->actingAs($blog->user)
             ->delete(route('blogs.destroy', $blog))
@@ -132,29 +97,5 @@ class BlogControllerTest extends TestCase
         $this->assertDatabaseMissing('blogs', [
             'name' => $blog->name,
         ]);
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory();
-
-        return $factory->create();
-    }
-
-    /**
-     * Blog
-     *
-     * @return \App\Models\Blog
-     */
-    private function blog()
-    {
-        $factory = Blog::factory()->forUser();
-
-        return $factory->create();
     }
 }

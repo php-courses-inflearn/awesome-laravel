@@ -4,7 +4,6 @@ namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Http\Middleware\RequirePassword;
 use App\Models\User;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
@@ -14,14 +13,9 @@ class ProfileControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 마이페이지 테스트
-     *
-     * @return void
-     */
-    public function testShow()
+    public function testReturnsShowView()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
@@ -30,14 +24,9 @@ class ProfileControllerTest extends TestCase
             ->assertViewIs('auth.profile.show');
     }
 
-    /**
-     * 마이페이지 - 개인정보수정 테스트
-     *
-     * @return void
-     */
-    public function testEdit()
+    public function testReturnsEditView()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
@@ -46,30 +35,31 @@ class ProfileControllerTest extends TestCase
             ->assertViewIs('auth.profile.edit');
     }
 
-    /**
-     * 사용자 정보 갱신 테스트
-     *
-     * @return void
-     */
     public function testUpdate()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $data = [
             'name' => $this->faker->name,
         ];
 
-        $this->update($user, $data, 'password');
+        $this->actingAs($user)
+            ->withoutMiddleware(RequirePassword::class)
+            ->put(route('profile.update'), $data)
+            ->assertRedirect(route('profile.show'));
+
+        $this->assertTrue(
+            Hash::check('password', $user->getAuthPassword())
+        );
+
+        $this->assertDatabaseHas('users', [
+            'name' => $data['name'],
+        ]);
     }
 
-    /**
-     * 사용자 정보 갱신 (비밀번호) 테스트
-     *
-     * @return void
-     */
-    public function testUpdateWithPassword()
+    public function testUpdateContainsPassword()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
         $password = $this->faker->password(8);
 
         $data = [
@@ -78,17 +68,6 @@ class ProfileControllerTest extends TestCase
             'password_confirmation' => $password,
         ];
 
-        $this->update($user, $data, $password);
-    }
-
-    /**
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @param  array  $data
-     * @param  string  $password
-     * @return void
-     */
-    private function update(Authenticatable $user, array $data, string $password)
-    {
         $this->actingAs($user)
             ->withoutMiddleware(RequirePassword::class)
             ->put(route('profile.update'), $data)
@@ -101,17 +80,5 @@ class ProfileControllerTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => $data['name'],
         ]);
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory();
-
-        return $factory->create();
     }
 }

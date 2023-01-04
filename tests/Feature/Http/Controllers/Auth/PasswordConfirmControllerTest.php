@@ -11,14 +11,9 @@ class PasswordConfirmControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 비밀번호 확인 폼 테스트
-     *
-     * @return void
-     */
-    public function testCreate()
+    public function testReturnsPasswordConfirmView()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->actingAs($user)
             ->get(route('password.confirm'))
@@ -26,12 +21,9 @@ class PasswordConfirmControllerTest extends TestCase
             ->assertViewIs('auth.confirm-password');
     }
 
-    /**
-     * 비밀번호 확인 테스트
-     */
-    public function testStore()
+    public function testConfirmsPasswordForCorrectPassword()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->actingAs($user)
             ->post(route('password.confirm'), [
@@ -40,14 +32,9 @@ class PasswordConfirmControllerTest extends TestCase
             ->assertRedirect();
     }
 
-    /**
-     * 비밀번호 확인 실패 테스트
-     *
-     * @return void
-     */
-    public function testStoreFailed()
+    public function testFailToConfirmPasswordForIncorrectPassword()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->actingAs($user)
             ->post(route('password.confirm'), [
@@ -55,17 +42,5 @@ class PasswordConfirmControllerTest extends TestCase
             ])
             ->assertRedirect()
             ->assertSessionHasErrors('password');
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory();
-
-        return $factory->create();
     }
 }

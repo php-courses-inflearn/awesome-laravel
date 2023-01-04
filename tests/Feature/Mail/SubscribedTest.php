@@ -12,15 +12,10 @@ class SubscribedTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * Subscribed 이메일 테스트
-     *
-     * @return void
-     */
-    public function testSubscribed()
+    public function testDisplaysUserNameAndBlogDisplayName()
     {
-        $user = $this->user();
-        $blog = $this->blog();
+        $user = User::factory()->create();
+        $blog = Blog::factory()->forUser()->create();
 
         $mailable = new Subscribed($user, $blog);
 
@@ -32,29 +27,5 @@ class SubscribedTest extends TestCase
             $user->name,
             $blog->display_name,
         ]);
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory();
-
-        return $factory->create();
-    }
-
-    /**
-     * Blog
-     *
-     * @return \App\Models\Blog
-     */
-    private function blog()
-    {
-        $factory = Blog::factory()->forUser();
-
-        return $factory->create();
     }
 }

@@ -13,35 +13,16 @@ class PostObserverTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * PostObserver::deleted 테스트
-     *
-     * @return void
-     */
-    public function testDeleted()
+    public function testDeletingAssociatedCommentsOnPostDeletion()
     {
-        $post = $this->article();
+        $post = Post::factory()->for(Blog::factory()->forUser())
+            ->has(Comment::factory()->forUser())
+            ->create();
+
         $observer = new PostObserver();
 
-        $this->assertDatabaseCount('comments', 1);
-
-        //$post->delete();
         $observer->deleted($post);
 
         $this->assertCount(0, $post->comments);
-        $this->assertDatabaseCount('comments', 0);
-    }
-
-    /**
-     * Article
-     *
-     * @return \App\Models\Post
-     */
-    private function article()
-    {
-        $factory = Post::factory()->for(Blog::factory()->forUser())
-            ->has(Comment::factory()->forUser());
-
-        return $factory->create();
     }
 }

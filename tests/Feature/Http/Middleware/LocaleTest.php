@@ -12,12 +12,7 @@ class LocaleTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * Locale 미들웨어 테스트
-     *
-     * @return void
-     */
-    public function testLocale()
+    public function testLocaleChangeWithAcceptLanguageHeader()
     {
         $this->assertTrue(app()->isLocale('ko'));
 
@@ -29,21 +24,16 @@ class LocaleTest extends TestCase
         $request->header('Accept-Language', 'en');
 
         $localeMiddleware->handle($request, function () {
+            $this->assertTrue(app()->isLocale('en'));
         });
-
-        $this->assertTrue(app()->isLocale('en'));
     }
 
-    /**
-     * Locale 미들웨어 테스트 (Query)
-     *
-     * @return void
-     */
-    public function testLocaleByQuery()
+    public function testLocaleChangeWithLangQueryString()
     {
         $this->assertTrue(app()->isLocale('ko'));
 
-        $localeMiddleware = new Locale();
+        /** @var \App\Http\Middleware\Locale $localeMiddleware */
+        $localeMiddleware = app(Locale::class);
 
         $request = app(Request::class);
         $request->setLaravelSession(app(Session::class));
@@ -53,8 +43,7 @@ class LocaleTest extends TestCase
         ]);
 
         $localeMiddleware->handle($request, function () {
+            $this->assertTrue(app()->isLocale('en'));
         });
-
-        $this->assertTrue(app()->isLocale('en'));
     }
 }

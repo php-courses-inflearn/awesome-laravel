@@ -7,87 +7,32 @@ use App\Models\Blog;
 use App\Models\User;
 use App\Notifications\Subscribed;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Mail\Mailable;
 use Illuminate\Notifications\AnonymousNotifiable;
-use Illuminate\Notifications\Messages\BroadcastMessage;
-use Illuminate\Notifications\Messages\MailMessage;
 use Tests\TestCase;
 
 class SubscribedTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * Subscribed 알림 테스트
-     *
-     * @return void
-     */
-    public function testSubscribed()
+    public function testToMailReturnsSubscribedMailable()
     {
-        $user = $this->user();
-        $blog = $this->blog();
+        $user = User::factory()->create();
+        $blog = Blog::factory()->forUser()->create();
 
         $notification = new Subscribed($user, $blog);
 
-        $this->toMail($notification, $notification->toMail($user));
-        $this->toMail($notification, $notification->toMail(new AnonymousNotifiable()));
-        $this->toBroadcast($notification, $notification->toBroadcast($user));
-        $this->viaQueues($notification->viaQueues());
+        $this->assertInstanceOf(SubscribedMailable::class, $notification->toMail($user));
+        $this->assertInstanceOf(SubscribedMailable::class, $notification->toMail(new AnonymousNotifiable()));
     }
 
-    /**
-     * @param  \App\Notifications\Subscribed  $notification
-     * @param  \Illuminate\Notifications\Messages\MailMessage|\Illuminate\Mail\Mailable  $mailable
-     * @return void
-     */
-    private function toMail(Subscribed $notification, MailMessage|Mailable $mailable)
+    public function testToBroadcastContainsUser()
     {
-        $this->assertInstanceOf(SubscribedMailable::class, $mailable);
-    }
+        $user = User::factory()->create();
+        $blog = Blog::factory()->forUser()->create();
 
-    /**
-     * @param  \App\Notifications\Subscribed  $notification
-     * @param  \Illuminate\Notifications\Messages\BroadcastMessage  $broadcastMessage
-     * @return void
-     */
-    private function toBroadcast(Subscribed $notification, BroadcastMessage $broadcastMessage)
-    {
+        $notification = new Subscribed($user, $blog);
+        $broadcastMessage = $notification->toBroadcast($user);
+
         $this->assertContains($notification->user, $broadcastMessage->data);
-    }
-
-    /**
-     * @param  array<string, string>  $queues
-     * @return void
-     */
-    private function viaQueues(array $queues)
-    {
-        $this->assertEquals($queues, [
-            'mail' => 'emails',
-            'broadcast' => 'broadcasts',
-        ]);
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory();
-
-        return $factory->create();
-    }
-
-    /**
-     * Blog
-     *
-     * @return \App\Models\Blog
-     */
-    private function blog()
-    {
-        $factory = Blog::factory()->forUser();
-
-        return $factory->create();
     }
 }

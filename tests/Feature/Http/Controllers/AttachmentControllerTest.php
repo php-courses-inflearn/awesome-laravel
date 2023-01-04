@@ -15,18 +15,13 @@ class AttachmentControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 파일 업로드 테스트
-     *
-     * @return void
-     */
-    public function testStore()
+    public function testCreateAttachmentForPost()
     {
         Storage::fake('public');
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        $post = $this->article();
+        $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
         $this->actingAs($post->blog->user)
             ->post(route('posts.attachments.store', $post), [
@@ -48,18 +43,18 @@ class AttachmentControllerTest extends TestCase
         );
     }
 
-    /**
-     * 파일 삭제 테스트
-     *
-     * @return void
-     */
-    public function testDestroy()
+    public function testDeleteAttachmentFromPost()
     {
         Storage::fake('public');
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        $post = $this->article($attachment);
+        $post = Post::factory()->for(Blog::factory()->forUser())->has(
+            Attachment::factory()->state([
+                'original_name' => $attachment->getClientOriginalName(),
+                'name' => $attachment->hashName('attachments'),
+            ])
+        )->create();
 
         foreach ($post->attachments as $attachment) {
             $this->actingAs($post->blog->user)
@@ -70,29 +65,5 @@ class AttachmentControllerTest extends TestCase
                 'id' => $attachment->id,
             ]);
         }
-    }
-
-    /**
-     * Article
-     *
-     * @param  \Illuminate\Http\UploadedFile|null  $attachment
-     * @return Post
-     */
-    private function article(UploadedFile $attachment = null)
-    {
-        $factory = Post::factory()->for(
-            Blog::factory()->forUser()
-        );
-
-        if ($attachment) {
-            $factory = $factory->has(
-                Attachment::factory()->state([
-                    'original_name' => $attachment->getClientOriginalName(),
-                    'name' => $attachment->hashName('attachments'),
-                ])
-            );
-        }
-
-        return $factory->create();
     }
 }

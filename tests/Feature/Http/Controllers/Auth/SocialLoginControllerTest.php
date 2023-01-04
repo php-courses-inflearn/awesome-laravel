@@ -14,12 +14,7 @@ class SocialLoginControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 서비스 제공자 리다이렉트
-     *
-     * @return void
-     */
-    public function testCreate()
+    public function testRedirectToProvider()
     {
         $provider = Provider::Github;
 
@@ -28,12 +23,7 @@ class SocialLoginControllerTest extends TestCase
             ->assertRedirectContains('https://github.com/login/oauth/authorize');
     }
 
-    /**
-     * 소셜 로그인
-     *
-     * @return void
-     */
-    public function testStore()
+    public function testSocialLoginAndUpdateOrCreateUser()
     {
         $provider = Provider::Github;
 
@@ -56,7 +46,9 @@ class SocialLoginControllerTest extends TestCase
         $this->get(route('login.social.callback', $provider))
             ->assertRedirect();
 
-        $this->assertEquals(session()->socialite($provider), $socialUser->getEmail());
+        $this->assertEquals(
+            session()->socialite($provider), $socialUser->getEmail()
+        );
 
         $this->assertAuthenticated();
 

@@ -12,14 +12,9 @@ class TokenControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 토큰 생성 폼 테스트
-     *
-     * @return void
-     */
-    public function testCreate()
+    public function testReturnsCreateViewForToken()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->actingAs($user)
             ->get(route('tokens.create'))
@@ -27,14 +22,9 @@ class TokenControllerTest extends TestCase
             ->assertViewIs('tokens.create');
     }
 
-    /**
-     * 토큰 생성 테스트
-     *
-     * @return void
-     */
-    public function testStore()
+    public function testCreateToken()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $abilities = $this->faker->randomElements(
             collect(Ability::cases())->pluck('value')->toArray()
@@ -55,14 +45,9 @@ class TokenControllerTest extends TestCase
         ]);
     }
 
-    /**
-     * 토큰 삭제 테스트
-     *
-     * @return void
-     */
-    public function testDestroy()
+    public function testDeleteToken()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $name = $this->faker->word;
         $user->createToken($name);
@@ -76,17 +61,5 @@ class TokenControllerTest extends TestCase
         $this->assertDatabaseMissing('personal_access_tokens', [
             'name' => $name,
         ]);
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory();
-
-        return $factory->create();
     }
 }

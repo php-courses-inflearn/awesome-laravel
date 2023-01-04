@@ -12,26 +12,16 @@ class LoginControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 로그인 폼 테스트
-     *
-     * @return void
-     */
-    public function testCreate()
+    public function testReturnsLoginView()
     {
         $this->get(route('login'))
             ->assertOk()
             ->assertViewIs('auth.login');
     }
 
-    /**
-     * 로그인 테스트
-     *
-     * @return void
-     */
-    public function testStore()
+    public function testLoginForValidCredentials()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->post(route('login'), [
             'email' => $user->email,
@@ -42,14 +32,9 @@ class LoginControllerTest extends TestCase
         $this->assertAuthenticated();
     }
 
-    /**
-     * 로그인 실패 테스트
-     *
-     * @return void
-     */
-    public function testStoreFailed()
+    public function testFailToLoginForInvalidCredentials()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->post(route('login'), [
             'email' => $user->email,
@@ -61,14 +46,9 @@ class LoginControllerTest extends TestCase
         $this->assertGuest();
     }
 
-    /**
-     * Ajax 로그인 테스트
-     *
-     * @return void
-     */
-    public function testStoreWithAjax()
+    public function testAjaxLoginForValidCredentials()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->postJson(route('login'), [
             'email' => $user->email,
@@ -81,31 +61,14 @@ class LoginControllerTest extends TestCase
         $this->assertAuthenticated();
     }
 
-    /**
-     * 로그아웃 테스트
-     *
-     * @return void
-     */
-    public function testDestroy()
+    public function testLogout()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $this->actingAs($user)
             ->post(route('logout'))
             ->assertRedirect(RouteServiceProvider::HOME);
 
         $this->assertGuest();
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory();
-
-        return $factory->create();
     }
 }

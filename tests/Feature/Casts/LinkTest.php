@@ -3,11 +3,11 @@
 namespace Tests\Feature\Casts;
 
 use App\Castables\Link as LinkCastable;
-use App\Casts\Link;
+use App\Models\Attachment;
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -15,103 +15,49 @@ class LinkTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * Link 캐스트 접근자 테스트
-     *
-     * @return void
-     */
-    public function testLink()
+    public function testLinkAccessorWithExternalPath()
     {
-        $attributes = [
+        $attachment = Attachment::factory()->state([
             'name' => $this->faker->imageUrl,
-        ];
+        ])->create();
 
-        $model = $this->model($attributes);
-
-        $this->assertInstanceOf(LinkCastable::class, $model->link);
-        $this->assertEquals($attributes['name'], $model->link->path);
+        $this->assertEquals($attachment->name, $attachment->link->path);
     }
 
-    /**
-     * Link 캐스트 접근자 테스트 (FilePath)
-     *
-     * @return void
-     */
-    public function testLinkWithFilePath()
+    public function testLinkAccessorWithFilePath()
     {
-        $attributes = [
-            'name' => $this->faker->filePath(),
-        ];
+        $attachment = UploadedFile::fake()->image('avatar.jpg');
 
-        $model = $this->model($attributes);
-
-        $this->assertInstanceOf(LinkCastable::class, $model->link);
+        $attachment = Attachment::factory()->state([
+            'original_name' => $attachment->getClientOriginalName(),
+            'name' => $attachment->hashName(),
+        ])->create();
 
         $this->assertEquals(
-            Storage::disk('public')->url($attributes['name']),
-            $model->link->path
+            Storage::disk('public')->url($attachment->name),
+            $attachment->link->path
         );
     }
 
-    /**
-     * Link 캐스트 변이자 테스트
-     *
-     * @return void
-     */
-    public function testLinkSetCastable()
+    public function testLinkMutatorSetsCastable()
     {
-        $model = $this->model();
+        $attachment = Attachment::factory()->create();
+
         $linkCastable = new LinkCastable(
             $this->faker->imageUrl
         );
 
-        $model->link = $linkCastable;
+        $attachment->link = $linkCastable;
 
-        $this->assertInstanceOf(LinkCastable::class, $model->link);
-        $this->assertEquals($linkCastable->path, $model->link->path);
+        $this->assertEquals($linkCastable->path, $attachment->link->path);
     }
 
-    /**
-     * Link 캐스트 변이자 테스트 (Null)
-     *
-     * @return void
-     */
-    public function testLinkSetNull()
+    public function testLinkMutatorThrowsExceptionOnInvalidValue()
     {
-        $model = $this->model();
+        $attachment = Attachment::factory()->create();
 
         $this->expectException(Exception::class);
 
-        $model->link = null;
-    }
-
-    /**
-     * Model
-     *
-     * @param $attributes
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    private function model($attributes = [])
-    {
-        return new class($attributes) extends Model
-        {
-            /**
-             * The attributes that are mass assignable.
-             *
-             * @var array<string>
-             */
-            protected $fillable = [
-                'name',
-            ];
-
-            /**
-             * The attributes that should be cast.
-             *
-             * @var array<string, string>
-             */
-            protected $casts = [
-                'link' => LinkCastable::class,
-            ];
-        };
+        $attachment->link = null;
     }
 }

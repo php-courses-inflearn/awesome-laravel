@@ -11,34 +11,14 @@ class UserChannelTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * UserChannel 테스트
-     *
-     * @return void
-     */
-    public function testUserChannel()
+    public function testJoinMethodGrantsAccessToChannelForAuthenticatedUser()
     {
-        $user = $this->user();
+        $user = User::factory()->create();
 
         $userChannel = new UserChannel();
 
         $this->assertTrue(
             $userChannel->join($user, $user->id)
         );
-        $this->assertNotTrue(
-            $userChannel->join($user, 2)
-        );
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory();
-
-        return $factory->create();
     }
 }

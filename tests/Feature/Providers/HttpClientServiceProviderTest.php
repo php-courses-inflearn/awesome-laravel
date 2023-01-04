@@ -8,11 +8,6 @@ use Tests\TestCase;
 
 class HttpClientServiceProviderTest extends TestCase
 {
-    /**
-     * API Http Client 테스트
-     *
-     * @return void
-     */
     public function testApiMacro()
     {
         Http::fake();

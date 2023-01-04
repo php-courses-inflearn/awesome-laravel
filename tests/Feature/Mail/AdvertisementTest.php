@@ -12,14 +12,9 @@ class AdvertisementTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * Advertisement 이메일 테스트
-     *
-     * @return void
-     */
-    public function testAdvertisement()
+    public function testDisplaysListOfPostTitles()
     {
-        $posts = $this->articles();
+        $posts = Post::factory(5)->for(Blog::factory()->forUser())->create();
 
         $mailable = new Advertisement($posts);
 
@@ -30,19 +25,5 @@ class AdvertisementTest extends TestCase
         $mailable->assertSeeInOrderInHtml(
             $posts->pluck('title')->toArray()
         );
-    }
-
-    /**
-     * Articles
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    private function articles()
-    {
-        $factory = Post::factory(5)->for(
-            Blog::factory()->forUser()
-        );
-
-        return $factory->create();
     }
 }

@@ -16,12 +16,7 @@ class EmailVerificationControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /**
-     * 이메일이 인증되지 않은 경우 테스트
-     *
-     * @return void
-     */
-    public function testCreate()
+    public function testReturnsVerifyEmailViewForUnverifiedUser()
     {
         $this->withoutMiddleware(Authenticate::class)
             ->get(route('verification.notice'))
@@ -29,33 +24,22 @@ class EmailVerificationControllerTest extends TestCase
             ->assertViewIs('auth.verify-email');
     }
 
-    /**
-     * 이메일 인증 테스트
-     *
-     * @return void
-     */
-    public function testStore()
+    public function testSendEmailForEmailVerification()
     {
         Notification::fake();
 
-        $user = $this->user();
+        $user = User::factory()->unverified()->create();
 
         $this->actingAs($user)
             ->post(route('verification.send'))
             ->assertRedirect();
 
-        Notification::assertSentTo(
-            $user, VerifyEmail::class);
+        Notification::assertSentTo($user, VerifyEmail::class);
     }
 
-    /**
-     * 이메일 인증 테스트
-     *
-     * @return void
-     */
-    public function testUpdate()
+    public function testVerifyEmail()
     {
-        $user = $this->user();
+        $user = User::factory()->unverified()->create();
 
         $this->actingAs($user)
             ->withoutMiddleware(ValidateSignature::class)
@@ -65,18 +49,8 @@ class EmailVerificationControllerTest extends TestCase
             ]))
             ->assertRedirect(RouteServiceProvider::HOME);
 
-        $this->assertTrue($user->hasVerifiedEmail());
-    }
-
-    /**
-     * User
-     *
-     * @return \App\Models\User
-     */
-    private function user()
-    {
-        $factory = User::factory()->unverified();
-
-        return $factory->create();
+        $this->assertTrue(
+            $user->hasVerifiedEmail()
+        );
     }
 }

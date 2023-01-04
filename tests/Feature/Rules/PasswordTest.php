@@ -8,35 +8,25 @@ use Tests\TestCase;
 
 class PasswordTest extends TestCase
 {
-    /**
-     * 비밀번호 규칙 테스트
-     *
-     * @param  string  $password
-     *
-     * @dataProvider passwordProvider
-     *
-     * @return void
-     */
-    public function testPasswordRule(string $password)
+    public function testAcceptsValidPasswords()
     {
-        $validator = Validator::make(['password' => $password], [
+        $validator = Validator::make(['password' => 'p@ssW0rd'], [
             'password' => new Password(),
         ]);
 
-        $errors = $validator->errors();
-
-        if ($validator->fails()) {
-            $this->assertContains('password', $errors->keys());
-        } else {
-            $this->assertEmpty($errors);
-        }
+        $this->assertTrue(
+            $validator->passes()
+        );
     }
 
-    /**
-     * @return string[][]
-     */
-    public function passwordProvider()
+    public function testRejectsInvalidPasswords()
     {
-        return [['1'], ['1!'], ['1!q'], ['1!qQ']];
+        $validator = Validator::make(['password' => 'password'], [
+            'password' => new Password(),
+        ]);
+
+        $this->assertFalse(
+            $validator->passes()
+        );
     }
 }

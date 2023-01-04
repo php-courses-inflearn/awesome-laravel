@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Console;
+namespace Tests\Feature\Console\Commands;
 
 use App\Mail\Advertisement;
 use App\Models\User;
@@ -12,32 +12,15 @@ class SendEmailsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * mail:send 명령어 테스트
-     *
-     * @return void
-     */
-    public function testSendEmails()
+    public function testMailSendCommandQueuesAdvertisementMailable()
     {
         Mail::fake();
 
-        $this->users();
+        User::factory(10)->create();
 
         $this->artisan('mail:send --queue=emails')
             ->assertSuccessful();
 
         Mail::assertQueued(Advertisement::class);
-    }
-
-    /**
-     * Users
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    private function users()
-    {
-        $factory = User::factory(10);
-
-        return $factory->create();
     }
 }
