@@ -2,11 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\Subscribed;
-use App\Notifications\Subscribed as SubscribedNotification;
+use App\Events\Published;
+use App\Notifications\Published as PublishedNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Notification;
 
-class SendSubscriptionNotification implements ShouldQueue
+class SendPublishedNotification implements ShouldQueue
 {
     /**
      * The name of the queue the job should be sent to.
@@ -28,11 +29,11 @@ class SendSubscriptionNotification implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  \App\Events\Subscribed  $event
+     * @param  \App\Events\Published  $event
      * @return void
      */
-    public function handle(Subscribed $event)
+    public function handle(Published $event)
     {
-        $event->blog->user->notify(new SubscribedNotification($event->user, $event->blog));
+        Notification::send($event->subscribers, new PublishedNotification($event->post));
     }
 }

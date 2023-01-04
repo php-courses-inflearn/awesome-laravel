@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use App\Events\Published;
 use App\Events\Subscribed;
-use App\Listeners\SendPublishingNotification;
-use App\Listeners\SendSubscriptionNotification;
+use App\Listeners\SendPublishedNotification;
+use App\Listeners\SendSubscribedNotification;
 use App\Models\Attachment;
 use App\Models\Post;
 use App\Observers\AttachmentObserver;
@@ -26,10 +26,10 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         Subscribed::class => [
-            SendSubscriptionNotification::class,
+            SendSubscribedNotification::class,
         ],
         Published::class => [
-            SendPublishingNotification::class,
+            SendPublishedNotification::class,
         ],
     ];
 
