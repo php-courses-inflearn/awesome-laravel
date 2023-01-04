@@ -16,7 +16,7 @@ class Password implements InvokableRule
      */
     public function __invoke($attribute, $value, $fail)
     {
-        if (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $value)) {
+        if (! preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/', $value)) {
             //$fail('The :attribute must contain at least one lowercase letter, one uppercase letter, one number, and one special character.');
             $fail('validation.regex')->translate();
         }
