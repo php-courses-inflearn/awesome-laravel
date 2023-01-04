@@ -42,6 +42,7 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware(['web', 'auth', 'password.confirm'])
                 ->prefix('/dashboard')
+                ->name('dashboard.')
                 ->group(base_path('routes/dashboard.php'));
         });
     }
