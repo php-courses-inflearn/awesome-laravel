@@ -12,7 +12,7 @@ class AttachmentController extends Controller
     /**
      * AttachmentController
      *
-     * @param AttachmentService $attachmentService
+     * @param  AttachmentService  $attachmentService
      */
     public function __construct(
         private readonly AttachmentService $attachmentService

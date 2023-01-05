@@ -35,7 +35,7 @@ class Subscribed extends Mailable implements ShouldQueue
     public function envelope()
     {
         return new Envelope(
-            subject: "[라라벨] 구독 알림",
+            subject: '[라라벨] 구독 알림',
         );
     }
 
