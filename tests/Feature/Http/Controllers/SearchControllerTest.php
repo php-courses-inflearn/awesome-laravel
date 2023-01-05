@@ -5,12 +5,14 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class SearchControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     public function testReturnsSearchViewWithSearchQueryInQueryString()
     {
@@ -25,6 +27,22 @@ class SearchControllerTest extends TestCase
             ]))
             ->assertOk()
             ->assertViewIs('search')
-            ->assertSeeText($query);
+            ->assertViewHas('posts', fn (Collection $posts) => $posts->contains($post))
+            ->assertViewHas('query', $query);
+    }
+
+    public function testSearchView()
+    {
+        $posts = Post::factory(5)->for(Blog::factory()->forUser())->create();
+        $query = $this->faker->word;
+
+        $view = $this->withViewErrors([])
+            ->view('search', [
+                'posts' => $posts,
+                'query' => $query,
+            ]);
+
+        $view->assertViewHas('query', $query);
+        $view->assertViewHas('posts', $posts);
     }
 }

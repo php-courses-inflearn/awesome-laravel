@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', "\"{$q}\" 에 해당하는 검색결과")
+@section('title', "\"{$query}\" 에 해당하는 검색결과")
 
 @section('content')
     <ul>
@@ -9,7 +9,7 @@
                 <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a>
             </li>
         @empty
-            {{ "\"{$q}\" 에 해당하는 검색결과가 없습니다" }}
+            {{ "\"{$query}\" 에 해당하는 검색결과가 없습니다" }}
         @endforelse
     </ul>
 @endsection

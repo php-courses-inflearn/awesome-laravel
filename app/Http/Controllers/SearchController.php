@@ -18,8 +18,8 @@ class SearchController extends Controller
         $query = $request->input('query');
 
         return view('search', [
-            'q' => $query,
             'posts' => Post::search($query)->get(),
+            'query' => $query,
         ]);
     }
 }
