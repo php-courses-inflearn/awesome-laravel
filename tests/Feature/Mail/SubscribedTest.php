@@ -20,7 +20,7 @@ class SubscribedTest extends TestCase
         $mailable = new Subscribed($user, $blog);
 
         $mailable->assertHasSubject(
-            "[라라벨] '{$user->name}' 님이 '{$blog->display_name}' 를 구독했습니다."
+            '[라라벨] 구독 알림'
         );
 
         $mailable->assertSeeInOrderInHtml([

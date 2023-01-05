@@ -7,6 +7,7 @@
 
     <form method="POST" action="{{ route('verification.send') }}">
         @csrf
+
         <button type="submit">이메일 재전송</button>
     </form>
 @endsection

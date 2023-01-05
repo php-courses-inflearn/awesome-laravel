@@ -35,7 +35,7 @@ class Subscribed extends Mailable implements ShouldQueue
     public function envelope()
     {
         return new Envelope(
-            subject: "[라라벨] '{$this->user->name}' 님이 '{$this->blog->display_name}' 를 구독했습니다.",
+            subject: "[라라벨] 구독 알림",
         );
     }
 

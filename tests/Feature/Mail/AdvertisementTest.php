@@ -19,7 +19,7 @@ class AdvertisementTest extends TestCase
         $mailable = new Advertisement($posts);
 
         $mailable->assertHasSubject(
-            '(광고) 라라벨 커뮤니티의 최신글 살펴보기!'
+            '[라라벨] 라라벨 커뮤니티의 최신글 살펴보기'
         );
 
         $mailable->assertSeeInOrderInHtml(

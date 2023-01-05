@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     /**
+     * PostController
+     *
      * @param  \App\Services\PostService  $postService
      */
     public function __construct(private readonly PostService $postService)
@@ -106,7 +108,7 @@ class PostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 글 삭제
      *
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\RedirectResponse
