@@ -18,7 +18,7 @@ class LinkTest extends TestCase
     public function testLinkAccessorWithExternalPath()
     {
         $attachment = Attachment::factory()->state([
-            'name' => $this->faker->imageUrl,
+            'name' => $this->faker->imageUrl(),
         ])->create();
 
         $this->assertEquals($attachment->name, $attachment->link->path);
@@ -44,7 +44,7 @@ class LinkTest extends TestCase
         $attachment = Attachment::factory()->create();
 
         $linkCastable = new LinkCastable(
-            $this->faker->imageUrl
+            $this->faker->imageUrl()
         );
 
         $attachment->link = $linkCastable;

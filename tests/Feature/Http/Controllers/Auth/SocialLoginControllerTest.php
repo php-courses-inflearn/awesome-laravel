@@ -28,8 +28,8 @@ class SocialLoginControllerTest extends TestCase
         $provider = Provider::Github;
 
         $data = [
-            'email' => $this->faker->safeEmail,
-            'name' => $this->faker->name,
+            'email' => $this->faker->safeEmail(),
+            'name' => $this->faker->name(),
         ];
 
         $socialUser = $this->mock(SocialiteUser::class, function (MockInterface $mock) use ($data) {

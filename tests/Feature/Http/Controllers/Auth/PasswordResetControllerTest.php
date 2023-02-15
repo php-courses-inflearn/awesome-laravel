@@ -45,7 +45,7 @@ class PasswordResetControllerTest extends TestCase
         Mail::fake();
 
         $this->post(route('password.email'), [
-            'email' => $this->faker->safeEmail,
+            'email' => $this->faker->safeEmail(),
         ])
         ->assertRedirect()
         ->assertSessionHasErrors('email');
@@ -89,7 +89,7 @@ class PasswordResetControllerTest extends TestCase
         Event::fake();
 
         $this->post(route('password.update'), [
-            'email' => $this->faker->safeEmail,
+            'email' => $this->faker->safeEmail(),
             'password' => 'password',
             'password_confirmation' => 'password',
             'token' => Str::random(),

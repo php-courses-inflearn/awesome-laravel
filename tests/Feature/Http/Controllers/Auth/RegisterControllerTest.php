@@ -23,10 +23,10 @@ class RegisterControllerTest extends TestCase
     {
         Event::fake();
 
-        $email = $this->faker->safeEmail;
+        $email = $this->faker->safeEmail();
 
         $this->post(route('register'), [
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
             'email' => $email,
             'password' => 'password',
         ])

@@ -40,7 +40,7 @@ class ProfileControllerTest extends TestCase
         $user = User::factory()->create();
 
         $data = [
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
         ];
 
         $this->actingAs($user)
@@ -63,7 +63,7 @@ class ProfileControllerTest extends TestCase
         $password = $this->faker->password(8);
 
         $data = [
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
             'password' => $password,
             'password_confirmation' => $password,
         ];

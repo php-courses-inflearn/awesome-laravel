@@ -30,7 +30,7 @@ class TokenControllerTest extends TestCase
             collect(Ability::cases())->pluck('value')->toArray()
         );
 
-        $name = $this->faker->word;
+        $name = $this->faker->word();
 
         $this->actingAs($user)
             ->post(route('tokens.store'), [
@@ -49,7 +49,7 @@ class TokenControllerTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $name = $this->faker->word;
+        $name = $this->faker->word();
         $user->createToken($name);
 
         $token = $user->tokens()->first();

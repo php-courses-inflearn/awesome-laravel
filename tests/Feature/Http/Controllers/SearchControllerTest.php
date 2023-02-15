@@ -34,7 +34,7 @@ class SearchControllerTest extends TestCase
     public function testSearchView()
     {
         $posts = Post::factory(5)->for(Blog::factory()->forUser())->create();
-        $query = $this->faker->word;
+        $query = $this->faker->word();
 
         $view = $this->withViewErrors([])
             ->view('search', [

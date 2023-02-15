@@ -37,7 +37,7 @@ class BlogControllerTest extends TestCase
         $user = User::factory()->create();
 
         $data = [
-            'name' => $this->faker->userName,
+            'name' => $this->faker->userName(),
             'display_name' => $this->faker->words(3, true),
         ];
 
@@ -75,7 +75,7 @@ class BlogControllerTest extends TestCase
         $blog = Blog::factory()->forUser()->create();
 
         $data = [
-            'name' => $this->faker->userName,
+            'name' => $this->faker->userName(),
             'display_name' => $this->faker->unique()->words(3, true),
         ];
 

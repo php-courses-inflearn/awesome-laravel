@@ -47,7 +47,7 @@ class PostControllerTest extends TestCase
 
         $data = [
             'title' => $this->faker->text(50),
-            'content' => $this->faker->text,
+            'content' => $this->faker->text(),
         ];
 
         $this->actingAs($blog->user)
@@ -103,7 +103,7 @@ class PostControllerTest extends TestCase
 
         $data = [
             'title' => $this->faker->text(50),
-            'content' => $this->faker->text,
+            'content' => $this->faker->text(),
         ];
 
         $this->actingAs($post->blog->user)

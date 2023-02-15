@@ -18,7 +18,7 @@ class SessionServiceProviderTest extends TestCase
             Session::hasMacro('socialite')
         );
 
-        Session::socialite(Provider::Github, $this->faker->safeEmail);
+        Session::socialite(Provider::Github, $this->faker->safeEmail());
 
         $this->assertTrue(
             Session::has('socialite.github')
@@ -35,7 +35,7 @@ class SessionServiceProviderTest extends TestCase
             Session::socialiteMissingAll()
         );
 
-        Session::put('socialite.github', $this->faker->safeEmail);
+        Session::put('socialite.github', $this->faker->safeEmail());
 
         $this->assertFalse(
             Session::socialiteMissingAll()

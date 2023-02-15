@@ -20,7 +20,7 @@ class CommentControllerTest extends TestCase
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
         $data = [
-            'content' => $this->faker->text,
+            'content' => $this->faker->text(),
         ];
 
         $this->actingAs($user)
@@ -46,7 +46,7 @@ class CommentControllerTest extends TestCase
             ->create();
 
         $data = [
-            'content' => $this->faker->text,
+            'content' => $this->faker->text(),
         ];
 
         $this->actingAs($user)
@@ -73,7 +73,7 @@ class CommentControllerTest extends TestCase
             ->create();
 
         $data = [
-            'content' => $this->faker->text,
+            'content' => $this->faker->text(),
         ];
 
         $this->actingAs($comment->user)
