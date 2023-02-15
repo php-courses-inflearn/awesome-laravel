@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Castables\Link;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -43,30 +45,24 @@ class Attachment extends Model
 
     /**
      * Get the prunable model query.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function prunable()
+    public function prunable(): Builder
     {
         return static::whereNull('post_id');
     }
 
     /**
      * Prepare the model for pruning.
-     *
-     * @return void
      */
-    public function pruning()
+    public function pruning(): void
     {
         Storage::disk('public')->delete($this->name);
     }
 
     /**
      * 글
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function post()
+    public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
     }

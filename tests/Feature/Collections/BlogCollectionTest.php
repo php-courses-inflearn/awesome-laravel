@@ -11,7 +11,7 @@ class BlogCollectionTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testReturnsLatestListOfPost()
+    public function testReturnsLatestListOfPost(): void
     {
         $blogs = Blog::factory(3)->forUser()->hasPosts(3)->create();
 

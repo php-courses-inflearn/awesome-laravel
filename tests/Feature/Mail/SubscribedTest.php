@@ -12,7 +12,7 @@ class SubscribedTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testDisplaysUserNameAndBlogDisplayName()
+    public function testDisplaysUserNameAndBlogDisplayName(): void
     {
         $user = User::factory()->create();
         $blog = Blog::factory()->forUser()->create();

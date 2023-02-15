@@ -15,16 +15,16 @@ class LinkTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testLinkAccessorWithExternalPath()
+    public function testLinkAccessorWithExternalPath(): void
     {
         $attachment = Attachment::factory()->state([
-            'name' => $this->faker->imageUrl,
+            'name' => $this->faker->imageUrl(),
         ])->create();
 
         $this->assertEquals($attachment->name, $attachment->link->path);
     }
 
-    public function testLinkAccessorWithFilePath()
+    public function testLinkAccessorWithFilePath(): void
     {
         $attachment = UploadedFile::fake()->image('avatar.jpg');
 
@@ -39,12 +39,12 @@ class LinkTest extends TestCase
         );
     }
 
-    public function testLinkMutatorSetsCastable()
+    public function testLinkMutatorSetsCastable(): void
     {
         $attachment = Attachment::factory()->create();
 
         $linkCastable = new LinkCastable(
-            $this->faker->imageUrl
+            $this->faker->imageUrl()
         );
 
         $attachment->link = $linkCastable;
@@ -52,7 +52,7 @@ class LinkTest extends TestCase
         $this->assertEquals($linkCastable->path, $attachment->link->path);
     }
 
-    public function testLinkMutatorThrowsExceptionOnInvalidValue()
+    public function testLinkMutatorThrowsExceptionOnInvalidValue(): void
     {
         $attachment = Attachment::factory()->create();
 

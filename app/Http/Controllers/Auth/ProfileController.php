@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
@@ -26,7 +28,6 @@ class ProfileController extends Controller
      *
      * @codeCoverageIgnore
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -36,10 +37,8 @@ class ProfileController extends Controller
 
     /**
      * 마이페이지
-     *
-     * @return \Illuminate\View\View
      */
-    public function show(Request $request)
+    public function show(Request $request): View
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
@@ -51,10 +50,8 @@ class ProfileController extends Controller
 
     /**
      * 마이페이지 - 개인정보수정
-     *
-     * @return \Illuminate\View\View
      */
-    public function edit(Request $request)
+    public function edit(Request $request): View
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
@@ -66,11 +63,8 @@ class ProfileController extends Controller
 
     /**
      * 개인정보수정
-     *
-     * @param  \App\Http\Requests\UpdateProfileRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateProfileRequest $request)
+    public function update(UpdateProfileRequest $request): RedirectResponse
     {
         /** @var \App\Models\User $user */
         $user = $request->user();

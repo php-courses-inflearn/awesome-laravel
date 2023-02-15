@@ -12,7 +12,7 @@ class SendEmailsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testMailSendCommandQueuesAdvertisementMailable()
+    public function testMailSendCommandQueuesAdvertisementMailable(): void
     {
         Mail::fake();
 

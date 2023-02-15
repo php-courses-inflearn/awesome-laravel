@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class KernelTest extends TestCase
 {
-    public function testMailSendCommandSchedule()
+    public function testMailSendCommandSchedule(): void
     {
         Event::fake();
 

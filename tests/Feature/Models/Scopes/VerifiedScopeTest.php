@@ -11,7 +11,7 @@ class VerifiedScopeTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testVerifiedScope()
+    public function testVerifiedScope(): void
     {
         $user = User::factory()->create();
         $unverifiedUser = User::factory()->unverified()->create();

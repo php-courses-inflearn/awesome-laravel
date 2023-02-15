@@ -13,20 +13,16 @@ class SessionServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
 
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Session::macro('socialite', function (Provider $provider, string $email = null) {
             if (is_null($email)) {

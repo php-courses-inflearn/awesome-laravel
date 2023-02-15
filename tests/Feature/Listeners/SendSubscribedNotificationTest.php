@@ -15,7 +15,7 @@ class SendSubscribedNotificationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testSubscribedNotificationSentToBlogOwner()
+    public function testSubscribedNotificationSentToBlogOwner(): void
     {
         Notification::fake();
 

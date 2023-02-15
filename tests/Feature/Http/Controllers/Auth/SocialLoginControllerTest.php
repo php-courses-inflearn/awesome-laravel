@@ -14,7 +14,7 @@ class SocialLoginControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testRedirectToProvider()
+    public function testRedirectToProvider(): void
     {
         $provider = Provider::Github;
 
@@ -23,13 +23,13 @@ class SocialLoginControllerTest extends TestCase
             ->assertRedirectContains('https://github.com/login/oauth/authorize');
     }
 
-    public function testSocialLoginAndUpdateOrCreateUser()
+    public function testSocialLoginAndUpdateOrCreateUser(): void
     {
         $provider = Provider::Github;
 
         $data = [
-            'email' => $this->faker->safeEmail,
-            'name' => $this->faker->name,
+            'email' => $this->faker->safeEmail(),
+            'name' => $this->faker->name(),
         ];
 
         $socialUser = $this->mock(SocialiteUser::class, function (MockInterface $mock) use ($data) {

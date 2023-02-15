@@ -6,29 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\SendResetLinkRequest;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class PasswordResetController extends Controller
 {
     /**
      * 비밀번호를 찾을 이메일을 입력하는 폼
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('auth.forgot-password');
     }
 
     /**
      * 비밀번호 재설정 이메일 전송
-     *
-     * @param  SendResetLinkRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(SendResetLinkRequest $request)
+    public function store(SendResetLinkRequest $request): RedirectResponse
     {
         $status = Password::sendResetLink($request->validated());
 
@@ -39,11 +36,8 @@ class PasswordResetController extends Controller
 
     /**
      * 비밀번호 재설정 폼
-     *
-     * @param  string  $token
-     * @return \Illuminate\View\View
      */
-    public function edit(string $token)
+    public function edit(string $token): View
     {
         return view('auth.reset-password', [
             'token' => $token,
@@ -52,11 +46,8 @@ class PasswordResetController extends Controller
 
     /**
      * 비밀번호 재설정
-     *
-     * @param  ResetPasswordRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ResetPasswordRequest $request)
+    public function update(ResetPasswordRequest $request): RedirectResponse
     {
         $status = Password::reset($request->validated(), function ($user, $password) {
             $user->forceFill([

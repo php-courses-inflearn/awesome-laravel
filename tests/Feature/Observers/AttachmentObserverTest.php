@@ -13,7 +13,7 @@ class AttachmentObserverTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testDeletingUploadedFileOnAttachmentDeletion()
+    public function testDeletingUploadedFileOnAttachmentDeletion(): void
     {
         $storage = Storage::fake('public');
 

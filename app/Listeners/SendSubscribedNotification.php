@@ -27,11 +27,8 @@ class SendSubscribedNotification implements ShouldQueue
 
     /**
      * Handle the event.
-     *
-     * @param  \App\Events\Subscribed  $event
-     * @return void
      */
-    public function handle(Subscribed $event)
+    public function handle(Subscribed $event): void
     {
         $event->blog->user->notify(new SubscribedNotification($event->user, $event->blog));
     }

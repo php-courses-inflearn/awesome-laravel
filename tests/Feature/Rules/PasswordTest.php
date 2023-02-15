@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class PasswordTest extends TestCase
 {
-    public function testAcceptsValidPasswords()
+    public function testAcceptsValidPasswords(): void
     {
         $validator = Validator::make(['password' => 'p@ssW0rd'], [
             'password' => new Password(),
@@ -19,7 +19,7 @@ class PasswordTest extends TestCase
         );
     }
 
-    public function testRejectsInvalidPasswords()
+    public function testRejectsInvalidPasswords(): void
     {
         $validator = Validator::make(['password' => 'password'], [
             'password' => new Password(),

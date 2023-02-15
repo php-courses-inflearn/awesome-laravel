@@ -27,10 +27,8 @@ class Advertisement extends Mailable implements ShouldQueue
 
     /**
      * Get the message envelope.
-     *
-     * @return \Illuminate\Mail\Mailables\Envelope
      */
-    public function envelope()
+    public function envelope(): Envelope
     {
         return new Envelope(
             subject: '[라라벨] 라라벨 커뮤니티의 최신글 살펴보기',
@@ -39,10 +37,8 @@ class Advertisement extends Mailable implements ShouldQueue
 
     /**
      * Get the message content definition.
-     *
-     * @return \Illuminate\Mail\Mailables\Content
      */
-    public function content()
+    public function content(): Content
     {
         return new Content(
             view: 'emails.advertisement',
@@ -51,10 +47,8 @@ class Advertisement extends Mailable implements ShouldQueue
 
     /**
      * Get the attachments for the message.
-     *
-     * @return array
      */
-    public function attachments()
+    public function attachments(): array
     {
         return [];
     }

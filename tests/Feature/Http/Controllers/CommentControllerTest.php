@@ -14,13 +14,13 @@ class CommentControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testCreateCommentForPost()
+    public function testCreateCommentForPost(): void
     {
         $user = User::factory()->create();
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
         $data = [
-            'content' => $this->faker->text,
+            'content' => $this->faker->text(),
         ];
 
         $this->actingAs($user)
@@ -37,7 +37,7 @@ class CommentControllerTest extends TestCase
         ]);
     }
 
-    public function testCreateChildCommentForComment()
+    public function testCreateChildCommentForComment(): void
     {
         $user = User::factory()->create();
 
@@ -46,7 +46,7 @@ class CommentControllerTest extends TestCase
             ->create();
 
         $data = [
-            'content' => $this->faker->text,
+            'content' => $this->faker->text(),
         ];
 
         $this->actingAs($user)
@@ -66,14 +66,14 @@ class CommentControllerTest extends TestCase
         ]);
     }
 
-    public function testUpdateComment()
+    public function testUpdateComment(): void
     {
         $comment = Comment::factory()->forUser()
             ->for(Post::factory()->for(Blog::factory()->forUser()), 'commentable')
             ->create();
 
         $data = [
-            'content' => $this->faker->text,
+            'content' => $this->faker->text(),
         ];
 
         $this->actingAs($comment->user)
@@ -88,7 +88,7 @@ class CommentControllerTest extends TestCase
         ]);
     }
 
-    public function testDeleteComment()
+    public function testDeleteComment(): void
     {
         $comment = Comment::factory()->forUser()
             ->for(Post::factory()->for(Blog::factory()->forUser()), 'commentable')

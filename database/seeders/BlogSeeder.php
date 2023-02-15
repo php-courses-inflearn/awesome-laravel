@@ -10,10 +10,8 @@ class BlogSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         User::all()->each(function (User $user) {
             $subscribers = User::whereNot('id', $user->id)->get()->random(3);

@@ -14,7 +14,7 @@ class CommentFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'content' => fake()->text,

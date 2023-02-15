@@ -12,7 +12,7 @@ class WelcomeControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testReturnsWelcomeView()
+    public function testReturnsWelcomeView(): void
     {
         $user = User::factory()->create();
 
@@ -22,7 +22,7 @@ class WelcomeControllerTest extends TestCase
             ->assertViewIs('welcome');
     }
 
-    public function testReturnsWelcomeViewWithSubscriptions()
+    public function testReturnsWelcomeViewWithSubscriptions(): void
     {
         $subscriptions = Blog::factory()->forUser()->hasPosts(5)->create();
 

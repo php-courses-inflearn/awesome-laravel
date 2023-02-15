@@ -28,9 +28,8 @@ class Published extends Notification implements ShouldQueue
      * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
-     * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail', 'broadcast'];
     }
@@ -39,9 +38,8 @@ class Published extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
             ->subject("[라라벨] '{$this->post->blog->display_name}' 에 새로운 글 '{$this->post->title}'")
@@ -54,9 +52,8 @@ class Published extends Notification implements ShouldQueue
      * Get the broadcastable representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return BroadcastMessage
      */
-    public function toBroadcast($notifiable)
+    public function toBroadcast($notifiable): BroadcastMessage
     {
         return new BroadcastMessage([
             'post' => $this->post,
@@ -67,10 +64,8 @@ class Published extends Notification implements ShouldQueue
      * Determine which queues should be used for each notification channel.
      *
      * @codeCoverageIgnore
-     *
-     * @return array
      */
-    public function viaQueues()
+    public function viaQueues(): array
     {
         return [
             'mail' => 'emails',

@@ -13,7 +13,7 @@ class JwtLoginControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testCreateJwtForValidCredentials()
+    public function testCreateJwtForValidCredentials(): void
     {
         $user = User::factory()->create();
 
@@ -35,7 +35,7 @@ class JwtLoginControllerTest extends TestCase
         );
     }
 
-    public function testFailToCreateJwtForInvalidCredentials()
+    public function testFailToCreateJwtForInvalidCredentials(): void
     {
         $user = User::factory()->create();
 
@@ -51,7 +51,7 @@ class JwtLoginControllerTest extends TestCase
         $this->assertGuest('api');
     }
 
-    public function testRefreshJwt()
+    public function testRefreshJwt(): void
     {
         $user = User::factory()->create();
 
@@ -75,7 +75,7 @@ class JwtLoginControllerTest extends TestCase
         );
     }
 
-    public function testDeleteJwt()
+    public function testDeleteJwt(): void
     {
         $user = User::factory()->create();
 

@@ -11,6 +11,8 @@ use App\Models\Blog;
 use App\Models\Post;
 use App\Services\PostService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -36,7 +38,7 @@ class PostController extends Controller
      *
      * @return \App\Http\Resources\PostCollection
      */
-    public function index(Blog $blog)
+    public function index(Blog $blog): PostCollection
     {
         $posts = $blog->posts()
            ->latest()
@@ -53,7 +55,7 @@ class PostController extends Controller
      * @param  \App\Http\Requests\StorePostRequest  $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function store(StorePostRequest $request, Blog $blog)
+    public function store(StorePostRequest $request, Blog $blog): Response
     {
         $post = $this->postService->store($request->validated(), $blog);
 
@@ -69,7 +71,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \App\Http\Resources\PostResource
      */
-    public function show(Request $request, Post $post)
+    public function show(Request $request, Post $post): PostResource
     {
         return new PostResource($post);
     }
@@ -81,7 +83,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post): Response
     {
         $this->postService->update($request->validated(), $post);
 
@@ -94,7 +96,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post): Response
     {
         $this->postService->destroy($post);
 

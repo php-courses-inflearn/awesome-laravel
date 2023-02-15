@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Scout\Searchable;
 
 /**
@@ -33,10 +35,8 @@ class Post extends Model
 
     /**
      * 블로그
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function blog()
+    public function blog(): BelongsTo
     {
         return $this->belongsTo(Blog::class);
     }
@@ -54,10 +54,8 @@ class Post extends Model
 
     /**
      * 첨부파일
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function attachments()
+    public function attachments(): HasMany
     {
         return $this->hasMany(Attachment::class);
     }

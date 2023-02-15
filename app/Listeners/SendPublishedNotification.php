@@ -28,11 +28,8 @@ class SendPublishedNotification implements ShouldQueue
 
     /**
      * Handle the event.
-     *
-     * @param  \App\Events\Published  $event
-     * @return void
      */
-    public function handle(Published $event)
+    public function handle(Published $event): void
     {
         Notification::send($event->subscribers, new PublishedNotification($event->post));
     }

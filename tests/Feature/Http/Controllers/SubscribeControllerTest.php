@@ -13,7 +13,7 @@ class SubscribeControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testUserSubscribeBlog()
+    public function testUserSubscribeBlog(): void
     {
         //Mail::fake();
         //Notification::fake();
@@ -41,7 +41,7 @@ class SubscribeControllerTest extends TestCase
         //Mail::assertQueued(SubscribedMailable::class);
     }
 
-    public function testUserUnsubscribeBlog()
+    public function testUserUnsubscribeBlog(): void
     {
         $user = User::factory()->create();
 

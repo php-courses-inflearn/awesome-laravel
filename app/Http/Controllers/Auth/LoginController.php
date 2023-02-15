@@ -6,15 +6,15 @@ use App\Enums\Provider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class LoginController extends Controller
 {
     /**
      * 로그인 폼
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('auth.login', [
             'providers' => Provider::cases(),
@@ -24,7 +24,6 @@ class LoginController extends Controller
     /**
      * 로그인
      *
-     * @param  \App\Http\Requests\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function store(LoginRequest $request)
@@ -44,10 +43,8 @@ class LoginController extends Controller
 
     /**
      * 로그아웃
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy()
+    public function destroy(): RedirectResponse
     {
         auth()->logout();
 

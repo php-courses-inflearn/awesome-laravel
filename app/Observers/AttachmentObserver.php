@@ -9,11 +9,8 @@ class AttachmentObserver
 {
     /**
      * Handle the Attachment "deleted" event.
-     *
-     * @param  \App\Models\Attachment  $attachment
-     * @return void
      */
-    public function deleted(Attachment $attachment)
+    public function deleted(Attachment $attachment): void
     {
         Storage::disk('public')->delete($attachment->name);
     }

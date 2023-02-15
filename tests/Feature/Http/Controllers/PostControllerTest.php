@@ -16,7 +16,7 @@ class PostControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testReturnsIndexViewForListOfPost()
+    public function testReturnsIndexViewForListOfPost(): void
     {
         $blog = Blog::factory()->forUser()->create();
 
@@ -26,7 +26,7 @@ class PostControllerTest extends TestCase
             ->assertViewIs('blogs.posts.index');
     }
 
-    public function testReturnsCreateViewForPost()
+    public function testReturnsCreateViewForPost(): void
     {
         $blog = Blog::factory()->forUser()->create();
 
@@ -36,7 +36,7 @@ class PostControllerTest extends TestCase
             ->assertViewIs('blogs.posts.create');
     }
 
-    public function testCreatePostForBlog()
+    public function testCreatePostForBlog(): void
     {
         Event::fake();
         Storage::fake('public');
@@ -47,7 +47,7 @@ class PostControllerTest extends TestCase
 
         $data = [
             'title' => $this->faker->text(50),
-            'content' => $this->faker->text,
+            'content' => $this->faker->text(),
         ];
 
         $this->actingAs($blog->user)
@@ -73,7 +73,7 @@ class PostControllerTest extends TestCase
         Event::assertDispatched(Published::class);
     }
 
-    public function testReturnsShowViewForPost()
+    public function testReturnsShowViewForPost(): void
     {
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
@@ -83,7 +83,7 @@ class PostControllerTest extends TestCase
             ->assertViewIs('blogs.posts.show');
     }
 
-    public function testReturnsEditViewForPost()
+    public function testReturnsEditViewForPost(): void
     {
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
@@ -93,7 +93,7 @@ class PostControllerTest extends TestCase
             ->assertViewIs('blogs.posts.edit');
     }
 
-    public function testUpdatePost()
+    public function testUpdatePost(): void
     {
         Storage::fake('public');
 
@@ -103,7 +103,7 @@ class PostControllerTest extends TestCase
 
         $data = [
             'title' => $this->faker->text(50),
-            'content' => $this->faker->text,
+            'content' => $this->faker->text(),
         ];
 
         $this->actingAs($post->blog->user)
@@ -127,7 +127,7 @@ class PostControllerTest extends TestCase
         );
     }
 
-    public function testDeletePost()
+    public function testDeletePost(): void
     {
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
 

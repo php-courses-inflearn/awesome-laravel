@@ -3,8 +3,13 @@
 namespace App\Models;
 
 use App\Collections\BlogCollection;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 /**
  * @property int $id
@@ -34,41 +39,32 @@ class Blog extends Model
 
     /**
      * Get the route key for the model.
-     *
-     * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'name';
     }
 
     /**
      * Create a new Eloquent Collection instance.
-     *
-     * @param  array  $models
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function newCollection(array $models = [])
+    public function newCollection(array $models = []): Collection
     {
         return new BlogCollection($models);
     }
 
     /**
      * 블로그 소유자
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
      * 내 구독자
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function subscribers()
+    public function subscribers(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
             ->as('subscription');
@@ -76,20 +72,16 @@ class Blog extends Model
 
     /**
      * 글
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function posts()
+    public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
 
     /**
      * 댓글
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    public function comments()
+    public function comments(): HasManyThrough
     {
         return $this->hasManyThrough(Comment::class, Post::class, secondKey: 'commentable_id')
             ->where('commentable_type', Post::class);

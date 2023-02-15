@@ -14,7 +14,7 @@ class AttachmentFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'original_name' => function (array $attributes) {

@@ -8,6 +8,8 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -62,10 +64,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
 
     /**
      * Perform any actions required after the model boots.
-     *
-     * @return void
      */
-    protected static function booted()
+    protected static function booted(): void
     {
         //static::addGlobalScope(new VerifiedScope());
     }
@@ -82,41 +82,32 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }
 
     /**
      * 이메일이 인증된 사용자만
-     *
-     * @param  Builder  $query
-     * @return Builder
      */
-    public function scopeVerified(Builder $query)
+    public function scopeVerified(Builder $query): Builder
     {
         return $query->whereNotNull('email_verified_at');
     }
 
     /**
      * 블로그
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function blogs()
+    public function blogs(): HasMany
     {
         return $this->hasMany(Blog::class);
     }
 
     /**
      * 내가 구독한 블로그
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function subscriptions()
+    public function subscriptions(): BelongsToMany
     {
         return $this->belongsToMany(Blog::class)
             ->as('subscription');
@@ -124,10 +115,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
 
     /**
      * 댓글
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function comments()
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }

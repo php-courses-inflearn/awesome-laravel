@@ -14,7 +14,7 @@ class RequirePasswordTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testRequirePasswordRedirect()
+    public function testRequirePasswordRedirect(): void
     {
         /** @var \App\Http\Middleware\RequirePassword $requirePasswordMiddleware */
         $requirePasswordMiddleware = app(RequirePassword::class);
@@ -28,14 +28,14 @@ class RequirePasswordTest extends TestCase
         $this->assertEquals($response->getStatusCode(), 302);
     }
 
-    public function testRequirePasswordDoesNotRedirect()
+    public function testRequirePasswordDoesNotRedirect(): void
     {
         /** @var \App\Http\Middleware\RequirePassword $requirePasswordMiddleware */
         $requirePasswordMiddleware = app(RequirePassword::class);
 
         $request = app(Request::class);
         $request->setLaravelSession(app(Session::class));
-        $request->session()->socialite(Provider::Github, $this->faker->safeEmail);
+        $request->session()->socialite(Provider::Github, $this->faker->safeEmail());
 
         $response = $requirePasswordMiddleware->handle($request, function () {
         });

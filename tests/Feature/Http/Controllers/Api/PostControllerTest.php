@@ -19,7 +19,7 @@ class PostControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testRequestListOfPost()
+    public function testRequestListOfPost(): void
     {
         $blog = Blog::factory()->forUser()->hasPosts(3)->create();
 
@@ -37,7 +37,7 @@ class PostControllerTest extends TestCase
             });
     }
 
-    public function testCreatePostAndReturnsItself()
+    public function testCreatePostAndReturnsItself(): void
     {
         Event::fake();
         Storage::fake('public');
@@ -48,7 +48,7 @@ class PostControllerTest extends TestCase
 
         $data = [
             'title' => $this->faker->text(50),
-            'content' => $this->faker->text,
+            'content' => $this->faker->text(),
         ];
 
         Sanctum::actingAs($blog->user, [
@@ -84,7 +84,7 @@ class PostControllerTest extends TestCase
         Event::assertDispatched(Published::class);
     }
 
-    public function testRequestPost()
+    public function testRequestPost(): void
     {
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
 
@@ -110,7 +110,7 @@ class PostControllerTest extends TestCase
         ->assertStatus(304);
     }
 
-    public function testUpdatePost()
+    public function testUpdatePost(): void
     {
         Storage::fake('public');
 
@@ -120,7 +120,7 @@ class PostControllerTest extends TestCase
 
         $data = [
             'title' => $this->faker->text(50),
-            'content' => $this->faker->text,
+            'content' => $this->faker->text(),
         ];
 
         Sanctum::actingAs($post->blog->user, [
@@ -147,7 +147,7 @@ class PostControllerTest extends TestCase
         );
     }
 
-    public function testDeletePost()
+    public function testDeletePost(): void
     {
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
 

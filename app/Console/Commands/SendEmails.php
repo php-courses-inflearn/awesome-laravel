@@ -6,6 +6,7 @@ use App\Mail\Advertisement;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Mail;
 
 class SendEmails extends Command
@@ -27,10 +28,8 @@ class SendEmails extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $queue = $this->option('queue');
 
@@ -41,11 +40,8 @@ class SendEmails extends Command
 
     /**
      * 이메일 전송
-     *
-     * @param  string  $queue
-     * @return void
      */
-    private function sendEmails(string $queue)
+    private function sendEmails(string $queue): void
     {
         $posts = $this->posts();
 
@@ -56,20 +52,16 @@ class SendEmails extends Command
 
     /**
      * 메일을 받을 사용자 목록
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    private function users()
+    private function users(): Collection
     {
         return User::verified()->get();
     }
 
     /**
      * 글 목록
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    private function posts()
+    private function posts(): Collection
     {
         return Post::latest()->limit(5)->get();
     }

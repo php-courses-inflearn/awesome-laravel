@@ -11,7 +11,7 @@ class UnsubscribeRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'blog_id' => 'required|exists:blogs,id',

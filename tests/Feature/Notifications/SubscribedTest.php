@@ -14,7 +14,7 @@ class SubscribedTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testToMailReturnsSubscribedMailable()
+    public function testToMailReturnsSubscribedMailable(): void
     {
         $user = User::factory()->create();
         $blog = Blog::factory()->forUser()->create();
@@ -25,7 +25,7 @@ class SubscribedTest extends TestCase
         $this->assertInstanceOf(SubscribedMailable::class, $notification->toMail(new AnonymousNotifiable()));
     }
 
-    public function testToBroadcastContainsUser()
+    public function testToBroadcastContainsUser(): void
     {
         $user = User::factory()->create();
         $blog = Blog::factory()->forUser()->create();

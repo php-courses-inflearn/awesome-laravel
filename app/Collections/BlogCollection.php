@@ -3,6 +3,7 @@
 namespace App\Collections;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class BlogCollection extends Collection
 {
@@ -11,7 +12,7 @@ class BlogCollection extends Collection
      *
      * @return \Illuminate\Support\Collection
      */
-    public function feed()
+    public function feed(): Collection
     {
         return $this->flatMap->posts->sortByDesc('created_at');
     }

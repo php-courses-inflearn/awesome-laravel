@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class HttpClientServiceProviderTest extends TestCase
 {
-    public function testApiMacro()
+    public function testApiMacro(): void
     {
         Http::fake();
 

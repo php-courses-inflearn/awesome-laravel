@@ -11,7 +11,7 @@ class UpdateBlogRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|unique:blogs,name|max:255|min:4',

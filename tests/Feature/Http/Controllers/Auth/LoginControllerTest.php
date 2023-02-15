@@ -12,14 +12,14 @@ class LoginControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testReturnsLoginView()
+    public function testReturnsLoginView(): void
     {
         $this->get(route('login'))
             ->assertOk()
             ->assertViewIs('auth.login');
     }
 
-    public function testLoginForValidCredentials()
+    public function testLoginForValidCredentials(): void
     {
         $user = User::factory()->create();
 
@@ -32,7 +32,7 @@ class LoginControllerTest extends TestCase
         $this->assertAuthenticated();
     }
 
-    public function testFailToLoginForInvalidCredentials()
+    public function testFailToLoginForInvalidCredentials(): void
     {
         $user = User::factory()->create();
 
@@ -46,7 +46,7 @@ class LoginControllerTest extends TestCase
         $this->assertGuest();
     }
 
-    public function testAjaxLoginForValidCredentials()
+    public function testAjaxLoginForValidCredentials(): void
     {
         $user = User::factory()->create();
 
@@ -61,7 +61,7 @@ class LoginControllerTest extends TestCase
         $this->assertAuthenticated();
     }
 
-    public function testLogout()
+    public function testLogout(): void
     {
         $user = User::factory()->create();
 

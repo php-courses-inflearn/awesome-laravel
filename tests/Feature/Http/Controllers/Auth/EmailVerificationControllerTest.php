@@ -16,7 +16,7 @@ class EmailVerificationControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testReturnsVerifyEmailViewForUnverifiedUser()
+    public function testReturnsVerifyEmailViewForUnverifiedUser(): void
     {
         $this->withoutMiddleware(Authenticate::class)
             ->get(route('verification.notice'))
@@ -24,7 +24,7 @@ class EmailVerificationControllerTest extends TestCase
             ->assertViewIs('auth.verify-email');
     }
 
-    public function testSendEmailForEmailVerification()
+    public function testSendEmailForEmailVerification(): void
     {
         Notification::fake();
 
@@ -37,7 +37,7 @@ class EmailVerificationControllerTest extends TestCase
         Notification::assertSentTo($user, VerifyEmail::class);
     }
 
-    public function testVerifyEmail()
+    public function testVerifyEmail(): void
     {
         $user = User::factory()->unverified()->create();
 

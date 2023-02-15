@@ -7,16 +7,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\View\View;
 
 class RegisterController extends Controller
 {
     /**
      * 회원가입 폼
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('auth.register', [
             'providers' => Provider::cases(),
@@ -25,11 +25,8 @@ class RegisterController extends Controller
 
     /**
      * 회원가입
-     *
-     * @param  RegisterUserRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(RegisterUserRequest $request)
+    public function store(RegisterUserRequest $request): RedirectResponse
     {
         $user = User::create([
             ...$request->validated(),
