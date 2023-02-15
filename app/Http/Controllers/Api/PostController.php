@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
@@ -13,6 +11,8 @@ use App\Models\Blog;
 use App\Models\Post;
 use App\Services\PostService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {

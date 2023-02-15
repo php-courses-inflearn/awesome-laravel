@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Database\Eloquent\Collection;
 use App\Mail\Advertisement;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Mail;
 
 class SendEmails extends Command

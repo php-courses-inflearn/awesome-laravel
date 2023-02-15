@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use App\Http\Requests\SearchRequest;
 use App\Models\Post;
+use Illuminate\View\View;
 
 class SearchController extends Controller
 {

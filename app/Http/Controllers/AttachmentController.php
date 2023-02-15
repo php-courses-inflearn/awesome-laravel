@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreAttachmentRequest;
 use App\Models\Attachment;
 use App\Models\Post;
 use App\Services\AttachmentService;
+use Illuminate\Http\RedirectResponse;
 
 class AttachmentController extends Controller
 {

@@ -2,10 +2,10 @@
 
 namespace App\Casts;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Castables\Link as LinkCastable;
 use Exception;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Link implements CastsAttributes

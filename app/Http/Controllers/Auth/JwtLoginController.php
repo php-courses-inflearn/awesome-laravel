@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use PHPOpenSourceSaver\JWTAuth\JWTGuard;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JwtLoginRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use PHPOpenSourceSaver\JWTAuth\JWTGuard;
 
 class JwtLoginController extends Controller
 {

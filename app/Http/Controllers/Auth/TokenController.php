@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use App\Enums\Ability;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTokenRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class TokenController extends Controller

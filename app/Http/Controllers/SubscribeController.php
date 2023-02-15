@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\RedirectResponse;
 use App\Events\Subscribed;
 use App\Http\Requests\SubscribeRequest;
 use App\Http\Requests\UnsubscribeRequest;
 use App\Models\Blog;
+use Illuminate\Http\RedirectResponse;
 
 class SubscribeController extends Controller
 {
