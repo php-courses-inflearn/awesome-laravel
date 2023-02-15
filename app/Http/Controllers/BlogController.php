@@ -21,8 +21,6 @@ class BlogController extends Controller
 
     /**
      * 블로그 목록
-     *
-     * @return \Illuminate\View\View
      */
     public function index(): View
     {
@@ -33,8 +31,6 @@ class BlogController extends Controller
 
     /**
      * 블로그 생성 폼
-     *
-     * @return \Illuminate\View\View
      */
     public function create(): View
     {
@@ -43,9 +39,6 @@ class BlogController extends Controller
 
     /**
      * 블로그 생성
-     *
-     * @param  \App\Http\Requests\StoreBlogRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreBlogRequest $request): RedirectResponse
     {
@@ -59,10 +52,6 @@ class BlogController extends Controller
 
     /**
      * 블로그
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\View\View
      */
     public function show(Request $request, Blog $blog): View
     {
@@ -79,8 +68,6 @@ class BlogController extends Controller
 
     /**
      * 블로그 수정 폼
-     *
-     * @return \Illuminate\View\View
      */
     public function edit(Blog $blog): View
     {
@@ -94,10 +81,6 @@ class BlogController extends Controller
 
     /**
      * 블로그 수정
-     *
-     * @param  \App\Http\Requests\UpdateBlogRequest  $request
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateBlogRequest $request, Blog $blog): RedirectResponse
     {
@@ -108,9 +91,6 @@ class BlogController extends Controller
 
     /**
      * 블로그 삭제
-     *
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Blog $blog): RedirectResponse
     {

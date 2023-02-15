@@ -28,9 +28,6 @@ class SendPublishedNotification implements ShouldQueue
 
     /**
      * Handle the event.
-     *
-     * @param  \App\Events\Published  $event
-     * @return void
      */
     public function handle(Published $event): void
     {

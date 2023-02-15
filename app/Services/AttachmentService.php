@@ -9,9 +9,6 @@ class AttachmentService
 {
     /**
      * 파일첨부
-     *
-     * @param  array  $data
-     * @return void
      */
     public function store(array $data, Post $post): void
     {
@@ -27,9 +24,6 @@ class AttachmentService
 
     /**
      * 첨부파일 삭제
-     *
-     * @param  Attachment  $attachment
-     * @return void
      */
     public function destroy(Attachment $attachment): void
     {

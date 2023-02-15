@@ -45,8 +45,6 @@ class Attachment extends Model
 
     /**
      * Get the prunable model query.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function prunable(): Builder
     {
@@ -55,8 +53,6 @@ class Attachment extends Model
 
     /**
      * Prepare the model for pruning.
-     *
-     * @return void
      */
     public function pruning(): void
     {
@@ -65,8 +61,6 @@ class Attachment extends Model
 
     /**
      * 글
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function post(): BelongsTo
     {

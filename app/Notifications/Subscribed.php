@@ -31,7 +31,6 @@ class Subscribed extends Notification implements ShouldQueue
      * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
-     * @return array
      */
     public function via($notifiable): array
     {
@@ -42,7 +41,6 @@ class Subscribed extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return \App\Mail\Subscribed
      */
     public function toMail($notifiable): Subscribed
     {
@@ -58,7 +56,6 @@ class Subscribed extends Notification implements ShouldQueue
      * Get the broadcastable representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return BroadcastMessage
      */
     public function toBroadcast($notifiable): BroadcastMessage
     {
@@ -71,8 +68,6 @@ class Subscribed extends Notification implements ShouldQueue
      * Determine which queues should be used for each notification channel.
      *
      * @codeCoverageIgnore
-     *
-     * @return array
      */
     public function viaQueues(): array
     {

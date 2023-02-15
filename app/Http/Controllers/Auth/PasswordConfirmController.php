@@ -12,8 +12,6 @@ class PasswordConfirmController extends Controller
 {
     /**
      * 비밀번호 확인 폼
-     *
-     * @return \Illuminate\View\View
      */
     public function create(): View
     {
@@ -22,9 +20,6 @@ class PasswordConfirmController extends Controller
 
     /**
      * 비밀번호 확인
-     *
-     * @param  \App\Http\Requests\PasswordConfirmRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(PasswordConfirmRequest $request): RedirectResponse
     {

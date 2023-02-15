@@ -12,9 +12,6 @@ class SubscribeController extends Controller
 {
     /**
      * 구독
-     *
-     * @param  \App\Http\Requests\SubscribeRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(SubscribeRequest $request): RedirectResponse
     {
@@ -31,9 +28,6 @@ class SubscribeController extends Controller
 
     /**
      * 구독 취소
-     *
-     * @param  \App\Http\Requests\UnsubscribeRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(UnsubscribeRequest $request): RedirectResponse
     {

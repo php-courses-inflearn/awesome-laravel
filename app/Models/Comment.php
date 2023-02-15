@@ -40,8 +40,6 @@ class Comment extends Model
 
     /**
      * 작성자
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -50,8 +48,6 @@ class Comment extends Model
 
     /**
      * 다형성
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function commentable(): MorphTo
     {

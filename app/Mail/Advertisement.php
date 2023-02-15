@@ -27,8 +27,6 @@ class Advertisement extends Mailable implements ShouldQueue
 
     /**
      * Get the message envelope.
-     *
-     * @return \Illuminate\Mail\Mailables\Envelope
      */
     public function envelope(): Envelope
     {
@@ -39,8 +37,6 @@ class Advertisement extends Mailable implements ShouldQueue
 
     /**
      * Get the message content definition.
-     *
-     * @return \Illuminate\Mail\Mailables\Content
      */
     public function content(): Content
     {
@@ -51,8 +47,6 @@ class Advertisement extends Mailable implements ShouldQueue
 
     /**
      * Get the attachments for the message.
-     *
-     * @return array
      */
     public function attachments(): array
     {

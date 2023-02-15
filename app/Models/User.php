@@ -64,8 +64,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
 
     /**
      * Perform any actions required after the model boots.
-     *
-     * @return void
      */
     protected static function booted(): void
     {
@@ -84,8 +82,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
      */
     public function getJWTCustomClaims(): array
     {
@@ -94,9 +90,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
 
     /**
      * 이메일이 인증된 사용자만
-     *
-     * @param  Builder  $query
-     * @return Builder
      */
     public function scopeVerified(Builder $query): Builder
     {
@@ -105,8 +98,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
 
     /**
      * 블로그
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function blogs(): HasMany
     {
@@ -115,8 +106,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
 
     /**
      * 내가 구독한 블로그
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function subscriptions(): BelongsToMany
     {
@@ -126,8 +115,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
 
     /**
      * 댓글
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments(): HasMany
     {

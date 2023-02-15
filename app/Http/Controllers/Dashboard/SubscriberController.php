@@ -12,9 +12,6 @@ class SubscriberController extends Controller
      * 내 구독자 대시보드
      *
      * @codeCoverageIgnore
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\View\View
      */
     public function __invoke(Request $request): View
     {

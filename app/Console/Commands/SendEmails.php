@@ -28,8 +28,6 @@ class SendEmails extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
@@ -42,9 +40,6 @@ class SendEmails extends Command
 
     /**
      * 이메일 전송
-     *
-     * @param  string  $queue
-     * @return void
      */
     private function sendEmails(string $queue): void
     {
@@ -57,8 +52,6 @@ class SendEmails extends Command
 
     /**
      * 메일을 받을 사용자 목록
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
     private function users(): Collection
     {
@@ -67,8 +60,6 @@ class SendEmails extends Command
 
     /**
      * 글 목록
-     *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
     private function posts(): Collection
     {

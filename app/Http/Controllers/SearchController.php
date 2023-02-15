@@ -10,9 +10,6 @@ class SearchController extends Controller
 {
     /**
      * 검색
-     *
-     * @param  \App\Http\Requests\SearchRequest  $request
-     * @return \Illuminate\View\View
      */
     public function __invoke(SearchRequest $request): View
     {

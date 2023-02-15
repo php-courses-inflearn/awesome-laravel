@@ -12,9 +12,6 @@ class JwtLoginController extends Controller
 {
     /**
      * JWT 생성
-     *
-     * @param  \App\Http\Requests\JwtLoginRequest  $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(JwtLoginRequest $request): JsonResponse
     {
@@ -27,8 +24,6 @@ class JwtLoginController extends Controller
 
     /**
      * JWT 갱신
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(): JsonResponse
     {
@@ -37,8 +32,6 @@ class JwtLoginController extends Controller
 
     /**
      * JWT 제거
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(): Response
     {
@@ -52,8 +45,6 @@ class JwtLoginController extends Controller
 
     /**
      * Guard
-     *
-     * @return \PHPOpenSourceSaver\JWTAuth\JWTGuard
      */
     private function guard(): JWTGuard
     {
@@ -67,7 +58,6 @@ class JwtLoginController extends Controller
      * 토큰 응답
      *
      * @param $token
-     * @return \Illuminate\Http\JsonResponse
      */
     private function respondWithToken($token): JsonResponse
     {

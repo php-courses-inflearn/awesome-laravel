@@ -35,8 +35,6 @@ class Post extends Model
 
     /**
      * 블로그
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function blog(): BelongsTo
     {
@@ -56,8 +54,6 @@ class Post extends Model
 
     /**
      * 첨부파일
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function attachments(): HasMany
     {

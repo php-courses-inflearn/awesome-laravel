@@ -13,8 +13,6 @@ class LoginController extends Controller
 {
     /**
      * 로그인 폼
-     *
-     * @return \Illuminate\View\View
      */
     public function create(): View
     {
@@ -26,7 +24,6 @@ class LoginController extends Controller
     /**
      * 로그인
      *
-     * @param  \App\Http\Requests\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function store(LoginRequest $request)
@@ -46,8 +43,6 @@ class LoginController extends Controller
 
     /**
      * 로그아웃
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(): RedirectResponse
     {

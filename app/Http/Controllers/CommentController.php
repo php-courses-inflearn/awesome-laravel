@@ -20,9 +20,6 @@ class CommentController extends Controller
 
     /**
      * 댓글 쓰기
-     *
-     * @param  \App\Http\Requests\StoreCommentRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreCommentRequest $request, Post $post): RedirectResponse
     {
@@ -38,10 +35,6 @@ class CommentController extends Controller
 
     /**
      * 댓글 수정
-     *
-     * @param  \App\Http\Requests\UpdateCommentRequest  $request
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateCommentRequest $request, Comment $comment): RedirectResponse
     {
@@ -52,9 +45,6 @@ class CommentController extends Controller
 
     /**
      * 댓글 삭제
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Comment $comment): RedirectResponse
     {

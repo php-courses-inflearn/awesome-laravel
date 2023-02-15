@@ -16,8 +16,6 @@ class PasswordResetController extends Controller
 {
     /**
      * 비밀번호를 찾을 이메일을 입력하는 폼
-     *
-     * @return \Illuminate\View\View
      */
     public function create(): View
     {
@@ -26,9 +24,6 @@ class PasswordResetController extends Controller
 
     /**
      * 비밀번호 재설정 이메일 전송
-     *
-     * @param  SendResetLinkRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(SendResetLinkRequest $request): RedirectResponse
     {
@@ -41,9 +36,6 @@ class PasswordResetController extends Controller
 
     /**
      * 비밀번호 재설정 폼
-     *
-     * @param  string  $token
-     * @return \Illuminate\View\View
      */
     public function edit(string $token): View
     {
@@ -54,9 +46,6 @@ class PasswordResetController extends Controller
 
     /**
      * 비밀번호 재설정
-     *
-     * @param  ResetPasswordRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ResetPasswordRequest $request): RedirectResponse
     {

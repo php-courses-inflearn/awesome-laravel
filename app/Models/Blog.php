@@ -39,8 +39,6 @@ class Blog extends Model
 
     /**
      * Get the route key for the model.
-     *
-     * @return string
      */
     public function getRouteKeyName(): string
     {
@@ -49,9 +47,6 @@ class Blog extends Model
 
     /**
      * Create a new Eloquent Collection instance.
-     *
-     * @param  array  $models
-     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function newCollection(array $models = []): Collection
     {
@@ -60,8 +55,6 @@ class Blog extends Model
 
     /**
      * 블로그 소유자
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -70,8 +63,6 @@ class Blog extends Model
 
     /**
      * 내 구독자
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function subscribers(): BelongsToMany
     {
@@ -81,8 +72,6 @@ class Blog extends Model
 
     /**
      * 글
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function posts(): HasMany
     {
@@ -91,8 +80,6 @@ class Blog extends Model
 
     /**
      * 댓글
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function comments(): HasManyThrough
     {

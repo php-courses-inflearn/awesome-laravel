@@ -9,9 +9,6 @@ class AttachmentObserver
 {
     /**
      * Handle the Attachment "deleted" event.
-     *
-     * @param  \App\Models\Attachment  $attachment
-     * @return void
      */
     public function deleted(Attachment $attachment): void
     {

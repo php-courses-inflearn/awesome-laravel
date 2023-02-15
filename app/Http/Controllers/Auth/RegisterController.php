@@ -15,8 +15,6 @@ class RegisterController extends Controller
 {
     /**
      * 회원가입 폼
-     *
-     * @return \Illuminate\View\View
      */
     public function create(): View
     {
@@ -27,9 +25,6 @@ class RegisterController extends Controller
 
     /**
      * 회원가입
-     *
-     * @param  RegisterUserRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(RegisterUserRequest $request): RedirectResponse
     {

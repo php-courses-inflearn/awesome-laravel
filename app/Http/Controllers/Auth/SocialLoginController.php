@@ -14,9 +14,6 @@ class SocialLoginController extends Controller
 {
     /**
      * 서비스 제공자 리다이렉트
-     *
-     * @param  \App\Enums\Provider  $provider
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function create(Provider $provider): RedirectResponse
     {
@@ -25,9 +22,6 @@ class SocialLoginController extends Controller
 
     /**
      * 소셜 로그인
-     *
-     * @param  \App\Enums\Provider  $provider
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Provider $provider): RedirectResponse
     {
@@ -43,9 +37,6 @@ class SocialLoginController extends Controller
 
     /**
      * 소셜 사용자 등록
-     *
-     * @param  \Laravel\Socialite\Contracts\User  $socialUser
-     * @return \App\Models\User
      */
     private function register(SocialiteUser $socialUser): User
     {

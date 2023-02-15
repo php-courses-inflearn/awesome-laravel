@@ -17,10 +17,6 @@ class PostService
 
     /**
      * 글쓰기
-     *
-     * @param  array  $data
-     * @param  \App\Models\Blog  $blog
-     * @return \App\Models\Post
      */
     public function store(array $data, Blog $blog): Post
     {
@@ -43,10 +39,6 @@ class PostService
 
     /**
      * 글 수정
-     *
-     * @param  array  $data
-     * @param  \App\Models\Post  $post
-     * @return void
      */
     public function update(array $data, Post $post): void
     {
@@ -62,9 +54,6 @@ class PostService
 
     /**
      * 글 삭제
-     *
-     * @param  \App\Models\Post  $post
-     * @return void
      */
     public function destroy(Post $post): void
     {
@@ -75,8 +64,6 @@ class PostService
      * 파일 업로드
      *
      * @param  array<UploadedFile>  $attachments
-     * @param  \App\Models\Post  $post
-     * @return void
      */
     private function attachments(array $attachments, Post $post): void
     {

@@ -15,8 +15,6 @@ class PostController extends Controller
 {
     /**
      * PostController
-     *
-     * @param  \App\Services\PostService  $postService
      */
     public function __construct(private readonly PostService $postService)
     {
@@ -30,8 +28,6 @@ class PostController extends Controller
 
     /**
      * 글 목록
-     *
-     * @return \Illuminate\View\View
      */
     public function index(Blog $blog): View
     {
@@ -42,8 +38,6 @@ class PostController extends Controller
 
     /**
      * 글 쓰기 폼
-     *
-     * @return \Illuminate\View\View
      */
     public function create(Blog $blog): View
     {
@@ -54,9 +48,6 @@ class PostController extends Controller
 
     /**
      * 글 쓰기
-     *
-     * @param  \App\Http\Requests\StorePostRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StorePostRequest $request, Blog $blog): RedirectResponse
     {
@@ -67,9 +58,6 @@ class PostController extends Controller
 
     /**
      * 글 읽기
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\View\View
      */
     public function show(Request $request, Post $post): View
     {
@@ -84,9 +72,6 @@ class PostController extends Controller
 
     /**
      * 글 수정 폼
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\View\View
      */
     public function edit(Post $post): View
     {
@@ -97,10 +82,6 @@ class PostController extends Controller
 
     /**
      * 글 수정
-     *
-     * @param  \App\Http\Requests\UpdatePostRequest  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdatePostRequest $request, Post $post): RedirectResponse
     {
@@ -111,9 +92,6 @@ class PostController extends Controller
 
     /**
      * 글 삭제
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Post $post): RedirectResponse
     {
