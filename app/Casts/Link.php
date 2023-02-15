@@ -2,6 +2,7 @@
 
 namespace App\Casts;
 
+use Illuminate\Database\Eloquent\Model;
 use App\Castables\Link as LinkCastable;
 use Exception;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
@@ -18,7 +19,7 @@ class Link implements CastsAttributes
      * @param  array  $attributes
      * @return mixed
      */
-    public function get($model, string $key, $value, array $attributes)
+    public function get(Model $model, string $key, mixed $value, array $attributes)
     {
         $path = $this->external($attributes['name'])
             ? $attributes['name']
@@ -37,7 +38,7 @@ class Link implements CastsAttributes
      * @param  array  $attributes
      * @return mixed
      */
-    public function set($model, string $key, $value, array $attributes)
+    public function set(Model $model, string $key, mixed $value, array $attributes)
     {
         if (! $value instanceof LinkCastable) {
             throw new Exception('The given value is not an Link instance.');
