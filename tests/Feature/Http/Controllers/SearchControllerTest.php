@@ -14,7 +14,7 @@ class SearchControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testReturnsSearchViewWithSearchQueryInQueryString()
+    public function testReturnsSearchViewWithSearchQueryInQueryString(): void
     {
         $user = User::factory()->create();
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
@@ -31,7 +31,7 @@ class SearchControllerTest extends TestCase
             ->assertViewHas('query', $query);
     }
 
-    public function testSearchView()
+    public function testSearchView(): void
     {
         $posts = Post::factory(5)->for(Blog::factory()->forUser())->create();
         $query = $this->faker->word();

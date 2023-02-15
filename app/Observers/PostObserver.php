@@ -12,7 +12,7 @@ class PostObserver
      * @param  \App\Models\Post  $post
      * @return void
      */
-    public function deleted(Post $post)
+    public function deleted(Post $post): void
     {
         $post->comments()->forceDelete();
     }

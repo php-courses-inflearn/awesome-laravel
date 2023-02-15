@@ -13,7 +13,7 @@ class ProfileControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testReturnsShowView()
+    public function testReturnsShowView(): void
     {
         $user = User::factory()->create();
 
@@ -24,7 +24,7 @@ class ProfileControllerTest extends TestCase
             ->assertViewIs('auth.profile.show');
     }
 
-    public function testReturnsEditView()
+    public function testReturnsEditView(): void
     {
         $user = User::factory()->create();
 
@@ -35,7 +35,7 @@ class ProfileControllerTest extends TestCase
             ->assertViewIs('auth.profile.edit');
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $user = User::factory()->create();
 
@@ -57,7 +57,7 @@ class ProfileControllerTest extends TestCase
         ]);
     }
 
-    public function testUpdateContainsPassword()
+    public function testUpdateContainsPassword(): void
     {
         $user = User::factory()->create();
         $password = $this->faker->password(8);

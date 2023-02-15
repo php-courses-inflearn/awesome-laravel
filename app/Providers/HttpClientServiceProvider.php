@@ -12,7 +12,7 @@ class HttpClientServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
@@ -22,7 +22,7 @@ class HttpClientServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Http::macro('api', function ($token) {
             $baseUrl = config('app.url').'/api';

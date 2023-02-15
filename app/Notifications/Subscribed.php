@@ -33,7 +33,7 @@ class Subscribed extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail', 'broadcast'];
     }
@@ -44,7 +44,7 @@ class Subscribed extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return \App\Mail\Subscribed
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): Subscribed
     {
         $address = $notifiable instanceof AnonymousNotifiable
             ? $notifiable->routeNotificationFor('mail')
@@ -60,7 +60,7 @@ class Subscribed extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return BroadcastMessage
      */
-    public function toBroadcast($notifiable)
+    public function toBroadcast($notifiable): BroadcastMessage
     {
         return new BroadcastMessage([
             'user' => $this->user,
@@ -74,7 +74,7 @@ class Subscribed extends Notification implements ShouldQueue
      *
      * @return array
      */
-    public function viaQueues()
+    public function viaQueues(): array
     {
         return [
             'mail' => 'emails',

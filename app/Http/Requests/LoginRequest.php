@@ -12,7 +12,7 @@ class LoginRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'email' => 'required|email|exists:users|max:255',

@@ -14,7 +14,7 @@ class CommentSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Post::all()->each(function (Post $post) {
             $factory = Comment::factory()

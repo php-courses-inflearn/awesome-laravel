@@ -13,7 +13,7 @@ class AttachmentService
      * @param  array  $data
      * @return void
      */
-    public function store(array $data, Post $post)
+    public function store(array $data, Post $post): void
     {
         foreach ($data['attachments'] as $attachment) {
             $attachment->storePublicly('attachments', 'public');
@@ -31,7 +31,7 @@ class AttachmentService
      * @param  Attachment  $attachment
      * @return void
      */
-    public function destroy(Attachment $attachment)
+    public function destroy(Attachment $attachment): void
     {
         $attachment->delete();
     }

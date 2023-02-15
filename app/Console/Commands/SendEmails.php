@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Database\Eloquent\Collection;
 use App\Mail\Advertisement;
 use App\Models\Post;
 use App\Models\User;
@@ -30,7 +31,7 @@ class SendEmails extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $queue = $this->option('queue');
 
@@ -45,7 +46,7 @@ class SendEmails extends Command
      * @param  string  $queue
      * @return void
      */
-    private function sendEmails(string $queue)
+    private function sendEmails(string $queue): void
     {
         $posts = $this->posts();
 
@@ -59,7 +60,7 @@ class SendEmails extends Command
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    private function users()
+    private function users(): Collection
     {
         return User::verified()->get();
     }
@@ -69,7 +70,7 @@ class SendEmails extends Command
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    private function posts()
+    private function posts(): Collection
     {
         return Post::latest()->limit(5)->get();
     }

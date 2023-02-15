@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Http\Request;
 use Illuminate\Auth\Middleware\RequirePassword as Middleware;
 
 class RequirePassword extends Middleware
@@ -13,7 +14,7 @@ class RequirePassword extends Middleware
      * @param  int|null  $passwordTimeoutSeconds
      * @return bool
      */
-    protected function shouldConfirmPassword($request, $passwordTimeoutSeconds = null)
+    protected function shouldConfirmPassword(Request $request, ?int $passwordTimeoutSeconds = null): bool
     {
         return session()->socialiteMissingAll()
             && parent::shouldConfirmPassword($request, $passwordTimeoutSeconds);

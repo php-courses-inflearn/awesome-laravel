@@ -16,7 +16,7 @@ class PasswordServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
@@ -26,7 +26,7 @@ class PasswordServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Password::defaults(function () {
             $rule = Password::min(8);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreAttachmentRequest;
 use App\Models\Attachment;
 use App\Models\Post;
@@ -43,7 +44,7 @@ class AttachmentController extends Controller
      * @param  \App\Models\Attachment  $attachment
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Attachment $attachment)
+    public function destroy(Attachment $attachment): RedirectResponse
     {
         $this->attachmentService->destroy($attachment);
 

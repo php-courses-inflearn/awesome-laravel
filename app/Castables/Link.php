@@ -21,7 +21,7 @@ class Link implements Castable
      * @return string
      * @return string|\Illuminate\Contracts\Database\Eloquent\CastsAttributes|\Illuminate\Contracts\Database\Eloquent\CastsInboundAttributes
      */
-    public static function castUsing(array $arguments)
+    public static function castUsing(array $arguments): string
     {
         return LinkCast::class;
     }

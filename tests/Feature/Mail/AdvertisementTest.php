@@ -12,7 +12,7 @@ class AdvertisementTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testDisplaysListOfPostTitles()
+    public function testDisplaysListOfPostTitles(): void
     {
         $posts = Post::factory(5)->for(Blog::factory()->forUser())->create();
 

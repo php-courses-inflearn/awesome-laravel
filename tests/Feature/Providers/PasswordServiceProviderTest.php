@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class PasswordServiceProviderTest extends TestCase
 {
-    public function testPasswordRule()
+    public function testPasswordRule(): void
     {
         $validator = Validator::make(['password' => 'password'], [
             'password' => Password::default(),
@@ -20,7 +20,7 @@ class PasswordServiceProviderTest extends TestCase
         );
     }
 
-    public function testPasswordRuleInProduction()
+    public function testPasswordRuleInProduction(): void
     {
         $this->app->bind('env', function () {
             return 'production';

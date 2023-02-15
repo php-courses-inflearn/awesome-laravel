@@ -12,7 +12,7 @@ class SessionServiceProviderTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testSocialiteMacro()
+    public function testSocialiteMacro(): void
     {
         $this->assertTrue(
             Session::hasMacro('socialite')
@@ -25,7 +25,7 @@ class SessionServiceProviderTest extends TestCase
         );
     }
 
-    public function testSocialiteMissingAllMacro()
+    public function testSocialiteMissingAllMacro(): void
     {
         $this->assertTrue(
             Session::hasMacro('socialiteMissingAll')

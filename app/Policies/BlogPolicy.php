@@ -16,7 +16,7 @@ class BlogPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return true;
     }
@@ -28,7 +28,7 @@ class BlogPolicy
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Blog $blog)
+    public function view(User $user, Blog $blog): bool
     {
         return true;
     }
@@ -39,7 +39,7 @@ class BlogPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return true;
     }
@@ -51,7 +51,7 @@ class BlogPolicy
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Blog $blog)
+    public function update(User $user, Blog $blog): bool
     {
         return $user->id === $blog->user_id;
     }
@@ -63,7 +63,7 @@ class BlogPolicy
      * @param  \App\Models\Blog  $blog
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Blog $blog)
+    public function delete(User $user, Blog $blog): bool
     {
         return $user->id === $blog->user_id;
     }

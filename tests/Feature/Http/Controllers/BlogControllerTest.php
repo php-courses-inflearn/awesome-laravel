@@ -12,7 +12,7 @@ class BlogControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testReturnsIndexViewForListOfBlog()
+    public function testReturnsIndexViewForListOfBlog(): void
     {
         $user = User::factory()->create();
 
@@ -22,7 +22,7 @@ class BlogControllerTest extends TestCase
             ->assertViewIs('blogs.index');
     }
 
-    public function testReturnsCreateViewForBlog()
+    public function testReturnsCreateViewForBlog(): void
     {
         $user = User::factory()->create();
 
@@ -32,7 +32,7 @@ class BlogControllerTest extends TestCase
             ->assertViewIs('blogs.create');
     }
 
-    public function testCreateBlog()
+    public function testCreateBlog(): void
     {
         $user = User::factory()->create();
 
@@ -49,7 +49,7 @@ class BlogControllerTest extends TestCase
         $this->assertDatabaseHas('blogs', $data);
     }
 
-    public function testReturnsShowViewForBlog()
+    public function testReturnsShowViewForBlog(): void
     {
         $user = User::factory()->create();
         $blog = Blog::factory()->forUser()->create();
@@ -60,7 +60,7 @@ class BlogControllerTest extends TestCase
             ->assertViewIs('blogs.show');
     }
 
-    public function testReturnsEditViewForBlog()
+    public function testReturnsEditViewForBlog(): void
     {
         $blog = Blog::factory()->forUser()->create();
 
@@ -70,7 +70,7 @@ class BlogControllerTest extends TestCase
             ->assertViewIs('blogs.edit');
     }
 
-    public function testUpdateBlog()
+    public function testUpdateBlog(): void
     {
         $blog = Blog::factory()->forUser()->create();
 
@@ -86,7 +86,7 @@ class BlogControllerTest extends TestCase
         $this->assertDatabaseHas('blogs', $data);
     }
 
-    public function testDeleteBlog()
+    public function testDeleteBlog(): void
     {
         $blog = Blog::factory()->forUser()->create();
 

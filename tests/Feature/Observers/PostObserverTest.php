@@ -13,7 +13,7 @@ class PostObserverTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testDeletingAssociatedCommentsOnPostDeletion()
+    public function testDeletingAssociatedCommentsOnPostDeletion(): void
     {
         $post = Post::factory()->for(Blog::factory()->forUser())
             ->has(Comment::factory()->forUser())

@@ -17,7 +17,7 @@ class PaginateServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
@@ -27,7 +27,7 @@ class PaginateServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Paginator::defaultView('vendor/pagination/default');
         Paginator::defaultSimpleView('vendor/pagination/simple-default');

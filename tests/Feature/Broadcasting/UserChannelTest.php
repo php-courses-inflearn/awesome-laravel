@@ -11,7 +11,7 @@ class UserChannelTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testJoinMethodGrantsAccessToChannelForAuthenticatedUser()
+    public function testJoinMethodGrantsAccessToChannelForAuthenticatedUser(): void
     {
         $user = User::factory()->create();
 

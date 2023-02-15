@@ -12,7 +12,7 @@ class TokenControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testReturnsCreateViewForToken()
+    public function testReturnsCreateViewForToken(): void
     {
         $user = User::factory()->create();
 
@@ -22,7 +22,7 @@ class TokenControllerTest extends TestCase
             ->assertViewIs('tokens.create');
     }
 
-    public function testCreateToken()
+    public function testCreateToken(): void
     {
         $user = User::factory()->create();
 
@@ -45,7 +45,7 @@ class TokenControllerTest extends TestCase
         ]);
     }
 
-    public function testDeleteToken()
+    public function testDeleteToken(): void
     {
         $user = User::factory()->create();
 

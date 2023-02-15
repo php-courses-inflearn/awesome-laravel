@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Scopes\VerifiedScope;
 use Illuminate\Auth\Passwords\CanResetPassword as ResettablePassword;
 use Illuminate\Contracts\Auth\CanResetPassword;
@@ -65,7 +67,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
      *
      * @return void
      */
-    protected static function booted()
+    protected static function booted(): void
     {
         //static::addGlobalScope(new VerifiedScope());
     }
@@ -85,7 +87,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
      *
      * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }
@@ -96,7 +98,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
      * @param  Builder  $query
      * @return Builder
      */
-    public function scopeVerified(Builder $query)
+    public function scopeVerified(Builder $query): Builder
     {
         return $query->whereNotNull('email_verified_at');
     }
@@ -106,7 +108,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function blogs()
+    public function blogs(): HasMany
     {
         return $this->hasMany(Blog::class);
     }
@@ -116,7 +118,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function subscriptions()
+    public function subscriptions(): BelongsToMany
     {
         return $this->belongsToMany(Blog::class)
             ->as('subscription');
@@ -127,7 +129,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword,
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function comments()
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }

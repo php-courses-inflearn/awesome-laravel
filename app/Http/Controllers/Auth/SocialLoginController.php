@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\RedirectResponse;
 use App\Enums\Provider;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -17,7 +18,7 @@ class SocialLoginController extends Controller
      * @param  \App\Enums\Provider  $provider
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create(Provider $provider)
+    public function create(Provider $provider): RedirectResponse
     {
         return Socialite::driver($provider->value)->redirect();
     }
@@ -28,7 +29,7 @@ class SocialLoginController extends Controller
      * @param  \App\Enums\Provider  $provider
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Provider $provider)
+    public function store(Provider $provider): RedirectResponse
     {
         $socialUser = Socialite::driver($provider->value)->user();
         $user = $this->register($socialUser);
@@ -46,7 +47,7 @@ class SocialLoginController extends Controller
      * @param  \Laravel\Socialite\Contracts\User  $socialUser
      * @return \App\Models\User
      */
-    private function register(SocialiteUser $socialUser)
+    private function register(SocialiteUser $socialUser): User
     {
         $user = User::updateOrCreate([
             'email' => $socialUser->getEmail(),

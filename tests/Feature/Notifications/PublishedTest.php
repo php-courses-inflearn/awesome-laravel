@@ -14,7 +14,7 @@ class PublishedTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testToMailContainsExpectedSubjectAndContent()
+    public function testToMailContainsExpectedSubjectAndContent(): void
     {
         $user = User::factory()->create();
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
@@ -42,7 +42,7 @@ class PublishedTest extends TestCase
         );
     }
 
-    public function testToBroadcastContainsPost()
+    public function testToBroadcastContainsPost(): void
     {
         $user = User::factory()->create();
         $post = Post::factory()->for(Blog::factory()->forUser())->create();

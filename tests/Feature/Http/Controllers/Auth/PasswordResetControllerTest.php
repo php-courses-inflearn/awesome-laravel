@@ -18,14 +18,14 @@ class PasswordResetControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testReturnsForgotPasswordView()
+    public function testReturnsForgotPasswordView(): void
     {
         $this->get(route('password.request'))
             ->assertOk()
             ->assertViewIs('auth.forgot-password');
     }
 
-    public function testSendEmailForPasswordResets()
+    public function testSendEmailForPasswordResets(): void
     {
         Notification::fake();
 
@@ -40,7 +40,7 @@ class PasswordResetControllerTest extends TestCase
         Notification::assertSentTo($user, ResetPassword::class);
     }
 
-    public function testFailToSendEmailForPasswordResets()
+    public function testFailToSendEmailForPasswordResets(): void
     {
         Mail::fake();
 
@@ -53,7 +53,7 @@ class PasswordResetControllerTest extends TestCase
         Mail::assertNothingSent();
     }
 
-    public function testReturnsResetPasswordView()
+    public function testReturnsResetPasswordView(): void
     {
         $token = Str::random(32);
 
@@ -64,7 +64,7 @@ class PasswordResetControllerTest extends TestCase
         ->assertViewIs('auth.reset-password');
     }
 
-    public function testPasswordResetsForValidToken()
+    public function testPasswordResetsForValidToken(): void
     {
         Event::fake();
 
@@ -84,7 +84,7 @@ class PasswordResetControllerTest extends TestCase
         Event::assertDispatched(PasswordReset::class);
     }
 
-    public function testFailToPasswordResetsForInvalidToken()
+    public function testFailToPasswordResetsForInvalidToken(): void
     {
         Event::fake();
 

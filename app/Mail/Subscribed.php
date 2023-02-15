@@ -32,7 +32,7 @@ class Subscribed extends Mailable implements ShouldQueue
      *
      * @return \Illuminate\Mail\Mailables\Envelope
      */
-    public function envelope()
+    public function envelope(): Envelope
     {
         return new Envelope(
             subject: '[라라벨] 구독 알림',
@@ -44,7 +44,7 @@ class Subscribed extends Mailable implements ShouldQueue
      *
      * @return \Illuminate\Mail\Mailables\Content
      */
-    public function content()
+    public function content(): Content
     {
         return new Content(
             view: 'emails.subscribed',
@@ -56,7 +56,7 @@ class Subscribed extends Mailable implements ShouldQueue
      *
      * @return array
      */
-    public function attachments()
+    public function attachments(): array
     {
         return [];
     }

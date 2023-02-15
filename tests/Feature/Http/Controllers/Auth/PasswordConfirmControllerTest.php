@@ -11,7 +11,7 @@ class PasswordConfirmControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testReturnsPasswordConfirmView()
+    public function testReturnsPasswordConfirmView(): void
     {
         $user = User::factory()->create();
 
@@ -21,7 +21,7 @@ class PasswordConfirmControllerTest extends TestCase
             ->assertViewIs('auth.confirm-password');
     }
 
-    public function testConfirmsPasswordForCorrectPassword()
+    public function testConfirmsPasswordForCorrectPassword(): void
     {
         $user = User::factory()->create();
 
@@ -32,7 +32,7 @@ class PasswordConfirmControllerTest extends TestCase
             ->assertRedirect();
     }
 
-    public function testFailToConfirmPasswordForIncorrectPassword()
+    public function testFailToConfirmPasswordForIncorrectPassword(): void
     {
         $user = User::factory()->create();
 

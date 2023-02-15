@@ -13,7 +13,7 @@ class AttachmentTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testPruningAssociatedUploadedFile()
+    public function testPruningAssociatedUploadedFile(): void
     {
         $storage = Storage::fake('public');
 

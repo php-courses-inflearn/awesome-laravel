@@ -15,7 +15,7 @@ class AttachmentControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testCreateAttachmentForPost()
+    public function testCreateAttachmentForPost(): void
     {
         Storage::fake('public');
 
@@ -43,7 +43,7 @@ class AttachmentControllerTest extends TestCase
         );
     }
 
-    public function testDeleteAttachmentFromPost()
+    public function testDeleteAttachmentFromPost(): void
     {
         Storage::fake('public');
 

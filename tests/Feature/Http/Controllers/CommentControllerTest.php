@@ -14,7 +14,7 @@ class CommentControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testCreateCommentForPost()
+    public function testCreateCommentForPost(): void
     {
         $user = User::factory()->create();
         $post = Post::factory()->for(Blog::factory()->forUser())->create();
@@ -37,7 +37,7 @@ class CommentControllerTest extends TestCase
         ]);
     }
 
-    public function testCreateChildCommentForComment()
+    public function testCreateChildCommentForComment(): void
     {
         $user = User::factory()->create();
 
@@ -66,7 +66,7 @@ class CommentControllerTest extends TestCase
         ]);
     }
 
-    public function testUpdateComment()
+    public function testUpdateComment(): void
     {
         $comment = Comment::factory()->forUser()
             ->for(Post::factory()->for(Blog::factory()->forUser()), 'commentable')
@@ -88,7 +88,7 @@ class CommentControllerTest extends TestCase
         ]);
     }
 
-    public function testDeleteComment()
+    public function testDeleteComment(): void
     {
         $comment = Comment::factory()->forUser()
             ->for(Post::factory()->for(Blog::factory()->forUser()), 'commentable')

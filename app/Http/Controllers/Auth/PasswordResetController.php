@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\SendResetLinkRequest;
@@ -17,7 +19,7 @@ class PasswordResetController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('auth.forgot-password');
     }
@@ -28,7 +30,7 @@ class PasswordResetController extends Controller
      * @param  SendResetLinkRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(SendResetLinkRequest $request)
+    public function store(SendResetLinkRequest $request): RedirectResponse
     {
         $status = Password::sendResetLink($request->validated());
 
@@ -43,7 +45,7 @@ class PasswordResetController extends Controller
      * @param  string  $token
      * @return \Illuminate\View\View
      */
-    public function edit(string $token)
+    public function edit(string $token): View
     {
         return view('auth.reset-password', [
             'token' => $token,
@@ -56,7 +58,7 @@ class PasswordResetController extends Controller
      * @param  ResetPasswordRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ResetPasswordRequest $request)
+    public function update(ResetPasswordRequest $request): RedirectResponse
     {
         $status = Password::reset($request->validated(), function ($user, $password) {
             $user->forceFill([

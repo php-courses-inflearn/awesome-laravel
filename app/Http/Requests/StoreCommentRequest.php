@@ -11,7 +11,7 @@ class StoreCommentRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'parent_id' => 'nullable|numeric|exists:comments,id',

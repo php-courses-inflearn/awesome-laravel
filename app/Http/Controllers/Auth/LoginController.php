@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Enums\Provider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
@@ -14,7 +16,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('auth.login', [
             'providers' => Provider::cases(),
@@ -47,7 +49,7 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy()
+    public function destroy(): RedirectResponse
     {
         auth()->logout();
 

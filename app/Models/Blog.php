@@ -2,6 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use App\Collections\BlogCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -37,7 +42,7 @@ class Blog extends Model
      *
      * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'name';
     }
@@ -48,7 +53,7 @@ class Blog extends Model
      * @param  array  $models
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function newCollection(array $models = [])
+    public function newCollection(array $models = []): Collection
     {
         return new BlogCollection($models);
     }
@@ -58,7 +63,7 @@ class Blog extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -68,7 +73,7 @@ class Blog extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function subscribers()
+    public function subscribers(): BelongsToMany
     {
         return $this->belongsToMany(User::class)
             ->as('subscription');
@@ -79,7 +84,7 @@ class Blog extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function posts()
+    public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
@@ -89,7 +94,7 @@ class Blog extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    public function comments()
+    public function comments(): HasManyThrough
     {
         return $this->hasManyThrough(Comment::class, Post::class, secondKey: 'commentable_id')
             ->where('commentable_type', Post::class);

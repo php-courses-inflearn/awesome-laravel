@@ -12,7 +12,7 @@ class LocaleTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testLocaleChangeWithAcceptLanguageHeader()
+    public function testLocaleChangeWithAcceptLanguageHeader(): void
     {
         $this->assertTrue(app()->isLocale('ko'));
 
@@ -28,7 +28,7 @@ class LocaleTest extends TestCase
         });
     }
 
-    public function testLocaleChangeWithLangQueryString()
+    public function testLocaleChangeWithLangQueryString(): void
     {
         $this->assertTrue(app()->isLocale('ko'));
 

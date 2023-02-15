@@ -17,7 +17,7 @@ class PostPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return $user->tokenCan('post:read');
     }
@@ -29,7 +29,7 @@ class PostPolicy
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Post $post)
+    public function view(User $user, Post $post): bool
     {
         return $user->tokenCan('post:read');
     }
@@ -40,7 +40,7 @@ class PostPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user, Blog $blog)
+    public function create(User $user, Blog $blog): bool
     {
         return $user->id === $blog->user_id &&
             $user->tokenCan('post:create');
@@ -53,7 +53,7 @@ class PostPolicy
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Post $post)
+    public function update(User $user, Post $post): bool
     {
         return $user->id === $post->blog->user_id &&
             $user->tokenCan('post:update');
@@ -66,7 +66,7 @@ class PostPolicy
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Post $post)
+    public function delete(User $user, Post $post): bool
     {
         return $user->id === $post->blog->user_id &&
             $user->tokenCan('post:delete');

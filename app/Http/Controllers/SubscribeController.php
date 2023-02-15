@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use App\Events\Subscribed;
 use App\Http\Requests\SubscribeRequest;
 use App\Http\Requests\UnsubscribeRequest;
@@ -15,7 +16,7 @@ class SubscribeController extends Controller
      * @param  \App\Http\Requests\SubscribeRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(SubscribeRequest $request)
+    public function store(SubscribeRequest $request): RedirectResponse
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
@@ -34,7 +35,7 @@ class SubscribeController extends Controller
      * @param  \App\Http\Requests\UnsubscribeRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(UnsubscribeRequest $request)
+    public function destroy(UnsubscribeRequest $request): RedirectResponse
     {
         /** @var \App\Models\User $user */
         $user = $request->user();

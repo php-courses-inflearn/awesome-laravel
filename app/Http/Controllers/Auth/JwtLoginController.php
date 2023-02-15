@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use PHPOpenSourceSaver\JWTAuth\JWTGuard;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JwtLoginRequest;
 
@@ -13,7 +16,7 @@ class JwtLoginController extends Controller
      * @param  \App\Http\Requests\JwtLoginRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(JwtLoginRequest $request)
+    public function store(JwtLoginRequest $request): JsonResponse
     {
         if (! $token = $this->guard()->attempt($request->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -27,7 +30,7 @@ class JwtLoginController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update()
+    public function update(): JsonResponse
     {
         return $this->respondWithToken($this->guard()->refresh());
     }
@@ -37,7 +40,7 @@ class JwtLoginController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy()
+    public function destroy(): Response
     {
         $guard = $this->guard();
 
@@ -52,7 +55,7 @@ class JwtLoginController extends Controller
      *
      * @return \PHPOpenSourceSaver\JWTAuth\JWTGuard
      */
-    private function guard()
+    private function guard(): JWTGuard
     {
         /** @var \PHPOpenSourceSaver\JWTAuth\JWTGuard $guard */
         $guard = auth('api');
@@ -66,7 +69,7 @@ class JwtLoginController extends Controller
      * @param $token
      * @return \Illuminate\Http\JsonResponse
      */
-    private function respondWithToken($token)
+    private function respondWithToken($token): JsonResponse
     {
         return response()->json([
             'access_token' => $token,

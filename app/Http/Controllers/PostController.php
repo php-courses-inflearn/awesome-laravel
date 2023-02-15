@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Blog;
@@ -31,7 +33,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Blog $blog)
+    public function index(Blog $blog): View
     {
         return view('blogs.posts.index', [
             'posts' => $blog->posts()->latest()->paginate(),
@@ -43,7 +45,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create(Blog $blog)
+    public function create(Blog $blog): View
     {
         return view('blogs.posts.create', [
             'blog' => $blog,
@@ -56,7 +58,7 @@ class PostController extends Controller
      * @param  \App\Http\Requests\StorePostRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StorePostRequest $request, Blog $blog)
+    public function store(StorePostRequest $request, Blog $blog): RedirectResponse
     {
         $post = $this->postService->store($request->validated(), $blog);
 
@@ -69,7 +71,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\View\View
      */
-    public function show(Request $request, Post $post)
+    public function show(Request $request, Post $post): View
     {
         return view('blogs.posts.show', [
             'post' => $post->loadCount('comments'),
@@ -86,7 +88,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\View\View
      */
-    public function edit(Post $post)
+    public function edit(Post $post): View
     {
         return view('blogs.posts.edit', [
             'post' => $post,
@@ -100,7 +102,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post): RedirectResponse
     {
         $this->postService->update($request->validated(), $post);
 
@@ -113,7 +115,7 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post): RedirectResponse
     {
         $this->postService->destroy($post);
 

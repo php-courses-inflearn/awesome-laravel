@@ -22,7 +22,7 @@ class PostService
      * @param  \App\Models\Blog  $blog
      * @return \App\Models\Post
      */
-    public function store(array $data, Blog $blog)
+    public function store(array $data, Blog $blog): Post
     {
         /** @var \App\Models\Post $post */
         $post = $blog->posts()->create([
@@ -48,7 +48,7 @@ class PostService
      * @param  \App\Models\Post  $post
      * @return void
      */
-    public function update(array $data, Post $post)
+    public function update(array $data, Post $post): void
     {
         $post->update([
             'title' => $data['title'],
@@ -66,7 +66,7 @@ class PostService
      * @param  \App\Models\Post  $post
      * @return void
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post): void
     {
         $post->delete();
     }
@@ -78,7 +78,7 @@ class PostService
      * @param  \App\Models\Post  $post
      * @return void
      */
-    private function attachments(array $attachments, Post $post)
+    private function attachments(array $attachments, Post $post): void
     {
         $data = [
             'attachments' => $attachments,

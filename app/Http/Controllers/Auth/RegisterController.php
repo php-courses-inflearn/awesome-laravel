@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Enums\Provider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterUserRequest;
@@ -16,7 +18,7 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('auth.register', [
             'providers' => Provider::cases(),
@@ -29,7 +31,7 @@ class RegisterController extends Controller
      * @param  RegisterUserRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(RegisterUserRequest $request)
+    public function store(RegisterUserRequest $request): RedirectResponse
     {
         $user = User::create([
             ...$request->validated(),

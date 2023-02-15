@@ -12,14 +12,14 @@ class RegisterControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testReturnsRegisterView()
+    public function testReturnsRegisterView(): void
     {
         $this->get(route('register'))
             ->assertOk()
             ->assertViewIs('auth.register');
     }
 
-    public function testUserRegistration()
+    public function testUserRegistration(): void
     {
         Event::fake();
 

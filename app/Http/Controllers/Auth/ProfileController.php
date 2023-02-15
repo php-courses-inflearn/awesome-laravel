@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\Request;
@@ -39,7 +41,7 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function show(Request $request)
+    public function show(Request $request): View
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
@@ -54,7 +56,7 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit(Request $request)
+    public function edit(Request $request): View
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
@@ -70,7 +72,7 @@ class ProfileController extends Controller
      * @param  \App\Http\Requests\UpdateProfileRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateProfileRequest $request)
+    public function update(UpdateProfileRequest $request): RedirectResponse
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
