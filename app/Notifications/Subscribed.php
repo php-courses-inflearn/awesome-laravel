@@ -42,7 +42,7 @@ class Subscribed extends Notification implements ShouldQueue
      *
      * @param  mixed  $notifiable
      */
-    public function toMail($notifiable): Subscribed
+    public function toMail($notifiable): SubscribedMailable
     {
         $address = $notifiable instanceof AnonymousNotifiable
             ? $notifiable->routeNotificationFor('mail')

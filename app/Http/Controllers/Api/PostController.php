@@ -12,7 +12,6 @@ use App\Models\Post;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -55,7 +54,7 @@ class PostController extends Controller
      * @param  \App\Http\Requests\StorePostRequest  $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function store(StorePostRequest $request, Blog $blog): Response
+    public function store(StorePostRequest $request, Blog $blog): \Symfony\Component\HttpFoundation\Response
     {
         $post = $this->postService->store($request->validated(), $blog);
 

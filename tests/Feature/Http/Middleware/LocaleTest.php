@@ -25,6 +25,8 @@ class LocaleTest extends TestCase
 
         $localeMiddleware->handle($request, function () {
             $this->assertTrue(app()->isLocale('en'));
+
+            return response()->noContent();
         });
     }
 
@@ -44,6 +46,8 @@ class LocaleTest extends TestCase
 
         $localeMiddleware->handle($request, function () {
             $this->assertTrue(app()->isLocale('en'));
+
+            return response()->noContent();
         });
     }
 }

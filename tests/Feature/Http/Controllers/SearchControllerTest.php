@@ -30,19 +30,4 @@ class SearchControllerTest extends TestCase
             ->assertViewHas('posts', fn (Collection $posts) => $posts->contains($post))
             ->assertViewHas('query', $query);
     }
-
-    public function testSearchView(): void
-    {
-        $posts = Post::factory(5)->for(Blog::factory()->forUser())->create();
-        $query = $this->faker->word();
-
-        $view = $this->withViewErrors([])
-            ->view('search', [
-                'posts' => $posts,
-                'query' => $query,
-            ]);
-
-        $view->assertViewHas('query', $query);
-        $view->assertViewHas('posts', $posts);
-    }
 }
