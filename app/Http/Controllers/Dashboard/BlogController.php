@@ -10,8 +10,6 @@ class BlogController extends Controller
 {
     /**
      * 블로그 대시보드
-     *
-     * @codeCoverageIgnore
      */
     public function __invoke(Request $request): View
     {

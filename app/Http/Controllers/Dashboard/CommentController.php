@@ -10,8 +10,6 @@ class CommentController extends Controller
 {
     /**
      * 댓글 대시보드
-     *
-     * @codeCoverageIgnore
      */
     public function __invoke(Request $request): View
     {

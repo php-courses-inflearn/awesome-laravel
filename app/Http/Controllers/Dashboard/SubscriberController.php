@@ -10,8 +10,6 @@ class SubscriberController extends Controller
 {
     /**
      * 내 구독자 대시보드
-     *
-     * @codeCoverageIgnore
      */
     public function __invoke(Request $request): View
     {
