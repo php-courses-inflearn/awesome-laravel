@@ -12,8 +12,6 @@ class CommentPolicy
 
     /**
      * Determine whether the user can create models.
-     *
-     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(User $user): bool
     {
@@ -22,8 +20,6 @@ class CommentPolicy
 
     /**
      * Determine whether the user can update the model.
-     *
-     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function update(User $user, Comment $comment): bool
     {
@@ -32,8 +28,6 @@ class CommentPolicy
 
     /**
      * Determine whether the user can delete the model.
-     *
-     * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user, Comment $comment): bool
     {

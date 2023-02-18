@@ -9,8 +9,6 @@ class PostCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
-     *
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray(Request $request): array
     {

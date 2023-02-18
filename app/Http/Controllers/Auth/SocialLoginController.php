@@ -9,13 +9,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
 use Laravel\Socialite\Facades\Socialite;
+use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 
 class SocialLoginController extends Controller
 {
     /**
      * 서비스 제공자 리다이렉트
      */
-    public function create(Provider $provider): RedirectResponse
+    public function create(Provider $provider): SymfonyRedirectResponse
     {
         return Socialite::driver($provider->value)->redirect();
     }

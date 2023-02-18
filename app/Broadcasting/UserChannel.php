@@ -18,10 +18,8 @@ class UserChannel
 
     /**
      * Authenticate the user's access to the channel.
-     *
-     * @return array|bool
      */
-    public function join(User $user, int $id)
+    public function join(User $user, int $id): bool
     {
         return $user->id === $id;
     }

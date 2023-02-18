@@ -12,8 +12,6 @@ class PostResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
-     *
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray(Request $request): array
     {
