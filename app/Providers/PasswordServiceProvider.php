@@ -6,9 +6,6 @@ use App\Rules\Password as PasswordRule;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
-/**
- * @codeCoverageIgnore
- */
 class PasswordServiceProvider extends ServiceProvider
 {
     /**
