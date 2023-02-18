@@ -47,5 +47,5 @@ jobs:
       uses: codecov/codecov-action@v3
     - name: Check code style via Laravel Pint
       run: vendor/bin/pint --test
-    - name: Execute static code analysis (L5) via Larastan
+    - name: Execute static code analysis via Larastan
       run: vendor/bin/phpstan analyse --xdebug
