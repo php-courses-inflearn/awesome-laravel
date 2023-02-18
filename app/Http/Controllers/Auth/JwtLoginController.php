@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JwtLoginRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use PHPOpenSourceSaver\JWTAuth\JWTGuard;
 
 class JwtLoginController extends Controller
@@ -33,7 +32,7 @@ class JwtLoginController extends Controller
     /**
      * JWT 제거
      */
-    public function destroy(): Response
+    public function destroy(): JsonResponse
     {
         $guard = $this->guard();
 
@@ -56,8 +55,6 @@ class JwtLoginController extends Controller
 
     /**
      * 토큰 응답
-     *
-     * @param $token
      */
     private function respondWithToken($token): JsonResponse
     {

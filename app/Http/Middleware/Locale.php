@@ -13,9 +13,6 @@ class Locale
      */
     private array $locales = ['ko', 'en'];
 
-    /**
-     * @var string
-     */
     private string $key = 'locale';
 
     /**

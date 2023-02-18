@@ -4,8 +4,8 @@
 
 <p align="center">
 <img src="https://github.com/php-courses-inflearn/laravel/actions/workflows/laravel.yml/badge.svg" alt="Build Status">
-<img src="https://img.shields.io/badge/laravel%2Fframework-9.45-red?&logo=laravel" alt="Laravel Version">
-<img src="https://img.shields.io/badge/php-8.1-blue?logo=php" alt="PHP Version">
+<img src="https://img.shields.io/badge/laravel%2Fframework-^10.0-red?&logo=laravel" alt="Laravel Version">
+<img src="https://img.shields.io/badge/php-^8.1-blue?logo=php" alt="PHP Version">
 <img src="https://codecov.io/gh/php-courses-inflearn/laravel/branch/main/graph/badge.svg?token=5NWU0Y3OT6"/>
 </p>
 
