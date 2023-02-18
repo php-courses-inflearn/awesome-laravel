@@ -56,7 +56,7 @@ class JwtLoginController extends Controller
     /**
      * 토큰 응답
      */
-    private function respondWithToken($token): JsonResponse
+    private function respondWithToken(string $token): JsonResponse
     {
         return response()->json([
             'access_token' => $token,
