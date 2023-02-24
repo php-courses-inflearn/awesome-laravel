@@ -27,8 +27,10 @@ class TokenController extends Controller
      */
     public function store(StoreTokenRequest $request): RedirectResponse
     {
-        $token = $request->user()
-            ->createToken($request->name, $request->abilities);
+        /** @var \App\Models\User $user */
+        $user = $request->user();
+
+        $token = $user->createToken($request->name, $request->abilities);
 
         return back()
             ->with('status', $token->plainTextToken);

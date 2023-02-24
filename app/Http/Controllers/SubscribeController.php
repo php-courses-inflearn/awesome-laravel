@@ -17,6 +17,7 @@ class SubscribeController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
+        /** @var \App\Models\Blog $blog */
         $blog = Blog::find($request->blog_id);
 
         $user->subscriptions()->attach($blog->id);
@@ -33,6 +34,7 @@ class SubscribeController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
+        /** @var \App\Models\Blog $blog */
         $blog = Blog::find($request->blog_id);
 
         $user->subscriptions()->detach($blog->id);
