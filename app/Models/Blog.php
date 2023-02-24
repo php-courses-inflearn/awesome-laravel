@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property-read int|null $comments_count
  * @property-read int|null $posts_count
  * @property-read int|null $subscribers_count
+ *
  * @method static BlogCollection<int, static> all($columns = ['*'])
  * @method static \Database\Factories\BlogFactory factory($count = null, $state = [])
  * @method static BlogCollection<int, static> get($columns = ['*'])
@@ -39,6 +40,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @method static \Illuminate\Database\Eloquent\Builder|Blog whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Blog whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Blog whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Blog extends Model

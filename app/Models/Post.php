@@ -22,6 +22,7 @@ use Laravel\Scout\Searchable;
  * @property \Illuminate\Support\Carbon $updated_at
  * @property-read int|null $attachments_count
  * @property-read int|null $comments_count
+ *
  * @method static \Database\Factories\PostFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
@@ -32,6 +33,7 @@ use Laravel\Scout\Searchable;
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Post extends Model

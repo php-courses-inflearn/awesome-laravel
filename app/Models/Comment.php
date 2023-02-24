@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon $deleted_at
  * @property-read int|null $replies_count
+ *
  * @method static \Database\Factories\CommentFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Comment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Comment newQuery()
@@ -41,6 +42,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Comment whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Comment withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Comment withoutTrashed()
+ *
  * @mixin \Eloquent
  */
 class Comment extends Model

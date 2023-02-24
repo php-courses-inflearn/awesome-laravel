@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
  * @property \App\Models\Post $post
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
+ *
  * @method static \Database\Factories\AttachmentFactory factory($count = null, $state = [])
  * @method static Builder|Attachment newModelQuery()
  * @method static Builder|Attachment newQuery()
@@ -31,6 +32,7 @@ use Illuminate\Support\Facades\Storage;
  * @method static Builder|Attachment whereOriginalName($value)
  * @method static Builder|Attachment wherePostId($value)
  * @method static Builder|Attachment whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Attachment extends Model
