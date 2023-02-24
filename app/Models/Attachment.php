@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
 /**
+ * App\Models\Attachment
+ *
  * @property int $id
  * @property string $original_name
  * @property string $name
@@ -19,6 +21,17 @@ use Illuminate\Support\Facades\Storage;
  * @property \App\Models\Post $post
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
+ * @method static \Database\Factories\AttachmentFactory factory($count = null, $state = [])
+ * @method static Builder|Attachment newModelQuery()
+ * @method static Builder|Attachment newQuery()
+ * @method static Builder|Attachment query()
+ * @method static Builder|Attachment whereCreatedAt($value)
+ * @method static Builder|Attachment whereId($value)
+ * @method static Builder|Attachment whereName($value)
+ * @method static Builder|Attachment whereOriginalName($value)
+ * @method static Builder|Attachment wherePostId($value)
+ * @method static Builder|Attachment whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Attachment extends Model
 {
