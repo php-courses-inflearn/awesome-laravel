@@ -2,14 +2,11 @@
 
 namespace Tests\Feature\Providers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Tests\TestCase;
 
 class PaginateServiceProviderTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function testPaginateMacro(): void
     {
         $collection = new Collection(range(1, 10));

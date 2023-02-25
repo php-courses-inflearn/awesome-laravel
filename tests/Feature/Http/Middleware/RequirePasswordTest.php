@@ -5,14 +5,13 @@ namespace Tests\Feature\Http\Middleware;
 use App\Enums\Provider;
 use App\Http\Middleware\RequirePassword;
 use Illuminate\Contracts\Session\Session;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Request;
 use Tests\TestCase;
 
 class RequirePasswordTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker;
 
     public function testRequirePasswordRedirect(): void
     {

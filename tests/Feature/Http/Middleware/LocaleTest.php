@@ -4,14 +4,11 @@ namespace Tests\Feature\Http\Middleware;
 
 use App\Http\Middleware\Locale;
 use Illuminate\Contracts\Session\Session;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 use Tests\TestCase;
 
 class LocaleTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function testLocaleChangeWithAcceptLanguageHeader(): void
     {
         $this->assertTrue(app()->isLocale('ko'));

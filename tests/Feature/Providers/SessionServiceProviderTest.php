@@ -3,14 +3,13 @@
 namespace Tests\Feature\Providers;
 
 use App\Enums\Provider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 class SessionServiceProviderTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker;
 
     public function testSocialiteMacro(): void
     {
