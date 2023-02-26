@@ -18,6 +18,7 @@ class RequirePasswordTest extends TestCase
         /** @var \App\Http\Middleware\RequirePassword $requirePasswordMiddleware */
         $requirePasswordMiddleware = app(RequirePassword::class);
 
+        /** @var Request $request */
         $request = app(Request::class);
         $request->setLaravelSession(app(Session::class));
 
@@ -32,6 +33,7 @@ class RequirePasswordTest extends TestCase
         /** @var \App\Http\Middleware\RequirePassword $requirePasswordMiddleware */
         $requirePasswordMiddleware = app(RequirePassword::class);
 
+        /** @var Request $request */
         $request = app(Request::class);
         $request->setLaravelSession(app(Session::class));
         $request->session()->socialite(Provider::Github, $this->faker->safeEmail());

@@ -6,6 +6,7 @@ use App\Enums\Provider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -23,10 +24,8 @@ class LoginController extends Controller
 
     /**
      * 로그인
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function store(LoginRequest $request)
+    public function store(LoginRequest $request): RedirectResponse|JsonResponse
     {
         if (! auth()->attempt($request->validated(), $request->boolean('remember'))) {
             return back()->withErrors([

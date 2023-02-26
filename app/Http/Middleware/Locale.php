@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Locale
 {
     /**
-     * @var array|string[]
+     * @var array<string>
      */
     private array $locales = ['ko', 'en'];
 
@@ -35,10 +35,8 @@ class Locale
 
     /**
      * 로케일
-     *
-     * @return mixed|string|null
      */
-    private function locale(Request $request)
+    private function locale(Request $request): ?string
     {
         $locale = $request->getPreferredLanguage($this->locales);
 

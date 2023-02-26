@@ -15,10 +15,8 @@ class ProfileController extends Controller
      * Show the form for creating the resource.
      *
      * @codeCoverageIgnore
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): never
     {
         abort(404);
     }
@@ -27,10 +25,8 @@ class ProfileController extends Controller
      * Store the newly created resource in storage.
      *
      * @codeCoverageIgnore
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): never
     {
         abort(404);
     }
@@ -87,10 +83,8 @@ class ProfileController extends Controller
      * Remove the resource from storage.
      *
      * @codeCoverageIgnore
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy()
+    public function destroy(): never
     {
         abort(404);
     }

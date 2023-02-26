@@ -26,10 +26,8 @@ class AttachmentController extends Controller
 
     /**
      * 파일 생성
-     *
-     * @return void
      */
-    public function store(StoreAttachmentRequest $request, Post $post)
+    public function store(StoreAttachmentRequest $request, Post $post): void
     {
         $this->attachmentService->store($request->validated(), $post);
     }

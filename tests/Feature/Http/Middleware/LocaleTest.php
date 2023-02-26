@@ -16,6 +16,7 @@ class LocaleTest extends TestCase
         /** @var \App\Http\Middleware\Locale $localeMiddleware */
         $localeMiddleware = app(Locale::class);
 
+        /** @var Request $request */
         $request = app(Request::class);
         $request->setLaravelSession(app(Session::class));
         $request->header('Accept-Language', 'en');
@@ -34,6 +35,7 @@ class LocaleTest extends TestCase
         /** @var \App\Http\Middleware\Locale $localeMiddleware */
         $localeMiddleware = app(Locale::class);
 
+        /** @var Request $request */
         $request = app(Request::class);
         $request->setLaravelSession(app(Session::class));
 
