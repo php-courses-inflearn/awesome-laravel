@@ -18,7 +18,7 @@ class PostControllerTest extends TestCase
 
     public function testReturnsIndexViewForListOfPost(): void
     {
-        $blog = Blog::factory()->forUser()->create();
+        $blog = Blog::factory()->create();
 
         $this->actingAs($blog->user)
             ->get(route('blogs.posts.index', $blog))
@@ -28,7 +28,7 @@ class PostControllerTest extends TestCase
 
     public function testReturnsCreateViewForPost(): void
     {
-        $blog = Blog::factory()->forUser()->create();
+        $blog = Blog::factory()->create();
 
         $this->actingAs($blog->user)
             ->get(route('blogs.posts.create', $blog))
@@ -43,7 +43,7 @@ class PostControllerTest extends TestCase
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        $blog = Blog::factory()->forUser()->hasSubscribers()->create();
+        $blog = Blog::factory()->hasSubscribers()->create();
 
         $data = [
             'title' => $this->faker->text(50),
@@ -75,7 +75,7 @@ class PostControllerTest extends TestCase
 
     public function testReturnsShowViewForPost(): void
     {
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()->create();
 
         $this->actingAs($post->blog->user)
             ->get(route('posts.show', $post))
@@ -85,7 +85,7 @@ class PostControllerTest extends TestCase
 
     public function testReturnsEditViewForPost(): void
     {
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()->create();
 
         $this->actingAs($post->blog->user)
             ->get(route('posts.edit', $post))
@@ -99,7 +99,7 @@ class PostControllerTest extends TestCase
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()->create();
 
         $data = [
             'title' => $this->faker->text(50),
@@ -129,7 +129,7 @@ class PostControllerTest extends TestCase
 
     public function testDeletePost(): void
     {
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()->create();
 
         $this->actingAs($post->blog->user)
             ->delete(route('posts.destroy', $post))

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\Blog;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -17,7 +16,7 @@ class SearchControllerTest extends TestCase
     public function testReturnsSearchViewWithSearchQueryInQueryString(): void
     {
         $user = User::factory()->create();
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()->create();
 
         $query = $post->title;
 

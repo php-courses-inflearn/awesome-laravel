@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use App\Models\Blog;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -17,7 +16,7 @@ class CommentControllerTest extends TestCase
     public function testCreateCommentForPost(): void
     {
         $user = User::factory()->create();
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()->create();
 
         $data = [
             'content' => $this->faker->text(),
@@ -40,10 +39,7 @@ class CommentControllerTest extends TestCase
     public function testCreateChildCommentForComment(): void
     {
         $user = User::factory()->create();
-
-        $comment = Comment::factory()->forUser()
-            ->for(Post::factory()->for(Blog::factory()->forUser()), 'commentable')
-            ->create();
+        $comment = Comment::factory()->create();
 
         $data = [
             'content' => $this->faker->text(),
@@ -68,9 +64,7 @@ class CommentControllerTest extends TestCase
 
     public function testUpdateComment(): void
     {
-        $comment = Comment::factory()->forUser()
-            ->for(Post::factory()->for(Blog::factory()->forUser()), 'commentable')
-            ->create();
+        $comment = Comment::factory()->create();
 
         $data = [
             'content' => $this->faker->text(),
@@ -90,9 +84,7 @@ class CommentControllerTest extends TestCase
 
     public function testDeleteComment(): void
     {
-        $comment = Comment::factory()->forUser()
-            ->for(Post::factory()->for(Blog::factory()->forUser()), 'commentable')
-            ->create();
+        $comment = Comment::factory()->create();
 
         $this->actingAs($comment->user)
             ->delete(route('comments.destroy', $comment))

@@ -17,7 +17,7 @@ class SubscribedTest extends TestCase
     public function testToMailReturnsSubscribedMailable(): void
     {
         $user = User::factory()->create();
-        $blog = Blog::factory()->forUser()->create();
+        $blog = Blog::factory()->create();
 
         $notification = new Subscribed($user, $blog);
 
@@ -28,7 +28,7 @@ class SubscribedTest extends TestCase
     public function testToBroadcastContainsUser(): void
     {
         $user = User::factory()->create();
-        $blog = Blog::factory()->forUser()->create();
+        $blog = Blog::factory()->create();
 
         $notification = new Subscribed($user, $blog);
         $broadcastMessage = $notification->toBroadcast($user);

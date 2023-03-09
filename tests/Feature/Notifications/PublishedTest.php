@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Notifications;
 
-use App\Models\Blog;
 use App\Models\Post;
 use App\Models\User;
 use App\Notifications\Published;
@@ -17,7 +16,7 @@ class PublishedTest extends TestCase
     public function testToMailContainsExpectedSubjectAndContent(): void
     {
         $user = User::factory()->create();
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()->create();
 
         $notification = new Published($post);
 
@@ -45,7 +44,7 @@ class PublishedTest extends TestCase
     public function testToBroadcastContainsPost(): void
     {
         $user = User::factory()->create();
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()->create();
 
         $notification = new Published($post);
         $broadcastMessage = $notification->toBroadcast($user);

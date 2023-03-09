@@ -52,7 +52,7 @@ class BlogControllerTest extends TestCase
     public function testReturnsShowViewForBlog(): void
     {
         $user = User::factory()->create();
-        $blog = Blog::factory()->forUser()->create();
+        $blog = Blog::factory()->create();
 
         $this->actingAs($user)
             ->get(route('blogs.show', $blog))
@@ -62,7 +62,7 @@ class BlogControllerTest extends TestCase
 
     public function testReturnsEditViewForBlog(): void
     {
-        $blog = Blog::factory()->forUser()->create();
+        $blog = Blog::factory()->create();
 
         $this->actingAs($blog->user)
             ->get(route('blogs.edit', $blog))
@@ -72,7 +72,7 @@ class BlogControllerTest extends TestCase
 
     public function testUpdateBlog(): void
     {
-        $blog = Blog::factory()->forUser()->create();
+        $blog = Blog::factory()->create();
 
         $data = [
             'name' => $this->faker->userName(),
@@ -88,7 +88,7 @@ class BlogControllerTest extends TestCase
 
     public function testDeleteBlog(): void
     {
-        $blog = Blog::factory()->forUser()->create();
+        $blog = Blog::factory()->create();
 
         $this->actingAs($blog->user)
             ->delete(route('blogs.destroy', $blog))

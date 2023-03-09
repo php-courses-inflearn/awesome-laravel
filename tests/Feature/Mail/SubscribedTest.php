@@ -15,7 +15,7 @@ class SubscribedTest extends TestCase
     public function testDisplaysUserNameAndBlogDisplayName(): void
     {
         $user = User::factory()->create();
-        $blog = Blog::factory()->forUser()->create();
+        $blog = Blog::factory()->create();
 
         $mailable = new Subscribed($user, $blog);
 

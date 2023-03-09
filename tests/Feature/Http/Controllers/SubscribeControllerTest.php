@@ -20,7 +20,7 @@ class SubscribeControllerTest extends TestCase
         Event::fake();
 
         $user = User::factory()->create();
-        $blog = Blog::factory()->forUser()->create();
+        $blog = Blog::factory()->create();
 
         $this->actingAs($user)
             ->post(route('subscribe'), [
@@ -45,7 +45,7 @@ class SubscribeControllerTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $blog = Blog::factory()->forUser()->hasAttached(
+        $blog = Blog::factory()->hasAttached(
             factory: $user,
             relationship: 'subscribers'
         )->create();

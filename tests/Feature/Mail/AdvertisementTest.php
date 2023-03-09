@@ -3,7 +3,6 @@
 namespace Tests\Feature\Mail;
 
 use App\Mail\Advertisement;
-use App\Models\Blog;
 use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,7 +13,7 @@ class AdvertisementTest extends TestCase
 
     public function testDisplaysListOfPostTitles(): void
     {
-        $posts = Post::factory(5)->for(Blog::factory()->forUser())->create();
+        $posts = Post::factory(5)->create();
 
         $mailable = new Advertisement($posts);
 

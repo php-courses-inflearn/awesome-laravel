@@ -21,7 +21,7 @@ class PostControllerTest extends TestCase
 
     public function testRequestListOfPost(): void
     {
-        $blog = Blog::factory()->forUser()->hasPosts(3)->create();
+        $blog = Blog::factory()->hasPosts(3)->create();
 
         Sanctum::actingAs($blog->user, [
             Ability::POST_READ->value,
@@ -44,7 +44,7 @@ class PostControllerTest extends TestCase
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        $blog = Blog::factory()->forUser()->hasPosts(3)->hasSubscribers()->create();
+        $blog = Blog::factory()->hasPosts(3)->hasSubscribers()->create();
 
         $data = [
             'title' => $this->faker->text(50),
@@ -86,7 +86,7 @@ class PostControllerTest extends TestCase
 
     public function testRequestPost(): void
     {
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()->create();
 
         Sanctum::actingAs($post->blog->user, [
             Ability::POST_READ->value,
@@ -116,7 +116,7 @@ class PostControllerTest extends TestCase
 
         $attachment = UploadedFile::fake()->image('avatar.jpg');
 
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()->create();
 
         $data = [
             'title' => $this->faker->text(50),
@@ -149,7 +149,7 @@ class PostControllerTest extends TestCase
 
     public function testDeletePost(): void
     {
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()->create();
 
         Sanctum::actingAs($post->blog->user, [
             Ability::POST_DELETE->value,

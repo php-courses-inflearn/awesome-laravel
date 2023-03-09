@@ -24,7 +24,7 @@ class WelcomeControllerTest extends TestCase
 
     public function testReturnsWelcomeViewWithSubscriptions(): void
     {
-        $subscriptions = Blog::factory()->forUser()->hasPosts(5)->create();
+        $subscriptions = Blog::factory()->hasPosts(5)->create();
 
         $user = User::factory()->hasAttached(
             factory: $subscriptions,

@@ -20,7 +20,7 @@ class SendSubscribedNotificationTest extends TestCase
         Notification::fake();
 
         $user = User::factory()->create();
-        $blog = Blog::factory()->forUser()->create();
+        $blog = Blog::factory()->create();
 
         $event = new Subscribed($user, $blog);
 

@@ -3,7 +3,6 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Attachment;
-use App\Models\Blog;
 use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -21,7 +20,7 @@ class AttachmentControllerTest extends TestCase
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        $post = Post::factory()->for(Blog::factory()->forUser())->create();
+        $post = Post::factory()->create();
 
         $this->actingAs($post->blog->user)
             ->post(route('posts.attachments.store', $post), [
@@ -49,7 +48,7 @@ class AttachmentControllerTest extends TestCase
 
         $attachment = UploadedFile::fake()->image('file.jpg');
 
-        $post = Post::factory()->for(Blog::factory()->forUser())->has(
+        $post = Post::factory()->has(
             Attachment::factory()->state([
                 'original_name' => $attachment->getClientOriginalName(),
                 'name' => $attachment->hashName('attachments'),
